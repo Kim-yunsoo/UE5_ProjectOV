@@ -53,8 +53,15 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	{
 		QuaterMoveAction = InputActionQuaterMoveRef.Object;
 	}
+	static ConstructorHelpers::FObjectFinder<UInputAction> AimActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_MouseRight.IA_OV_MouseRight'"));
+	if (nullptr != AimActionRef.Object)
+	{
+		MouseRight = AimActionRef.Object;
+	}
+
 
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
+	bIsAiming = false;
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -69,12 +76,14 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
 	
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Jumping);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeCharacterControl);
 		EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderMove);
 		EnhancedInputComponent->BindAction(ShoulderLookAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLook);
 		EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::QuaterMove);
+		EnhancedInputComponent->BindAction(MouseRight, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Aiming);
+		EnhancedInputComponent->BindAction(MouseRight, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopAiming);
 	
 }
 
@@ -166,4 +175,23 @@ void AOVCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 	FVector MoveDirection = FVector(MovementVector.X, MovementVector.Y, 0.0f);
 	GetController()->SetControlRotation(FRotationMatrix::MakeFromX(MoveDirection).Rotator());
 	AddMovementInput(MoveDirection, MovementVectorSize);
+}
+
+void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
+{
+	bIsAiming = true;
+}
+
+void AOVCharacterPlayer::StopAiming(const FInputActionValue& Value)
+{
+	bIsAiming = false;
+}
+
+void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
+{
+	if (!bIsAiming)
+	{
+		bPressedJump = true;
+		JumpKeyHoldTime = 0.0f;
+	}
 }

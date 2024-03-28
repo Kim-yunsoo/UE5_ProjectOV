@@ -57,10 +57,27 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> QuaterMoveAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> MouseRight;//마우스 오른쪽
+
 	void ShoulderMove(const FInputActionValue& Value);
 	void ShoulderLook(const FInputActionValue& Value);
 
 	void QuaterMove(const FInputActionValue& Value);
+
+	void Aiming(const FInputActionValue& Value);
+	void StopAiming(const FInputActionValue& Value);
+
+	void Jumping(const FInputActionValue& Value);
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
+	uint8 bIsAiming : 1; //조준 
+
+
+public:
+	const uint8 GetIsAiming() { return bIsAiming; };
+
 
 	ECharacterControlType CurrentCharacterControlType;
 };

@@ -23,7 +23,7 @@ protected:
 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character)
-	TObjectPtr<class ACharacter> Owner; //애님 인스턴스를 소유하고 있는 정보를 담는 변수 
+	TObjectPtr<class AOVCharacterPlayer> Owner; //애님 인스턴스를 소유하고 있는 정보를 담는 변수 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character)
 	TObjectPtr<class UCharacterMovementComponent> Movement;
@@ -48,4 +48,13 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	float JumpingThreshould; //점프중인지 
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
+	uint8 bIsAiming : 1; //에임모드
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
+	float DeltaY;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
+	float DeltaZ;
 };
