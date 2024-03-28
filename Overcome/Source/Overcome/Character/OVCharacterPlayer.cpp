@@ -58,7 +58,11 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	{
 		MouseRight = AimActionRef.Object;
 	}
-
+	static ConstructorHelpers::FObjectFinder<UInputAction> ShootActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_MouseLeft.IA_OV_MouseLeft'"));
+	if (nullptr != ShootActionRef.Object)
+	{
+		MouseLeft = ShootActionRef.Object;
+	}
 
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
@@ -84,7 +88,8 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::QuaterMove);
 		EnhancedInputComponent->BindAction(MouseRight, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Aiming);
 		EnhancedInputComponent->BindAction(MouseRight, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopAiming);
-	
+		EnhancedInputComponent->BindAction(MouseLeft, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Shooting);
+		EnhancedInputComponent->BindAction(MouseLeft, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopShooting);
 }
 
 void AOVCharacterPlayer::ChangeCharacterControl()
@@ -194,4 +199,17 @@ void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
 		bPressedJump = true;
 		JumpKeyHoldTime = 0.0f;
 	}
+}
+
+void AOVCharacterPlayer::Shooting(const FInputActionValue& Value)
+{
+	if (bIsAiming)
+	{
+
+	}
+}
+
+void AOVCharacterPlayer::StopShooting(const FInputActionValue& Value)
+{
+
 }
