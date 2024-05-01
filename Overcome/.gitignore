@@ -80,3 +80,5 @@ Content/MCO_Mocap_Basics/*
 
 #ThirdPercon
 Content/ThirdPerson/*
+Content/__ExternalActors__/*
+Content/__ExternalObjects__/*

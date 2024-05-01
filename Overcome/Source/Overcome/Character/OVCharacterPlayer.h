@@ -60,9 +60,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> MouseRight;//마우스 오른쪽
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UInputAction> MouseLeft;//마우스 오른쪽
-
 	void ShoulderMove(const FInputActionValue& Value);
 	void ShoulderLook(const FInputActionValue& Value);
 
@@ -72,9 +69,6 @@ protected:
 	void StopAiming(const FInputActionValue& Value);
 
 	void Jumping(const FInputActionValue& Value);
-
-	void Shooting(const FInputActionValue& Value);
-	void StopShooting(const FInputActionValue& Value);
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
