@@ -7,9 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="">
+    <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/ABP_OV_Character.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/ABP_OV_Character.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/BP_OVCharacterPlayer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/TestMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,9 +35,10 @@
   }
 }]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
   "associatedIndex": 7
 }]]></component>
-  <component name="ProjectId" id="2gbBENDoU3GoHHCYDayT8v3Zo6G" />
+  <component name="ProjectId" id="2gbMgu0AVIYUi30wfAl0DGrfQHc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -132,12 +135,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="디폴트 작업">
-      <changelist id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="" />
-      <created>1715956283607</created>
+      <changelist id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="" />
+      <created>1715961939346</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1715956283607</updated>
-      <workItem from="1715956284692" duration="5532000" />
+      <updated>1715961939346</updated>
+      <workItem from="1715961940840" duration="1282000" />
     </task>
     <servers />
   </component>
