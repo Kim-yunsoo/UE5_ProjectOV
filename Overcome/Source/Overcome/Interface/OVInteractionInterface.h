@@ -72,5 +72,5 @@ public:
 	virtual void BeginInteract();
 	virtual void EndInteract();
 	virtual void Interact();
-	
+	FInteractableData InteractableData;
 };

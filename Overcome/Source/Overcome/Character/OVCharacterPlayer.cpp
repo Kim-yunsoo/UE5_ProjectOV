@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Gun/OVGun.h"
 #include "OVCharacterControlData.h"
+#include "Interface/OVInteractionInterface.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Item/OVHpItemData.h"
@@ -19,6 +20,7 @@
 #include "Stat/OVCharacterStatComponent.h"
 #include "UI/OVHUDWidget.h"
 #include "UI/OVStatWidget.h"
+#include "DrawDebugHelpers.h"
 
 DEFINE_LOG_CATEGORY(LogOVCharacter);
 
@@ -125,6 +127,9 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 
 	ShieldSkillComponent = CreateDefaultSubobject<UOVShieldSkill>(TEXT("ShieldSkillComponent"));
 	bIsActiveShieldSkill = true;
+
+	InteractionCheckFrequency=0.1f;
+	InteractionCheckDistance =225.0f;
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -495,11 +500,6 @@ void AOVCharacterPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AOVCharacterPlayer, bIsGun);
 }
 
-void AOVCharacterPlayer::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-	AimOffset(DeltaSeconds);
-}
 
 void AOVCharacterPlayer::TakeItem(UOVItemData* InItemData)
 {
@@ -567,6 +567,70 @@ void AOVCharacterPlayer::ShieldSkill(const FInputActionValue& Value)
 		float MpIncreaseAmount = Stat->GetCurrentMp()  - 30;
 		Stat->SetMp(MpIncreaseAmount);
 	}
+}
+void AOVCharacterPlayer::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	AimOffset(DeltaSeconds);
+
+	if(GetWorld()->TimeSince(InteractionData.LastInteractionCheckTime)>InteractionCheckFrequency)
+	{
+		PerformInteractionCheck();
+	}
+}
+
+void AOVCharacterPlayer::PerformInteractionCheck()
+{ //todo
+	InteractionData.LastInteractionCheckTime = GetWorld()->GetTimeSeconds();
+
+	FVector TraceStart{GetPawnViewLocation()}; //폰의 뷰 위치가 시작 자동으로 눈 높의를 나타내는 특정 값으로 초기화
+	FVector TraceEnd {TraceStart + (GetViewRotation().Vector()*InteractionCheckDistance)}; //캐릭터 컨트롤러의 회전 값
+
+	DrawDebugLine(GetWorld(), TraceStart,TraceEnd,FColor::Red,false,1.0f , 0,2.0f);
+
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this);
+	FHitResult TraceHit;
+
+	if(GetWorld()->LineTraceSingleByChannel(TraceHit,TraceStart,TraceEnd,ECC_Visibility,QueryParams))
+	{
+		if(TraceHit.GetActor()->GetClass()->ImplementsInterface(UOVInteractionInterface::StaticClass()))
+		{
+			const float Distance = (TraceStart - TraceHit.ImpactPoint).Size();
+
+			if(TraceHit.GetActor() != InteractionData.CurrentInteractable&& Distance <= InteractionCheckDistance)
+			{
+				FoundInteractable(TraceHit.GetActor()); // 상호작용 가능한 액터를 찾음
+				return;
+			}
+
+			if(TraceHit.GetActor() == InteractionData.CurrentInteractable)
+			{
+				return; // 여전히 같은 것을 보고 있다
+			}
+		}
+	}
+	NoInteractableFound(); //아무것도 못찾은 경우 반환 
+}
+
+void AOVCharacterPlayer::FoundInteractable(AActor* NewInteractable)
+{
+}
+
+void AOVCharacterPlayer::NoInteractableFound()
+{
+}
+
+void AOVCharacterPlayer::BeginInteract()
+{
+}
+
+void AOVCharacterPlayer::EndInteract()
+{
+}
+
+void AOVCharacterPlayer::Interact()
+{
 }
 
 

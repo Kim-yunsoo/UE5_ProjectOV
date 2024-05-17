@@ -15,6 +15,7 @@
  * 
  */
 
+class IOVInteractionInterface;
 class UOVHUDWidget;
 DECLARE_LOG_CATEGORY_EXTERN(LogOVCharacter, Log, All);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnAimChangedDelegate, bool /*aim*/)
@@ -29,6 +30,24 @@ struct FTakeItemDelegateWrapper
 	FTakeItemDelegateWrapper() {}
 	FTakeItemDelegateWrapper(const FOnTakeItemDelegate& InItemDelegate) : ItemDelegate(InItemDelegate){}
 	FOnTakeItemDelegate ItemDelegate;
+};
+
+
+USTRUCT()
+struct FInteractionData
+{
+	GENERATED_USTRUCT_BODY()
+
+	FInteractionData() : CurrentInteractable(nullptr), LastInteractionCheckTime(0.0f)
+	{
+		
+	};
+	
+	UPROPERTY()
+	AActor* CurrentInteractable; //상호작용한 액터 
+
+	UPROPERTY()
+	float LastInteractionCheckTime; //매 프레임 마다 확인할 필요 없으니 확인하는 시간을 정해둠 
 };
 
 UCLASS()
@@ -255,4 +274,22 @@ public:
 	void TeleportSkill(const FInputActionValue& Value);
 	void ShieldSkill(const FInputActionValue& Value);
 
+protected:
+	UPROPERTY(VisibleAnywhere,Category = "Caracter | Interaction")
+	TScriptInterface<IOVInteractionInterface> TargetInteractable; //라인트레이스에 히트된 타겟을 처리
+
+	float InteractionCheckFrequency; //체크 빈도
+	float InteractionCheckDistance; //얼마나 멀리 라인트레이스?
+
+	FTimerHandle TimerHandle_Interaction;
+
+	FInteractionData InteractionData; // 라인트레이스로 인터렉트하는데 사용할 정보들 구조체  
+
+	void PerformInteractionCheck(); // 매틱마다 호출하며 라인트레이스
+	void FoundInteractable(AActor* NewInteractable); // 상호작용 가능한 액터인지 체크
+	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출
+	void BeginInteract();
+	void EndInteract();
+	void Interact();
+	
 };
