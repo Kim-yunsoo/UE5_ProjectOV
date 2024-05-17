@@ -35,17 +35,17 @@ void AOVItemBase::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 
-	if(nullptr == Item)
-	{
-		Destroy();
-		return;
-	}
-	
-	IOVCharacterItemInterface* OverlappingPawn = Cast<IOVCharacterItemInterface>(OtherActor);
-	if(OverlappedComp)
-	{
-		OverlappingPawn->TakeItem(Item);
-	}
+	// if(nullptr == Item)
+	// {
+	// 	Destroy();
+	// 	return;
+	// }
+	//
+	// IOVCharacterItemInterface* OverlappingPawn = Cast<IOVCharacterItemInterface>(OtherActor);
+	// if(OverlappedComp)
+	// {
+	// 	OverlappingPawn->TakeItem(Item);
+	// }
 	
 	//SetActorEnableCollision(false);
 

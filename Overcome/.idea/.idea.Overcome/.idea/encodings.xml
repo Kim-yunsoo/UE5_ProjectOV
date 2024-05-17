@@ -4,6 +4,8 @@
     <file url="file://$PROJECT_DIR$/Source/Overcome/Animation/OVAnimInstance.cpp" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/Source/Overcome/Animation/OVAnimInstance.h" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Source/Overcome/Data/ItemDataStructs.h" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Source/Overcome/Item/OVItemData.h" charset="x-windows-949" />
     <file url="PROJECT" charset="x-windows-949" />
   </component>
 </project>

@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Item/OVItemData.h"
-#include "OVHpItemData.generated.h"
+//#include "OVHpItemData.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class OVERCOME_API UOVHpItemData : public UOVItemData
-{
-	GENERATED_BODY()
-};
+// UCLASS()
+// class OVERCOME_API UOVHpItemData : public UOVItemData
+// {
+// 	GENERATED_BODY()
+// };
