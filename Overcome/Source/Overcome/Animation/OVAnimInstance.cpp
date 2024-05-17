@@ -38,7 +38,8 @@ void UOVAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bIsFalling = Movement->IsFalling();
 		bIsJumping = bIsFalling & (Velocity.Z > JumpingThreshould);
 		bIsAiming = Owner->GetIsAiming();
-
+		TurningInPlace = Owner->GetTurningInPlace();
+		
 		AO_Yaw = Owner->GetAO_Yaw();
 		AO_Pitch =  Owner->GetAO_Pitch();
 	}
