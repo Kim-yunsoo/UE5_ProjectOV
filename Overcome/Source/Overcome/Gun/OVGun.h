@@ -27,6 +27,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 
+	FORCEINLINE int32 GetBulletCount(){return BulletCount;};
 private:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
@@ -40,6 +41,9 @@ private:
 	UPROPERTY(EditAnywhere);
 	float Damage;	
 
+	UPROPERTY(EditAnywhere)
+	int32 BulletCount;
+	
 	UPROPERTY()
 	TObjectPtr<UNiagaraSystem> EmitterHit;
 };

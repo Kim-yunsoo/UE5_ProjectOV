@@ -9,6 +9,7 @@
 #include "Interface/OVCharacterHUDInterface.h"
 #include "Interface/OVCharacterItemInterface.h"
 #include "Stat/OVCharacterStatComponent.h"
+#include "TurningInPlace.h"
 #include "OVCharacterPlayer.generated.h"
 
 /**
@@ -138,6 +139,7 @@ protected:
 	void AimOffset(float DeltaTime);
 
 	float AO_Yaw;
+	float InterpAO_Yaw;
 	float AO_Pitch;
 	FRotator StaringAimRotation;
 
@@ -179,8 +181,8 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Turn")
 	void ClearMotion();
 
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnInPlace();
+	// UFUNCTION(BlueprintCallable, Category = "Turn")
+	// void TurnInPlace();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
 	uint8 bIsTurning : 1;
@@ -197,7 +199,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
 	TObjectPtr<class UAnimMontage> TurnLeft_180;
 
-
+	ETurningPlaceType TurningInPlace;
+	void TurnInPlace(float DeltaTime);
+	
+public:
+	FORCEINLINE ETurningPlaceType GetTurningInPlace() const { return TurningInPlace; }
+	
 	//Gun
 public:
 	FORCEINLINE float GetAttack() {return Stat->GetCurrentAttack();}

@@ -130,6 +130,7 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 
 	InteractionCheckFrequency=0.1f;
 	InteractionCheckDistance =225.0f;
+	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -256,17 +257,15 @@ void AOVCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 void AOVCharacterPlayer::ShoulderLookX(const FInputActionValue& Value)
 {
 	float LookAxisVector = Value.Get<float>();
-
 	AddControllerYawInput(LookAxisVector);
 	//UE_LOG(LogTemp, Log, TEXT("LookX"));
-	if (bIsAiming && bIsGun)
-		TurnInPlace();
+	 // if (bIsAiming && bIsGun)
+	 // 	TurnInPlace();
 }
 
 void AOVCharacterPlayer::ShoulderLookY(const FInputActionValue& Value)
 {
 	float LookAxisVector = Value.Get<float>();
-
 	AddControllerPitchInput(LookAxisVector);
 }
 
@@ -295,10 +294,18 @@ void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
 	if (bIsGun)
 	{
-		bIsAiming = true;
-		SmoothCurveTimeline->Play();
-		OnAimChanged.Broadcast(bIsAiming);
-		ServerRPCAiming();
+		if(!bIsAiming)
+		{
+			bIsAiming = true;
+			SmoothCurveTimeline->Play();
+			OnAimChanged.Broadcast(bIsAiming);
+			ServerRPCAiming();
+		}
+		// else
+		// {
+		// 	StopAiming(Value);
+		// }
+		
 	}
 }
 
@@ -338,7 +345,7 @@ void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 void AOVCharacterPlayer::AimOffset(float DeltaTime)
 {
 	//컨트롤러 회전 사용 중단
-	if(!bIsAiming) return ;
+//if(!bIsAiming) return ;
 	FVector Velocity = GetVelocity();
 	Velocity.Z = 0.f;
 	float Speed = Velocity.Size();
@@ -349,13 +356,19 @@ void AOVCharacterPlayer::AimOffset(float DeltaTime)
 		FRotator CurrentAimRoTation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
 		FRotator DeltaAimRotaion = UKismetMathLibrary::NormalizedDeltaRotator(CurrentAimRoTation, StaringAimRotation); //회전값 가지고 오기
 		AO_Yaw = DeltaAimRotaion.Yaw;
-		bUseControllerRotationYaw = false;
+		if(TurningInPlace == ETurningPlaceType::ETIP_NotTurning)
+		{
+			InterpAO_Yaw = AO_Yaw;
+		}
+		bUseControllerRotationYaw = true;
+		TurnInPlace(DeltaTime);
 	}
 	if(Speed > 0.f || bIsInAir)    // 달리거나 점프할 때
 	{
 		StaringAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
 		AO_Yaw = 0.f;
 		bUseControllerRotationYaw = true;
+		TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
 	}
 
 	AO_Pitch = GetBaseAimRotation().Pitch;
@@ -366,6 +379,31 @@ void AOVCharacterPlayer::AimOffset(float DeltaTime)
 		FVector2D InRange(270.f, 360.f);
 		FVector2D OutRange(-90, 0.f);
 		AO_Pitch = FMath::GetMappedRangeValueClamped(InRange, OutRange, AO_Pitch);
+	}
+}
+
+
+void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
+{
+	//UE_LOG(LogTemp,	Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
+	if(AO_Yaw > 90.f)
+	{
+		TurningInPlace = ETurningPlaceType::ETIP_Right;
+	}
+	else if (AO_Yaw < - 90.f)
+	{
+		TurningInPlace = ETurningPlaceType::ETIP_Left;
+	}
+	if(TurningInPlace != ETurningPlaceType::ETIP_NotTurning)
+	{
+		InterpAO_Yaw = FMath::FInterpTo(InterpAO_Yaw, 0.0f, DeltaTime, 4.f);
+		AO_Yaw = InterpAO_Yaw;
+
+		if (FMath::Abs(AO_Yaw) < 15.f) 
+		{
+			TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
+			StaringAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
+		}
 	}
 }
 
@@ -425,46 +463,49 @@ void AOVCharacterPlayer::ClearMotion()
 
 }
 
-void AOVCharacterPlayer::TurnInPlace()
-{
-	
-	float VelocityXY = GetCharacterMovement()->Velocity.Size2D();
-	if (!(GetCharacterMovement()->IsFalling()) && !(VelocityXY > 0.0f))
-	{
-		FRotator DeltaRotation = GetActorRotation() - GetBaseAimRotation();
-		DeltaRotation.Normalize();
-		float DeltaYaw = DeltaRotation.Yaw * -1.0f;
-        //Todo 외적 사용해서 다시 구현하기 
-		if ((DeltaYaw > 45.f) || (DeltaYaw < -45.f))
-		{
-			// if (DeltaYaw > 135.f)
-			// 	TurnRight180();
-			// else if (DeltaYaw < -135.f)
-			// 	TurnLeft180();
-			// else
-			if(DeltaYaw > 45.f)
-				TurnRight90();
-			else if (DeltaYaw < -45.f)
-				TurnLeft90();
-		}
-	}
-}
+// void AOVCharacterPlayer::TurnInPlace()
+// {
+// 	
+// 	float VelocityXY = GetCharacterMovement()->Velocity.Size2D();
+// 	if (!(GetCharacterMovement()->IsFalling()) && !(VelocityXY > 0.0f))
+// 	{
+// 		FRotator DeltaRotation = GetActorRotation() - GetBaseAimRotation();
+// 		DeltaRotation.Normalize();
+// 		float DeltaYaw = DeltaRotation.Yaw * -1.0f;
+//         //Todo 외적 사용해서 다시 구현하기 
+// 		if ((DeltaYaw > 45.f) || (DeltaYaw < -45.f))
+// 		{
+// 			// if (DeltaYaw > 135.f)
+// 			// 	TurnRight180();
+// 			// else if (DeltaYaw < -135.f)
+// 			// 	TurnLeft180();
+// 			// else
+// 			if(DeltaYaw > 45.f)
+// 				TurnRight90();
+// 			else if (DeltaYaw < -45.f)
+// 				TurnLeft90();
+// 		}
+// 	}
+// }
 
 void AOVCharacterPlayer::Shoot()
 {
 	if (!bIsShooting)
 	{
 		bIsShooting = true;
-		Gun->PullTrigger();
-		PlayAnimMontage(Shooting_Gun, 0.5);
+		if(Gun->GetBulletCount())
+		{
+			Gun->PullTrigger();
+			PlayAnimMontage(Shooting_Gun, 0.5);
 
-		FTimerHandle TimerHandle;
+			FTimerHandle TimerHandle;
 
-		// Set up the timer to call the ResetTurning function after 0.2 seconds
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-			{
-				bIsShooting = false;
-			}, 0.5, false);
+			// Set up the timer to call the ResetTurning function after 0.2 seconds
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+				{
+					bIsShooting = false;
+				}, 0.5, false);
+		}
 	}
 }
 
@@ -531,7 +572,7 @@ void AOVCharacterPlayer::Damage(UOVItemData* InItemData)
 {
 	if(bIsActiveShieldSkill)
 	{
-		float HpIncreaseAmount = Stat->GetCurrentHp()-  30;
+		float HpIncreaseAmount = Stat->GetCurrentHp() - 30;
 		Stat->SetHp(HpIncreaseAmount);
 	}
 }

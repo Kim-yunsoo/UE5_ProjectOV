@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "TurningInPlace.h"
 #include "OVAnimInstance.generated.h"
 
 /**
@@ -61,5 +62,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	float AO_Pitch;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
+	ETurningPlaceType TurningInPlace;
 };

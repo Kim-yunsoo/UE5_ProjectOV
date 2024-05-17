@@ -29,12 +29,13 @@ TEXT("/Script/Niagara.NiagaraSystem'/Game/Vefects/Blood_VFX/VFX/Performance_Vers
 	{
 		EmitterHit = HitRef.Object;
 	}
-
+	BulletCount = 20;
 }
 
 void AOVGun::PullTrigger()
 {
-	UE_LOG(LogTemp, Log, TEXT("You've been shot!"));
+	BulletCount -= 1;
+	UE_LOG(LogTemp, Log, TEXT("You've been shot! %d"), BulletCount);
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
 	if(OwnerPawn == nullptr) return;
 	AController* OwnerController = OwnerPawn->GetController();
