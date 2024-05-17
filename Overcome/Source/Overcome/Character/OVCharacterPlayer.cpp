@@ -160,7 +160,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(ShoulderLookActionY, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookY);
 	EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::QuaterMove);
 	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Aiming);
-	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopAiming);
+	//EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopAiming);
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Shoot);
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopShoot);
 	EnhancedInputComponent->BindAction(WheelAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeWeapon);
@@ -251,17 +251,15 @@ void AOVCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 void AOVCharacterPlayer::ShoulderLookX(const FInputActionValue& Value)
 {
 	float LookAxisVector = Value.Get<float>();
-
 	AddControllerYawInput(LookAxisVector);
 	//UE_LOG(LogTemp, Log, TEXT("LookX"));
-	if (bIsAiming && bIsGun)
-		TurnInPlace();
+	 // if (bIsAiming && bIsGun)
+	 // 	TurnInPlace();
 }
 
 void AOVCharacterPlayer::ShoulderLookY(const FInputActionValue& Value)
 {
 	float LookAxisVector = Value.Get<float>();
-
 	AddControllerPitchInput(LookAxisVector);
 }
 
@@ -290,10 +288,18 @@ void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
 	if (bIsGun)
 	{
-		bIsAiming = true;
-		SmoothCurveTimeline->Play();
-		OnAimChanged.Broadcast(bIsAiming);
-		ServerRPCAiming();
+		if(!bIsAiming)
+		{
+			bIsAiming = true;
+			SmoothCurveTimeline->Play();
+			OnAimChanged.Broadcast(bIsAiming);
+			ServerRPCAiming();
+		}
+		else
+		{
+			StopAiming(Value);
+		}
+		
 	}
 }
 
@@ -450,16 +456,19 @@ void AOVCharacterPlayer::Shoot()
 	if (!bIsShooting)
 	{
 		bIsShooting = true;
-		Gun->PullTrigger();
-		PlayAnimMontage(Shooting_Gun, 0.5);
+		if(Gun->GetBulletCount())
+		{
+			Gun->PullTrigger();
+			PlayAnimMontage(Shooting_Gun, 0.5);
 
-		FTimerHandle TimerHandle;
+			FTimerHandle TimerHandle;
 
-		// Set up the timer to call the ResetTurning function after 0.2 seconds
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-			{
-				bIsShooting = false;
-			}, 0.5, false);
+			// Set up the timer to call the ResetTurning function after 0.2 seconds
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+				{
+					bIsShooting = false;
+				}, 0.5, false);
+		}
 	}
 }
 
@@ -531,7 +540,7 @@ void AOVCharacterPlayer::Damage(UOVItemData* InItemData)
 {
 	if(bIsActiveShieldSkill)
 	{
-		float HpIncreaseAmount = Stat->GetCurrentHp()-  30;
+		float HpIncreaseAmount = Stat->GetCurrentHp() - 30;
 		Stat->SetHp(HpIncreaseAmount);
 	}
 }
