@@ -13,7 +13,16 @@ UCLASS()
 class OVERCOME_API AOVPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+public:
+	AOVPlayerController();
 	
 	protected:
 	virtual void BeginPlay() override;
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HUD)
+	TSubclassOf<class UOVHUDWidget> OVHUDWidgetClass;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = HUD)
+	TObjectPtr<class UOVHUDWidget> OVHUDWidget;
 };
