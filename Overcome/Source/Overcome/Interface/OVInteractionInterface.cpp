@@ -4,3 +4,22 @@
 #include "Interface/OVInteractionInterface.h"
 
 // Add default functionality here for any IOVInteractionInterface functions that are not pure virtual.
+void IOVInteractionInterface::BeginFocus()
+{
+}
+
+void IOVInteractionInterface::EndFocus()
+{
+}
+
+void IOVInteractionInterface::BeginInteract()
+{
+}
+
+void IOVInteractionInterface::EndInteract()
+{
+}
+
+void IOVInteractionInterface::Interact()
+{
+}
