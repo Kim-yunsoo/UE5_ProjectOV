@@ -298,6 +298,7 @@ void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 		{
 			bIsAiming = true;
 			SmoothCurveTimeline->Play();
+			bUseControllerRotationYaw = true;
 			OnAimChanged.Broadcast(bIsAiming);
 			ServerRPCAiming();
 		}
@@ -312,6 +313,7 @@ void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 void AOVCharacterPlayer::StopAiming(const FInputActionValue& Value)
 {
 	bIsAiming = false;
+	bUseControllerRotationYaw = false;
 	SmoothCurveTimeline->Reverse();
 	OnAimChanged.Broadcast(bIsAiming);
 	ServerRPCStopAiming();
@@ -345,7 +347,7 @@ void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 void AOVCharacterPlayer::AimOffset(float DeltaTime)
 {
 	//컨트롤러 회전 사용 중단
-//if(!bIsAiming) return ;
+	if(!bIsAiming) return ;
 	FVector Velocity = GetVelocity();
 	Velocity.Z = 0.f;
 	float Speed = Velocity.Size();
@@ -385,12 +387,12 @@ void AOVCharacterPlayer::AimOffset(float DeltaTime)
 
 void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 {
-	//UE_LOG(LogTemp,	Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
+	UE_LOG(LogTemp,	Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
 	if(AO_Yaw > 90.f)
 	{
 		TurningInPlace = ETurningPlaceType::ETIP_Right;
 	}
-	else if (AO_Yaw < - 90.f)
+	else if (AO_Yaw < -90.f)
 	{
 		TurningInPlace = ETurningPlaceType::ETIP_Left;
 	}
