@@ -73,12 +73,11 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
-
 # Asset
+Content/RifleAnims/*
 Content/ParagonLtBelica/*
-Content/MCO_Mocap_Basics/*
-
-#ThirdPercon
+Content/ItemPickupSet/*
+Content/FightingAnimations/*
 Content/ThirdPerson/*
-Content/__ExternalActors__/*
-Content/__ExternalObjects__/*
+Content/Asset/*
+Content/Vefects/*

@@ -5,7 +5,10 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "OVCharacterControlData.h"
-
+#include "Components/WidgetComponent.h"
+#include "Stat/OVCharacterStatComponent.h"
+#include "UI/OVWidgetComponent.h"
+#include "UI/OVHpBarWidget.h"
 
 // Sets default values
 AOVCharacterBase::AOVCharacterBase()
@@ -14,7 +17,6 @@ AOVCharacterBase::AOVCharacterBase()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
-
 
 	//Capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -59,6 +61,29 @@ AOVCharacterBase::AOVCharacterBase()
 	{
 		CharacterControlManager.Add(ECharacterControlType::Quater, QuaterDataRef.Object);
 	}
+
+	
+	//Stat Component
+	Stat = CreateDefaultSubobject<UOVCharacterStatComponent>(TEXT("Stat"));
+
+	//Widget Component
+	HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
+	HpBar->SetupAttachment(GetMesh());
+	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
+	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
+	if (HpBarWidgetRef.Class)
+	{
+		HpBar->SetWidgetClass(HpBarWidgetRef.Class);
+		HpBar->SetWidgetSpace(EWidgetSpace::Screen);
+		HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
+		HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+}
+
+void AOVCharacterBase::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	Stat->OnHpZero.AddUObject(this, &AOVCharacterBase::SetDead);
 }
 
 void AOVCharacterBase::SetCharacterControlData(const UOVCharacterControlData* CharacterControlData)
@@ -70,6 +95,33 @@ void AOVCharacterBase::SetCharacterControlData(const UOVCharacterControlData* Ch
 	GetCharacterMovement()->bOrientRotationToMovement = CharacterControlData->bOrientRotationToMovement;
 	GetCharacterMovement()->bUseControllerDesiredRotation = CharacterControlData->bUseControllerDesiredRotation;
 	GetCharacterMovement()->RotationRate = CharacterControlData->RotationRate;
+}
+
+float AOVCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float DamageTpApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	Stat->ApplyDamage(DamageAmount);
+	return DamageTpApply;
+}
+
+void AOVCharacterBase::SetDead()
+{
+	UE_LOG(LogTemp, Warning, TEXT("DEAD!!!"));
+	SetActorEnableCollision(false);
+	HpBar->SetHiddenInGame(true);
+	// Destroy(this);
+	//SetActorHiddenInGame(true);
+}
+
+void AOVCharacterBase::SetupCharacterWidget(UOVUserWidget* InUserWidget)
+{
+	UOVHpBarWidget* HpBarWidget = Cast<UOVHpBarWidget>(InUserWidget);
+	if(HpBarWidget)
+	{
+		HpBarWidget->SetMaxHp(Stat->GetMaxHp());
+		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp());
+		Stat->OnHpchanged.AddUObject(HpBarWidget, &UOVHpBarWidget::UpdateHpBar);
+	}
 }
 
 

@@ -3,27 +3,39 @@
 
 #include "Character/OVCharacterPlayer.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputMappingContext.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Gun/OVGun.h"
 #include "OVCharacterControlData.h"
+#include "Net/UnrealNetwork.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Item/OVHpItemData.h"
+#include "Skill/OVShieldSkill.h"
+#include "Skill/OVTeleportSkill.h"
+#include "Stat/OVCharacterStatComponent.h"
+#include "UI/OVHUDWidget.h"
+#include "UI/OVStatWidget.h"
+
+DEFINE_LOG_CATEGORY(LogOVCharacter);
 
 AOVCharacterPlayer::AOVCharacterPlayer()
 {
 	//Camera
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 400.0f;
+	CameraBoom->TargetArmLength = 250.0f;
 	CameraBoom->bUsePawnControlRotation = true;
+	CameraBoom->SocketOffset = FVector(0.0, 80.0, 50.0);
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
-
 	// Input
-
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionJumpRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Jump.IA_OV_Jump'"));
 	if (nullptr != InputActionJumpRef.Object)
 	{
@@ -42,10 +54,16 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 		ShoulderMoveAction = InputActionShoulderMoveRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderLookRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderLook.IA_OV_ShoulderLook'"));
-	if (nullptr != InputActionShoulderLookRef.Object)
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderLookXRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderLookX.IA_OV_ShoulderLookX'"));
+	if (nullptr != InputActionShoulderLookXRef.Object)
 	{
-		ShoulderLookAction = InputActionShoulderLookRef.Object;
+		ShoulderLookActionX = InputActionShoulderLookXRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderLookYRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderLookY.IA_OV_ShoulderLookY'"));
+	if (nullptr != InputActionShoulderLookYRef.Object)
+	{
+		ShoulderLookActionY = InputActionShoulderLookYRef.Object;
 	}
 
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionQuaterMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_QuaterMove.IA_OV_QuaterMove'"));
@@ -56,18 +74,76 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	static ConstructorHelpers::FObjectFinder<UInputAction> AimActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_MouseRight.IA_OV_MouseRight'"));
 	if (nullptr != AimActionRef.Object)
 	{
-		MouseRight = AimActionRef.Object;
+		AimAction = AimActionRef.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UInputAction> ShootActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Shoot.IA_OV_Shoot'"));
+	if (nullptr != ShootActionRef.Object)
+	{
+		ShootAction = ShootActionRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> WheelActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ChangeWeapon.IA_OV_ChangeWeapon'"));
+	if (nullptr != WheelActionRef.Object)
+	{
+		WheelAction = WheelActionRef.Object;
+	}
+	
+	static ConstructorHelpers::FObjectFinder<UInputAction> TeleportActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Teleport.IA_OV_Teleport'"));
+	if (nullptr != TeleportActionRef.Object)
+	{
+		TeleportAction = TeleportActionRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> ShieldActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Shield.IA_OV_Shield'"));
+	if (nullptr != ShieldActionRef.Object)
+	{
+		ShieldAction = ShieldActionRef.Object;
+	}
 
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
+
+	//Timeline
+	SmoothCurveTimeline = CreateDefaultSubobject<UTimelineComponent>(TEXT("TimelineFront"));
+	SmoothInterpFunction.BindUFunction(this, FName("SmoothInterpReturn"));
+	SmoothTimelineFinish.BindUFunction(this, FName("SmoothOnFinish"));
+
+	//Gun
+	Gun = CreateDefaultSubobject<AOVGun>(TEXT("Gun"));
+	bIsGun = true;
+
+	//Item Action
+	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
+	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkMp)));
+	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkAttack)));
+	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::Damage)));
+
+	//Skill
+	TeleportSkillComponent = CreateDefaultSubobject<UOVTeleportSkill>(TEXT("TeleSkillComponent"));
+	bIsActiveTeleportSkill = true;
+
+	ShieldSkillComponent = CreateDefaultSubobject<UOVShieldSkill>(TEXT("ShieldSkillComponent"));
+	bIsActiveShieldSkill = true;
 }
 
 void AOVCharacterPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if(HasAuthority())
+	{
+		Gun = GetWorld()->SpawnActor<AOVGun>(GunClass);
+		Gun->SetOwner(this);
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Back_Socket"));
+	}
+
+	if (SmoothCurveFloat)
+	{
+		SmoothCurveTimeline->AddInterpFloat(SmoothCurveFloat, SmoothInterpFunction);
+		SmoothCurveTimeline->SetTimelineFinishedFunc(SmoothTimelineFinish);
+		SmoothCurveTimeline->SetLooping(false);
+	}
 	SetCharacterControl(CurrentCharacterControlType);
 }
 
@@ -75,17 +151,32 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
-	
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Jumping);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-		EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeCharacterControl);
-		EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderMove);
-		EnhancedInputComponent->BindAction(ShoulderLookAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLook);
-		EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::QuaterMove);
-		EnhancedInputComponent->BindAction(MouseRight, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Aiming);
-		EnhancedInputComponent->BindAction(MouseRight, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopAiming);
-	
+
+	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Jumping);
+	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+	EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeCharacterControl);
+	EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderMove);
+	EnhancedInputComponent->BindAction(ShoulderLookActionX, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookX);
+	EnhancedInputComponent->BindAction(ShoulderLookActionY, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookY);
+	EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::QuaterMove);
+	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Aiming);
+	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopAiming);
+	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Shoot);
+	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopShoot);
+	EnhancedInputComponent->BindAction(WheelAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeWeapon);
+	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::TeleportSkill);
+	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
 }
+
+void AOVCharacterPlayer::SmoothInterpReturn(float Value)
+{
+	CameraBoom->TargetArmLength = (FMath::Lerp(250, 150, Value));
+}
+
+void AOVCharacterPlayer::SmoothOnFinish()
+{
+}
+
 
 void AOVCharacterPlayer::ChangeCharacterControl()
 {
@@ -101,23 +192,27 @@ void AOVCharacterPlayer::ChangeCharacterControl()
 
 void AOVCharacterPlayer::SetCharacterControl(ECharacterControlType NewCharacterControlType)
 {
-	UOVCharacterControlData* NewCharacterControl = CharacterControlManager[NewCharacterControlType]; //ÄÁÆ®·Ñ µ¥ÀÌÅÍ °¡Áö°í ¿Â´Ù
-	check(NewCharacterControl); //¹Ýµå½Ã ÀÖ´ÂÁö È®ÀÎ
+	if (!IsLocallyControlled())
+	{
+		return;
+	}
+	
+	UOVCharacterControlData* NewCharacterControl = CharacterControlManager[NewCharacterControlType]; //ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½
+	check(NewCharacterControl); //ï¿½Ýµï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 
 	SetCharacterControlData(NewCharacterControl);
 
-	APlayerController* PlayerController = CastChecked<APlayerController>(GetController()); //ÄÁÆ®·Ñ·¯ °¡Áö°í ¿À±â CastChecked·Î È®ÀÎ
+	APlayerController* PlayerController = CastChecked<APlayerController>(GetController()); //ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ CastCheckedï¿½ï¿½ È®ï¿½ï¿½
 
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 	{
-		Subsystem->ClearAllMappings(); //¸ÅÇÎ ÃÊ±âÈ­
+		Subsystem->ClearAllMappings(); //ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 		UInputMappingContext* NewMappingContext = NewCharacterControl->InputMappingContext;
 		if (NewMappingContext)
 		{
 			Subsystem->AddMappingContext(NewMappingContext, 0);
 		}
 	}
-
 	CurrentCharacterControlType = NewCharacterControlType;
 }
 
@@ -134,6 +229,7 @@ void AOVCharacterPlayer::SetCharacterControlData(const UOVCharacterControlData* 
 	CameraBoom->bDoCollisionTest = CharacterControlData->bDoCollisionTest;
 }
 
+
 void AOVCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
@@ -146,14 +242,27 @@ void AOVCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 
 	AddMovementInput(ForwardDirection, MovementVector.X);
 	AddMovementInput(RightDirection, MovementVector.Y);
+
+	ClearTurnInPlace(MovementVector.X);
+	ClearTurnInPlace(MovementVector.Y);
 }
 
-void AOVCharacterPlayer::ShoulderLook(const FInputActionValue& Value)
-{
-	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
-	AddControllerYawInput(LookAxisVector.X);
-	AddControllerPitchInput(LookAxisVector.Y);
+void AOVCharacterPlayer::ShoulderLookX(const FInputActionValue& Value)
+{
+	float LookAxisVector = Value.Get<float>();
+
+	AddControllerYawInput(LookAxisVector);
+	//UE_LOG(LogTemp, Log, TEXT("LookX"));
+	if (bIsAiming && bIsGun)
+		TurnInPlace();
+}
+
+void AOVCharacterPlayer::ShoulderLookY(const FInputActionValue& Value)
+{
+	float LookAxisVector = Value.Get<float>();
+
+	AddControllerPitchInput(LookAxisVector);
 }
 
 void AOVCharacterPlayer::QuaterMove(const FInputActionValue& Value)
@@ -179,13 +288,23 @@ void AOVCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
-	bIsAiming = true;
+	if (bIsGun)
+	{
+		bIsAiming = true;
+		SmoothCurveTimeline->Play();
+		OnAimChanged.Broadcast(bIsAiming);
+		ServerRPCAiming();
+	}
 }
 
 void AOVCharacterPlayer::StopAiming(const FInputActionValue& Value)
 {
 	bIsAiming = false;
+	SmoothCurveTimeline->Reverse();
+	OnAimChanged.Broadcast(bIsAiming);
+	ServerRPCStopAiming();
 }
+
 
 void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
 {
@@ -195,3 +314,264 @@ void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
 		JumpKeyHoldTime = 0.0f;
 	}
 }
+
+void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
+{
+	int GunSocket = Value.Get<float>();   ;
+	if(GunSocket > 0)
+	{
+		bIsGun = true;
+		ServerRPCIsGun(bIsGun);
+	}
+	else
+	{
+		bIsGun = false;
+		ServerRPCIsGun(bIsGun);
+	}
+}
+
+void AOVCharacterPlayer::AimOffset(float DeltaTime)
+{
+	//ì»¨íŠ¸ë¡¤ëŸ¬ íšŒì „ ì‚¬ìš© ì¤‘ë‹¨
+	if(!bIsAiming) return ;
+	FVector Velocity = GetVelocity();
+	Velocity.Z = 0.f;
+	float Speed = Velocity.Size();
+	bool bIsInAir = GetCharacterMovement()->IsFalling();
+
+	if(Speed == 0.f && !bIsInAir)		// ì„œìžˆê³  ì í”„ ì•ˆí•˜ëŠ” ìƒíƒœ
+	{
+		FRotator CurrentAimRoTation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
+		FRotator DeltaAimRotaion = UKismetMathLibrary::NormalizedDeltaRotator(CurrentAimRoTation, StaringAimRotation); //íšŒì „ê°’ ê°€ì§€ê³  ì˜¤ê¸°
+		AO_Yaw = DeltaAimRotaion.Yaw;
+		bUseControllerRotationYaw = false;
+	}
+	if(Speed > 0.f || bIsInAir)    // ë‹¬ë¦¬ê±°ë‚˜ ì í”„í•  ë•Œ
+	{
+		StaringAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
+		AO_Yaw = 0.f;
+		bUseControllerRotationYaw = true;
+	}
+
+	AO_Pitch = GetBaseAimRotation().Pitch;
+
+	if(AO_Pitch > 90.f && !IsLocallyControlled())
+	{
+		//[270,360) -> [-90, 0]
+		FVector2D InRange(270.f, 360.f);
+		FVector2D OutRange(-90, 0.f);
+		AO_Pitch = FMath::GetMappedRangeValueClamped(InRange, OutRange, AO_Pitch);
+	}
+}
+
+void AOVCharacterPlayer::PlayTurn(class UAnimMontage* MontagetoPlay, float PlayRate, float Duration)
+{
+	if (!bIsTurning)
+	{
+		bIsTurning = true;
+		PlayAnimMontage(MontagetoPlay, PlayRate);
+		// Declare the FTimerHandle within the function
+		FTimerHandle TimerHandle;
+		
+		// Set up the timer to call the ResetTurning function after 0.2 seconds
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+			{
+				this->bIsTurning = false;
+			}, Duration, false);
+
+		bIsTurning = false;
+	}
+}
+
+void AOVCharacterPlayer::TurnRight90()
+{
+	PlayTurn(TurnRight_90, 1.5f, 0.5f);
+}
+
+void AOVCharacterPlayer::TurnLeft90()
+{
+	PlayTurn(TurnLeft_90, 1.5f, 0.5f);
+}
+
+void AOVCharacterPlayer::TurnRight180()
+{
+	PlayTurn(TurnRight_180, 1.7f, 0.6f);
+}
+
+void AOVCharacterPlayer::TurnLeft180()
+{
+	PlayTurn(TurnLeft_180, 1.7f, 0.6f);
+}
+
+void AOVCharacterPlayer::ClearTurnInPlace(float Force)
+{
+	if (Force != 0.0f)
+	{
+		ClearMotion();
+	}
+}
+
+void AOVCharacterPlayer::ClearMotion()
+{
+	if (IsPlayingRootMotion())
+	{
+		StopAnimMontage(GetCurrentMontage());
+	}
+
+}
+
+void AOVCharacterPlayer::TurnInPlace()
+{
+	
+	float VelocityXY = GetCharacterMovement()->Velocity.Size2D();
+	if (!(GetCharacterMovement()->IsFalling()) && !(VelocityXY > 0.0f))
+	{
+		FRotator DeltaRotation = GetActorRotation() - GetBaseAimRotation();
+		DeltaRotation.Normalize();
+		float DeltaYaw = DeltaRotation.Yaw * -1.0f;
+        //Todo ì™¸ì  ì‚¬ìš©í•´ì„œ ë‹¤ì‹œ êµ¬í˜„í•˜ê¸° 
+		if ((DeltaYaw > 45.f) || (DeltaYaw < -45.f))
+		{
+			// if (DeltaYaw > 135.f)
+			// 	TurnRight180();
+			// else if (DeltaYaw < -135.f)
+			// 	TurnLeft180();
+			// else
+			if(DeltaYaw > 45.f)
+				TurnRight90();
+			else if (DeltaYaw < -45.f)
+				TurnLeft90();
+		}
+	}
+}
+
+void AOVCharacterPlayer::Shoot()
+{
+	if (!bIsShooting)
+	{
+		bIsShooting = true;
+		Gun->PullTrigger();
+		PlayAnimMontage(Shooting_Gun, 0.5);
+
+		FTimerHandle TimerHandle;
+
+		// Set up the timer to call the ResetTurning function after 0.2 seconds
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+			{
+				bIsShooting = false;
+			}, 0.5, false);
+	}
+}
+
+void AOVCharacterPlayer::StopShoot()
+{
+}
+
+void AOVCharacterPlayer::ServerRPCStopAiming_Implementation()
+{
+	bIsAiming = false;
+}
+
+void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
+{
+	if(IsGun)
+	{
+		bIsGun=true;
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Rifle_Socket"));
+	}
+	else
+	{
+		bIsGun=false;
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Back_Socket"));  
+	}
+
+}
+
+
+void AOVCharacterPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AOVCharacterPlayer, bIsAiming);
+	DOREPLIFETIME(AOVCharacterPlayer, bIsGun);
+}
+
+void AOVCharacterPlayer::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	AimOffset(DeltaSeconds);
+}
+
+void AOVCharacterPlayer::TakeItem(UOVItemData* InItemData)
+{
+	if(InItemData)
+	{
+		TakeItemActions[(uint8)InItemData->Type].ItemDelegate.ExecuteIfBound(InItemData);
+	}
+}
+
+void AOVCharacterPlayer::DrinkHp(UOVItemData* InItemData)
+{
+	float HpIncreaseAmount = Stat->GetCurrentHp() + 30;
+	Stat->SetHp(HpIncreaseAmount);
+}
+
+void AOVCharacterPlayer::DrinkMp(UOVItemData* InItemData)
+{
+	float MpIncreaseAmount = Stat->GetCurrentMp()  + 20;
+	Stat->SetMp(MpIncreaseAmount);
+}
+
+void AOVCharacterPlayer::DrinkAttack(UOVItemData* InItemData)
+{
+	float AttackIncreaseAmount = Stat->GetCurrentAttack()  + 10;
+	Stat->SetAttack(AttackIncreaseAmount);
+}
+
+void AOVCharacterPlayer::Damage(UOVItemData* InItemData)
+{
+	if(bIsActiveShieldSkill)
+	{
+		float HpIncreaseAmount = Stat->GetCurrentHp()-  30;
+		Stat->SetHp(HpIncreaseAmount);
+	}
+}
+
+void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
+{
+	OnAimChanged.AddUObject(InUserWidget, &UOVHUDWidget::UpdateTarget);
+	UOVStatWidget* StatWidget = InUserWidget->StatWidget;
+	if(StatWidget)
+	{
+		StatWidget->UpdateStatWidget(Stat->GetCurrentHp(), Stat->GetCurrentMp(), Stat->GetCurrentAttack());
+		Stat->OnStatChanged.AddUObject(StatWidget, &UOVStatWidget::UpdateStatWidget);
+	}
+}
+
+void AOVCharacterPlayer::TeleportSkill(const FInputActionValue& Value)
+{
+	if(bIsActiveTeleportSkill && Stat->GetCurrentMp())
+	{
+		bIsActiveTeleportSkill = false;
+		TeleportSkillComponent->SkillAction();
+		float MpIncreaseAmount = Stat->GetCurrentMp()  - 20;
+		Stat->SetMp(MpIncreaseAmount);
+	}
+}
+
+void AOVCharacterPlayer::ShieldSkill(const FInputActionValue& Value)
+{
+	if(bIsActiveShieldSkill && Stat->GetCurrentMp())
+	{
+		bIsActiveShieldSkill = false;
+		ShieldSkillComponent->SkillAction();
+		float MpIncreaseAmount = Stat->GetCurrentMp()  - 30;
+		Stat->SetMp(MpIncreaseAmount);
+	}
+}
+
+
+void AOVCharacterPlayer::ServerRPCAiming_Implementation()
+{
+	bIsAiming = true;
+}
+
