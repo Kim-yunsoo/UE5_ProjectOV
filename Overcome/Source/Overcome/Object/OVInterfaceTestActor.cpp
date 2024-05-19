@@ -23,5 +23,40 @@ void AOVInterfaceTestActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
+
+	SetRootComponent(Mesh);
+	
+}
+
+void AOVInterfaceTestActor::BeginFocus()
+{
+	if(Mesh)
+	{
+		Mesh->SetRenderCustomDepth(true);
+	}
+}
+
+void AOVInterfaceTestActor::EndFocus()
+{
+	if(Mesh)
+	{
+		Mesh->SetRenderCustomDepth(false);
+	}
+}
+
+void AOVInterfaceTestActor::BeginInteract()
+{
+	UE_LOG(LogTemp,Warning,TEXT("Calling BeginInteract override on interface test Actor"));
+}
+
+void AOVInterfaceTestActor::EndInteract()
+{
+	UE_LOG(LogTemp,Warning,TEXT("Calling BeginInteract override on interface test Actor"));
+}
+
+void AOVInterfaceTestActor::Interact()
+{
+	UE_LOG(LogTemp,Warning,TEXT("Calling BeginInteract override on interface test Actor"));
 }
 

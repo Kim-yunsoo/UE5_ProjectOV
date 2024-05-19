@@ -76,6 +76,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Timeline")
 	UCurveFloat* SmoothCurveFloat; // (6)
 
+	
+
 
 	// Character Control Section
 protected:
@@ -281,6 +283,8 @@ public:
 	void TeleportSkill(const FInputActionValue& Value);
 	void ShieldSkill(const FInputActionValue& Value);
 
+	FORCEINLINE bool IsInteracting() const {return GetWorldTimerManager().IsTimerActive(TimerHandle_Interaction); };
+	//상호작용 중인지 체크한다. 
 protected:
 	UPROPERTY(VisibleAnywhere,Category = "Caracter | Interaction")
 	TScriptInterface<IOVInteractionInterface> TargetInteractable; //라인트레이스에 히트된 타겟을 처리
