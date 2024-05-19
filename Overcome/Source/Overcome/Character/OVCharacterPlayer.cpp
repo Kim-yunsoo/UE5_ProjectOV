@@ -114,6 +114,13 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 		ShieldAction = ShieldActionRef.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UInputAction> InteractionActionRef(
+	TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Interact.IA_OV_Interact'"));
+	if (nullptr != InteractionActionRef.Object)
+	{
+		InteractionAction = InteractionActionRef.Object;
+	}
+
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
 
@@ -194,6 +201,8 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this,
 	                                   &AOVCharacterPlayer::TeleportSkill);
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
+	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
+	//EndInteraction 안함
 }
 
 void AOVCharacterPlayer::SmoothInterpReturn(float Value)

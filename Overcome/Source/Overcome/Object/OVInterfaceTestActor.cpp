@@ -8,6 +8,9 @@ AOVInterfaceTestActor::AOVInterfaceTestActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+
+	SetRootComponent(Mesh);
 
 }
 
@@ -23,9 +26,7 @@ void AOVInterfaceTestActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 
-	SetRootComponent(Mesh);
 	
 }
 
@@ -52,11 +53,11 @@ void AOVInterfaceTestActor::BeginInteract()
 
 void AOVInterfaceTestActor::EndInteract()
 {
-	UE_LOG(LogTemp,Warning,TEXT("Calling BeginInteract override on interface test Actor"));
+	UE_LOG(LogTemp,Warning,TEXT("Calling EndInteract override on interface test Actor"));
 }
 
 void AOVInterfaceTestActor::Interact()
 {
-	UE_LOG(LogTemp,Warning,TEXT("Calling BeginInteract override on interface test Actor"));
+	UE_LOG(LogTemp,Warning,TEXT("Calling Interact override on interface test Actor"));
 }
 

@@ -17,7 +17,7 @@ public:
 	AOVInterfaceTestActor();
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Test Actor")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category = "Test Actor")
 	TObjectPtr<UStaticMeshComponent> Mesh;
 	
 	// Called when the game starts or when spawned

@@ -9,6 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/TestMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.cpp" afterDir="false" />
@@ -141,7 +143,7 @@
       <updated>1715956283607</updated>
       <workItem from="1715956284692" duration="5532000" />
       <workItem from="1715961920123" duration="2406000" />
-      <workItem from="1716098637207" duration="7401000" />
+      <workItem from="1716098637207" duration="10345000" />
     </task>
     <servers />
   </component>
