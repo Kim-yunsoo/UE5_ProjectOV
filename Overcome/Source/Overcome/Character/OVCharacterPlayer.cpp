@@ -121,7 +121,9 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	{
 		InteractionAction = InteractionActionRef.Object;
 	}
+	
 
+	
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
 
@@ -156,11 +158,7 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	BaseEyeHeight = 74.0f;
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
 
-	AOVPlayerController* OVController = Cast<AOVPlayerController>(GetController());
-	if(OVController)
-	{
-		HUDWidget = OVController->GetOVHUDWidget();
-	}
+
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -262,6 +260,12 @@ void AOVCharacterPlayer::SetCharacterControl(ECharacterControlType NewCharacterC
 		}
 	}
 	CurrentCharacterControlType = NewCharacterControlType;
+
+	AOVPlayerController* OVController = Cast<AOVPlayerController>(GetController());
+	if(OVController)
+	{
+		HUDWidget = OVController->GetOVHUDWidget();
+	}
 }
 
 void AOVCharacterPlayer::SetCharacterControlData(const UOVCharacterControlData* CharacterControlData)

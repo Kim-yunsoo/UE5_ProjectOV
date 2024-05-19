@@ -27,10 +27,13 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere,meta=(BindWidget), Category = "Interaction Widget | Interaction Data")
 	TObjectPtr<UTextBlock> NameText;
+
 	UPROPERTY(VisibleAnywhere,meta=(BindWidget), Category = "Interaction Widget | Interaction Data")
 	TObjectPtr<UTextBlock> ActionText;
+
 	UPROPERTY(VisibleAnywhere,meta=(BindWidget), Category = "Interaction Widget | Interaction Data")
 	TObjectPtr<UTextBlock> QuantityText;
+
 	UPROPERTY(VisibleAnywhere,meta=(BindWidget), Category = "Interaction Widget | Interaction Data")
 	TObjectPtr<UTextBlock> KeyPressText;
 	

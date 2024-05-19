@@ -3,14 +3,11 @@
 
 #include "UI/OVHUDWidget.h"
 
-#include "OVMainMenu.h"
-#include "Interaction/OVInteractionWidget.h"
-
+#include "UI/OVMainMenu.h"
+#include "UI/Interaction/OVInteractionWidget.h"
 #include "OVStatWidget.h"
 #include "OVTargetWidget.h"
 #include "Interface/OVCharacterHUDInterface.h"
-#include "OVMainMenu.h"
-#include "Interface/OVInteractionInterface.h"
 
 UOVHUDWidget::UOVHUDWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {       
@@ -83,8 +80,10 @@ void UOVHUDWidget::HideInteractionWidget() const
 {
 	if(InteractionWidget)
 	{
+		//UE_LOG(LogTemp,Log,TEXT("%s"),*InteractionWidget->GetName() )
 		InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}
+
 }
 
 void UOVHUDWidget::UpdateInteractionWidget(const FInteractableData* InteractionData) const

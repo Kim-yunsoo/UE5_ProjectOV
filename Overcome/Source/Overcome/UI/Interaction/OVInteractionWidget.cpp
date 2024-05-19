@@ -51,7 +51,7 @@ void UOVInteractionWidget::UpdateWidget(const FInteractableData* InteractableDat
 	default: ;
 	}
 
-	ActionText ->SetText(InteractableData->Action);
+	ActionText->SetText(InteractableData->Action);
 	NameText->SetText(InteractableData->Name);
 }
 
