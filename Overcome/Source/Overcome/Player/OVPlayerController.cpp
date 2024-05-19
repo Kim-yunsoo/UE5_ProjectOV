@@ -30,3 +30,8 @@ void AOVPlayerController::BeginPlay()
 		}
 	}
 }
+
+UOVHUDWidget* AOVPlayerController::GetOVHUDWidget() const
+{
+	return OVHUDWidget;
+}

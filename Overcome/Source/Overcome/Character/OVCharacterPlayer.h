@@ -233,6 +233,9 @@ public:
 	UPROPERTY()
 	AOVGun* Gun;
 
+	UPROPERTY()
+	TObjectPtr<class UOVHUDWidget> HUDWidget;
+
 	// ServerRPC
 	UFUNCTION(Server, Unreliable)
 	void ServerRPCAiming();

@@ -8,17 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Input/Actions/IA_OV_Interact.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/Actions/IA_OV_Interact.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/YSMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/YSMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Item/OVItemBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Item/OVItemBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Player/OVPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Player/OVPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Player/OVPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Player/OVPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.h" afterDir="false" />
     </list>
@@ -43,6 +41,18 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -158,6 +168,7 @@
       <workItem from="1715956284692" duration="5532000" />
       <workItem from="1715961920123" duration="2406000" />
       <workItem from="1716098637207" duration="20696000" />
+      <workItem from="1716135487977" duration="932000" />
     </task>
     <servers />
   </component>

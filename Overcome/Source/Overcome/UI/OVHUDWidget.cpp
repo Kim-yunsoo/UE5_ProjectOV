@@ -9,6 +9,8 @@
 #include "OVStatWidget.h"
 #include "OVTargetWidget.h"
 #include "Interface/OVCharacterHUDInterface.h"
+#include "OVMainMenu.h"
+#include "Interface/OVInteractionInterface.h"
 
 UOVHUDWidget::UOVHUDWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {       
@@ -19,10 +21,18 @@ void UOVHUDWidget::NativeConstruct()
 	Super::NativeConstruct();
 	TargetWidget = Cast<UOVTargetWidget>(GetWidgetFromName(TEXT("WBP_TargetWidget")));
 	StatWidget = Cast<UOVStatWidget>(GetWidgetFromName(TEXT("WBP_Stat")));
-	IOVCharacterHUDInterface* CharacterWidget = Cast<IOVCharacterHUDInterface>(GetOwningPlayerPawn());
-	if(CharacterWidget)
+	// InteractionWidget = Cast<UOVInteractionWidget>(GetWidgetFromName(TEXT("WBP_InteractionWidget")));
+	// if(InteractionWidget)
+	// {
+	// 	InteractionWidget->AddToViewport(-1);
+	// 	InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
+	// }
+
+	if(InteractionWidgetClass)
 	{
-		CharacterWidget->SetupHUDWidget(this);
+		InteractionWidget= CreateWidget<UOVInteractionWidget>(GetWorld(),InteractionWidgetClass);
+		InteractionWidget->AddToViewport(-1);
+		InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}
 
 	if(MainMenuClass)
@@ -32,12 +42,15 @@ void UOVHUDWidget::NativeConstruct()
 		MainMenuWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}
 
-	if(InteractionWidgetClass)
+	
+	IOVCharacterHUDInterface* CharacterWidget = Cast<IOVCharacterHUDInterface>(GetOwningPlayerPawn());
+	if(CharacterWidget)
 	{
-		InteractionWidget= CreateWidget<UOVInteractionWidget>(GetWorld(),InteractionWidgetClass);
-		InteractionWidget->AddToViewport(-1);
-		InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
+		CharacterWidget->SetupHUDWidget(this);
 	}
+
+
+
 }
 
 void UOVHUDWidget::DisplayMenu()
@@ -58,7 +71,7 @@ void UOVHUDWidget::HideMenu()
 	}
 }
 
-void UOVHUDWidget::ShowInteractionWidget()
+void UOVHUDWidget::ShowInteractionWidget() const
 {
 	if(InteractionWidget)
 	{
@@ -66,7 +79,7 @@ void UOVHUDWidget::ShowInteractionWidget()
 	}
 }
 
-void UOVHUDWidget::HideInteractionWidget()
+void UOVHUDWidget::HideInteractionWidget() const
 {
 	if(InteractionWidget)
 	{
@@ -74,7 +87,7 @@ void UOVHUDWidget::HideInteractionWidget()
 	}
 }
 
-void UOVHUDWidget::UpdateInteractionWidget(const FInteractionData* InteractionData)
+void UOVHUDWidget::UpdateInteractionWidget(const FInteractableData* InteractionData) const
 {
 	if(InteractionWidget)
 	{
@@ -83,11 +96,11 @@ void UOVHUDWidget::UpdateInteractionWidget(const FInteractionData* InteractionDa
 			InteractionWidget->SetVisibility(ESlateVisibility::Visible);
 		}
 
-		// InteractionWidget->UpdateWidget(InteractableData);
+		InteractionWidget->UpdateWidget(InteractionData);
 	}
 }
 
-void UOVHUDWidget::UpdateTarget(bool bIsShowUI)
+void UOVHUDWidget::UpdateTarget(bool bIsShowUI) const
 {
 	TargetWidget->UpdateTargetUI(bIsShowUI);
 }

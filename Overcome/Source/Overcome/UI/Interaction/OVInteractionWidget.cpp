@@ -21,7 +21,7 @@ void UOVInteractionWidget::NativeConstruct()
 	CurrentInteractionDuration = 0.0f;
 }
 
-void UOVInteractionWidget::UpdateWidget(const FInteractableData* InteractableData)
+void UOVInteractionWidget::UpdateWidget(const FInteractableData* InteractableData) const
 {
 	switch (InteractableData->InteractableType)
 	{
@@ -50,6 +50,9 @@ void UOVInteractionWidget::UpdateWidget(const FInteractableData* InteractableDat
 		break;
 	default: ;
 	}
+
+	ActionText ->SetText(InteractableData->Action);
+	NameText->SetText(InteractableData->Name);
 }
 
 float UOVInteractionWidget::UpdateInteractionProgress()

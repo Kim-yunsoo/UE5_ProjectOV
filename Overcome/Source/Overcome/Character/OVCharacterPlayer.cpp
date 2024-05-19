@@ -21,6 +21,7 @@
 #include "UI/OVHUDWidget.h"
 #include "UI/OVStatWidget.h"
 #include "DrawDebugHelpers.h"
+#include "Player/OVPlayerController.h"
 
 DEFINE_LOG_CATEGORY(LogOVCharacter);
 
@@ -154,6 +155,12 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	InteractionCheckDistance = 225.0f;
 	BaseEyeHeight = 74.0f;
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
+
+	AOVPlayerController* OVController = Cast<AOVPlayerController>(GetController());
+	if(OVController)
+	{
+		HUDWidget = OVController->GetOVHUDWidget();
+	}
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -712,6 +719,7 @@ void AOVCharacterPlayer::FoundInteractable(AActor* NewInteractable)
 	InteractionData.CurrentInteractable = NewInteractable;
 	TargetInteractable = NewInteractable;
 
+	HUDWidget->UpdateInteractionWidget(&TargetInteractable->InteractableData);
 	TargetInteractable->BeginFocus();
 }
 
@@ -729,6 +737,8 @@ void AOVCharacterPlayer::NoInteractableFound()
 			TargetInteractable->EndFocus();
 		}
 	}
+	HUDWidget->HideInteractionWidget();
+	
 	InteractionData.CurrentInteractable = nullptr;
 	TargetInteractable = nullptr;
 }

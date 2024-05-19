@@ -22,7 +22,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Interaction Widget | Player Reference")
 	TObjectPtr<AOVCharacterPlayer> PlayerReference;
 
-	void UpdateWidget(const FInteractableData* InteractableData);
+	void UpdateWidget(const FInteractableData* InteractableData) const;
 
 protected:
 	UPROPERTY(VisibleAnywhere,meta=(BindWidget), Category = "Interaction Widget | Interaction Data")
@@ -33,8 +33,10 @@ protected:
 	TObjectPtr<UTextBlock> QuantityText;
 	UPROPERTY(VisibleAnywhere,meta=(BindWidget), Category = "Interaction Widget | Interaction Data")
 	TObjectPtr<UTextBlock> KeyPressText;
+	
 	UPROPERTY(VisibleAnywhere,meta=(BindWidget), Category = "Interaction Widget | Interaction Data")
 	TObjectPtr<UProgressBar> InteractionProgressBar;
+	
 	UPROPERTY(VisibleAnywhere,meta=(BindWidget), Category = "Interaction Widget | Interaction Data")
 	float CurrentInteractionDuration;
 
