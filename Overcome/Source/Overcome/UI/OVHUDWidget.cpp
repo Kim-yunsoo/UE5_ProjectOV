@@ -3,6 +3,9 @@
 
 #include "UI/OVHUDWidget.h"
 
+#include "OVMainMenu.h"
+#include "Interaction/OVInteractionWidget.h"
+
 #include "OVStatWidget.h"
 #include "OVTargetWidget.h"
 #include "Interface/OVCharacterHUDInterface.h"
@@ -20,6 +23,67 @@ void UOVHUDWidget::NativeConstruct()
 	if(CharacterWidget)
 	{
 		CharacterWidget->SetupHUDWidget(this);
+	}
+
+	if(MainMenuClass)
+	{
+		MainMenuWidget= CreateWidget<UOVMainMenu>(GetWorld(),MainMenuClass);
+		MainMenuWidget->AddToViewport(5);
+		MainMenuWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+
+	if(InteractionWidgetClass)
+	{
+		InteractionWidget= CreateWidget<UOVInteractionWidget>(GetWorld(),InteractionWidgetClass);
+		InteractionWidget->AddToViewport(-1);
+		InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
+
+void UOVHUDWidget::DisplayMenu()
+{
+	if(MainMenuWidget)
+	{
+		bIsMenuVisible=true;
+		MainMenuWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void UOVHUDWidget::HideMenu()
+{
+	if(MainMenuWidget)
+	{
+		bIsMenuVisible=false;
+		MainMenuWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
+
+void UOVHUDWidget::ShowInteractionWidget()
+{
+	if(InteractionWidget)
+	{
+		InteractionWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void UOVHUDWidget::HideInteractionWidget()
+{
+	if(InteractionWidget)
+	{
+		InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
+
+void UOVHUDWidget::UpdateInteractionWidget(const FInteractionData* InteractionData)
+{
+	if(InteractionWidget)
+	{
+		if(InteractionWidget->GetVisibility()==ESlateVisibility::Collapsed)
+		{
+			InteractionWidget->SetVisibility(ESlateVisibility::Visible);
+		}
+
+		// InteractionWidget->UpdateWidget(InteractableData);
 	}
 }
 

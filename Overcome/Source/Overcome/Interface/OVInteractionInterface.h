@@ -8,6 +8,8 @@
 
 // This class does not need to be modified.
 
+class AOVCharacterPlayer;
+
 UENUM()
 enum class EInteractableType : uint8
 {
@@ -71,6 +73,6 @@ public:
 	virtual void EndFocus();
 	virtual void BeginInteract();
 	virtual void EndInteract();
-	virtual void Interact();
+	virtual void Interact(AOVCharacterPlayer* PlayerCharacter);
 	FInteractableData InteractableData;
 };

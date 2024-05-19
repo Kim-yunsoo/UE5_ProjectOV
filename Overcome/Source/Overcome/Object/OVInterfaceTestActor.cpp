@@ -18,7 +18,8 @@ AOVInterfaceTestActor::AOVInterfaceTestActor()
 void AOVInterfaceTestActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	InteractableData = InstanceInteractableData;
 }
 
 // Called every frame
@@ -56,7 +57,7 @@ void AOVInterfaceTestActor::EndInteract()
 	UE_LOG(LogTemp,Warning,TEXT("Calling EndInteract override on interface test Actor"));
 }
 
-void AOVInterfaceTestActor::Interact()
+void AOVInterfaceTestActor::Interact(AOVCharacterPlayer* PlayerCharacter)
 {
 	UE_LOG(LogTemp,Warning,TEXT("Calling Interact override on interface test Actor"));
 }

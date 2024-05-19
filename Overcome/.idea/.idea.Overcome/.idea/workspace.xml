@@ -8,13 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Map/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/TestMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/Actions/IA_OV_Interact.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/Actions/IA_OV_Interact.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/YSMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/YSMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Item/OVItemBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Item/OVItemBase.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVInterfaceTestActor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +42,14 @@
     &quot;accountId&quot;: &quot;9c8f9718-d4dc-45e8-b91c-a772cc3bcf80&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.h" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -143,7 +157,7 @@
       <updated>1715956283607</updated>
       <workItem from="1715956284692" duration="5532000" />
       <workItem from="1715961920123" duration="2406000" />
-      <workItem from="1716098637207" duration="10345000" />
+      <workItem from="1716098637207" duration="20696000" />
     </task>
     <servers />
   </component>

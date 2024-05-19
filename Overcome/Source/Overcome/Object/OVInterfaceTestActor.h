@@ -7,6 +7,8 @@
 #include "Interface/OVInteractionInterface.h"
 #include "OVInterfaceTestActor.generated.h"
 
+struct FInteractionData;
+
 UCLASS()
 class OVERCOME_API AOVInterfaceTestActor : public AActor , public IOVInteractionInterface
 {
@@ -19,6 +21,9 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category = "Test Actor")
 	TObjectPtr<UStaticMeshComponent> Mesh;
+
+	UPROPERTY(EditInstanceOnly, Category="Test Actor")
+	FInteractableData InstanceInteractableData;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -29,5 +34,5 @@ protected:
 	virtual void EndFocus() override;
 	virtual void BeginInteract() override;
 	virtual void EndInteract() override;
-	virtual void Interact() override;
+	virtual void Interact(AOVCharacterPlayer* PlayerCharacter) override;
 };

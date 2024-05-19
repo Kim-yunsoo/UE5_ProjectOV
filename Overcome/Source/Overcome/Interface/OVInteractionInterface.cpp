@@ -2,6 +2,7 @@
 
 
 #include "Interface/OVInteractionInterface.h"
+#include "Character/OVCharacterPlayer.h"
 
 // Add default functionality here for any IOVInteractionInterface functions that are not pure virtual.
 void IOVInteractionInterface::BeginFocus()
@@ -20,6 +21,6 @@ void IOVInteractionInterface::EndInteract()
 {
 }
 
-void IOVInteractionInterface::Interact()
+void IOVInteractionInterface::Interact(AOVCharacterPlayer* PlayerCharacter)
 {
 }

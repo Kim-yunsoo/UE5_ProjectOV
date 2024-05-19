@@ -202,6 +202,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	                                   &AOVCharacterPlayer::TeleportSkill);
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
 	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
+	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
 	//EndInteraction 안함
 }
 
@@ -678,9 +679,9 @@ void AOVCharacterPlayer::PerformInteractionCheck()
 			if (TraceHit.GetActor()->GetClass()->ImplementsInterface(UOVInteractionInterface::StaticClass()))
 			{
 				//특정 인터페이스가 있는지 확인 
-				const float Distance = (TraceStart - TraceHit.ImpactPoint).Size();
+				//const float Distance = (TraceStart - TraceHit.ImpactPoint).Size();
 
-				if (TraceHit.GetActor() != InteractionData.CurrentInteractable && Distance <= InteractionCheckDistance)
+				if (TraceHit.GetActor() != InteractionData.CurrentInteractable )
 				{
 					FoundInteractable(TraceHit.GetActor()); // 상호작용 가능한 액터를 찾음
 					return;
@@ -774,7 +775,7 @@ void AOVCharacterPlayer::Interact()
 
 	if(IsValid(TargetInteractable.GetObject()))
 	{
-		TargetInteractable->Interact();
+		TargetInteractable->Interact(this);
 	}
 }
 
