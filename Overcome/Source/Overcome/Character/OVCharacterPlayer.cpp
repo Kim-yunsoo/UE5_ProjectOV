@@ -245,8 +245,7 @@ void AOVCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 	AddMovementInput(ForwardDirection, MovementVector.X);
 	AddMovementInput(RightDirection, MovementVector.Y);
 
-	ClearTurnInPlace(MovementVector.X);
-	ClearTurnInPlace(MovementVector.Y);
+
 }
 
 
@@ -406,86 +405,9 @@ void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 	}
 }
 
-void AOVCharacterPlayer::PlayTurn(class UAnimMontage* MontagetoPlay, float PlayRate, float Duration)
-{
-	if (!bIsTurning)
-	{
-		bIsTurning = true;
-		PlayAnimMontage(MontagetoPlay, PlayRate);
-		// Declare the FTimerHandle within the function
-		FTimerHandle TimerHandle;
-		
-		// Set up the timer to call the ResetTurning function after 0.2 seconds
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-			{
-				this->bIsTurning = false;
-			}, Duration, false);
 
-		bIsTurning = false;
-	}
-}
 
-void AOVCharacterPlayer::TurnRight90()
-{
-	PlayTurn(TurnRight_90, 1.5f, 0.5f);
-}
 
-void AOVCharacterPlayer::TurnLeft90()
-{
-	PlayTurn(TurnLeft_90, 1.5f, 0.5f);
-}
-
-void AOVCharacterPlayer::TurnRight180()
-{
-	PlayTurn(TurnRight_180, 1.7f, 0.6f);
-}
-
-void AOVCharacterPlayer::TurnLeft180()
-{
-	PlayTurn(TurnLeft_180, 1.7f, 0.6f);
-}
-
-void AOVCharacterPlayer::ClearTurnInPlace(float Force)
-{
-	if (Force != 0.0f)
-	{
-		ClearMotion();
-	}
-}
-
-void AOVCharacterPlayer::ClearMotion()
-{
-	if (IsPlayingRootMotion())
-	{
-		StopAnimMontage(GetCurrentMontage());
-	}
-
-}
-
-// void AOVCharacterPlayer::TurnInPlace()
-// {
-// 	
-// 	float VelocityXY = GetCharacterMovement()->Velocity.Size2D();
-// 	if (!(GetCharacterMovement()->IsFalling()) && !(VelocityXY > 0.0f))
-// 	{
-// 		FRotator DeltaRotation = GetActorRotation() - GetBaseAimRotation();
-// 		DeltaRotation.Normalize();
-// 		float DeltaYaw = DeltaRotation.Yaw * -1.0f;
-//         //Todo 외적 사용해서 다시 구현하기 
-// 		if ((DeltaYaw > 45.f) || (DeltaYaw < -45.f))
-// 		{
-// 			// if (DeltaYaw > 135.f)
-// 			// 	TurnRight180();
-// 			// else if (DeltaYaw < -135.f)
-// 			// 	TurnLeft180();
-// 			// else
-// 			if(DeltaYaw > 45.f)
-// 				TurnRight90();
-// 			else if (DeltaYaw < -45.f)
-// 				TurnLeft90();
-// 		}
-// 	}
-// }
 
 void AOVCharacterPlayer::Shoot()
 {
