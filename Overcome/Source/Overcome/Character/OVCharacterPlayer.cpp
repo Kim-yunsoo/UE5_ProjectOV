@@ -27,9 +27,9 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	//Camera
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 250.0f;
+	CameraBoom->TargetArmLength = 300.0f;
 	CameraBoom->bUsePawnControlRotation = true;
-	CameraBoom->SocketOffset = FVector(0.0, 80.0, 50.0);
+	CameraBoom->SocketOffset = FVector(0.0, 60.0, 60.0);
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
@@ -172,7 +172,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void AOVCharacterPlayer::SmoothInterpReturn(float Value)
 {
-	CameraBoom->TargetArmLength = (FMath::Lerp(250, 150, Value));
+	CameraBoom->TargetArmLength = (FMath::Lerp(300, 150, Value));
 }
 
 void AOVCharacterPlayer::SmoothOnFinish()
@@ -383,13 +383,14 @@ void AOVCharacterPlayer::AimOffset(float DeltaTime)
 
 void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 {
-	//UE_LOG(LogTemp,	Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
+	UE_LOG(LogTemp,	Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
 	if(AO_Yaw > 90.f)
 	{
 		TurningInPlace = ETurningPlaceType::ETIP_Right;
 	}
 	else if (AO_Yaw < -90.f)
 	{
+		
 		TurningInPlace = ETurningPlaceType::ETIP_Left;
 	}
 	if(TurningInPlace != ETurningPlaceType::ETIP_NotTurning)
