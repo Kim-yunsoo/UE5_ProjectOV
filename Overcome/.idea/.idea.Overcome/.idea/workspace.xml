@@ -7,7 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="">
+    <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/ABP_OV_Character.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/ABP_OV_Character.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/BP_OVCharacterPlayer.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
@@ -20,46 +21,47 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "InGyeongSeok"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;InGyeongSeok&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/InGyeongSeok/Overcome.git",
-    "accountId": "9c8f9718-d4dc-45e8-b91c-a772cc3bcf80"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/InGyeongSeok/Overcome.git&quot;,
+    &quot;accountId&quot;: &quot;9c8f9718-d4dc-45e8-b91c-a772cc3bcf80&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
-  <component name="ProjectId" id="2gbBENDoU3GoHHCYDayT8v3Zo6G" />
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2gbMgu0AVIYUi30wfAl0DGrfQHc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ 프로젝트.Overcome.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "IngyeongSeok",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ 프로젝트.Overcome.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;IngyeongSeok&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\ingyeong\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\ingyeong\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Overcome" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -132,12 +134,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="디폴트 작업">
-      <changelist id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="" />
-      <created>1715956283607</created>
+      <changelist id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="" />
+      <created>1715961939346</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1715956283607</updated>
-      <workItem from="1715956284692" duration="5532000" />
+      <updated>1715961939346</updated>
+      <workItem from="1715961940840" duration="1282000" />
+      <workItem from="1716102281037" duration="1920000" />
     </task>
     <servers />
   </component>

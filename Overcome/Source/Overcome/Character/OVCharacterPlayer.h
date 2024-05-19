@@ -140,46 +140,6 @@ public:
 	ECharacterControlType CurrentCharacterControlType;
 
 protected:
-	//Turn In Place Section
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void PlayTurn(class UAnimMontage* MontagetoPlay, float PlayRate, float Duration);
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnRight90();
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnLeft90();
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnRight180();
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnLeft180();
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void ClearTurnInPlace(float Force);
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void ClearMotion();
-
-	// UFUNCTION(BlueprintCallable, Category = "Turn")
-	// void TurnInPlace();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	uint8 bIsTurning : 1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	TObjectPtr<class UAnimMontage> TurnRight_90;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	TObjectPtr<class UAnimMontage> TurnLeft_90;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	TObjectPtr<class UAnimMontage> TurnRight_180;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	TObjectPtr<class UAnimMontage> TurnLeft_180;
-
 	ETurningPlaceType TurningInPlace;
 	void TurnInPlace(float DeltaTime);
 	

@@ -27,9 +27,9 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	//Camera
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 250.0f;
+	CameraBoom->TargetArmLength = 300.0f;
 	CameraBoom->bUsePawnControlRotation = true;
-	CameraBoom->SocketOffset = FVector(0.0, 80.0, 50.0);
+	CameraBoom->SocketOffset = FVector(0.0, 60.0, 60.0);
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
@@ -172,7 +172,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void AOVCharacterPlayer::SmoothInterpReturn(float Value)
 {
-	CameraBoom->TargetArmLength = (FMath::Lerp(250, 150, Value));
+	CameraBoom->TargetArmLength = (FMath::Lerp(300, 150, Value));
 }
 
 void AOVCharacterPlayer::SmoothOnFinish()
@@ -245,8 +245,7 @@ void AOVCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 	AddMovementInput(ForwardDirection, MovementVector.X);
 	AddMovementInput(RightDirection, MovementVector.Y);
 
-	ClearTurnInPlace(MovementVector.X);
-	ClearTurnInPlace(MovementVector.Y);
+
 }
 
 
@@ -383,13 +382,14 @@ void AOVCharacterPlayer::AimOffset(float DeltaTime)
 
 void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 {
-	UE_LOG(LogTemp,	Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
+	//UE_LOG(LogTemp,	Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
 	if(AO_Yaw > 90.f)
 	{
 		TurningInPlace = ETurningPlaceType::ETIP_Right;
 	}
 	else if (AO_Yaw < -90.f)
 	{
+		
 		TurningInPlace = ETurningPlaceType::ETIP_Left;
 	}
 	if(TurningInPlace != ETurningPlaceType::ETIP_NotTurning)
@@ -405,86 +405,9 @@ void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 	}
 }
 
-void AOVCharacterPlayer::PlayTurn(class UAnimMontage* MontagetoPlay, float PlayRate, float Duration)
-{
-	if (!bIsTurning)
-	{
-		bIsTurning = true;
-		PlayAnimMontage(MontagetoPlay, PlayRate);
-		// Declare the FTimerHandle within the function
-		FTimerHandle TimerHandle;
-		
-		// Set up the timer to call the ResetTurning function after 0.2 seconds
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-			{
-				this->bIsTurning = false;
-			}, Duration, false);
 
-		bIsTurning = false;
-	}
-}
 
-void AOVCharacterPlayer::TurnRight90()
-{
-	PlayTurn(TurnRight_90, 1.5f, 0.5f);
-}
 
-void AOVCharacterPlayer::TurnLeft90()
-{
-	PlayTurn(TurnLeft_90, 1.5f, 0.5f);
-}
-
-void AOVCharacterPlayer::TurnRight180()
-{
-	PlayTurn(TurnRight_180, 1.7f, 0.6f);
-}
-
-void AOVCharacterPlayer::TurnLeft180()
-{
-	PlayTurn(TurnLeft_180, 1.7f, 0.6f);
-}
-
-void AOVCharacterPlayer::ClearTurnInPlace(float Force)
-{
-	if (Force != 0.0f)
-	{
-		ClearMotion();
-	}
-}
-
-void AOVCharacterPlayer::ClearMotion()
-{
-	if (IsPlayingRootMotion())
-	{
-		StopAnimMontage(GetCurrentMontage());
-	}
-
-}
-
-// void AOVCharacterPlayer::TurnInPlace()
-// {
-// 	
-// 	float VelocityXY = GetCharacterMovement()->Velocity.Size2D();
-// 	if (!(GetCharacterMovement()->IsFalling()) && !(VelocityXY > 0.0f))
-// 	{
-// 		FRotator DeltaRotation = GetActorRotation() - GetBaseAimRotation();
-// 		DeltaRotation.Normalize();
-// 		float DeltaYaw = DeltaRotation.Yaw * -1.0f;
-//         //Todo 외적 사용해서 다시 구현하기 
-// 		if ((DeltaYaw > 45.f) || (DeltaYaw < -45.f))
-// 		{
-// 			// if (DeltaYaw > 135.f)
-// 			// 	TurnRight180();
-// 			// else if (DeltaYaw < -135.f)
-// 			// 	TurnLeft180();
-// 			// else
-// 			if(DeltaYaw > 45.f)
-// 				TurnRight90();
-// 			else if (DeltaYaw < -45.f)
-// 				TurnLeft90();
-// 		}
-// 	}
-// }
 
 void AOVCharacterPlayer::Shoot()
 {

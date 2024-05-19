@@ -41,13 +41,13 @@ AOVCharacterBase::AOVCharacterBase()
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharaterMeshRef(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonLtBelica/Characters/Heroes/Belica/Skins/PolarStrike/Meshes/Belica_PolarStrike.Belica_PolarStrike'"));
 	if (CharaterMeshRef.Object)
 	{
-		GetMesh()->SetSkeletalMesh(CharaterMeshRef.Object); //ºĞ¼ö´ë ¸¸µé¾úÀ» ¶§Ã³·³ ¿ÀºêÁ§Æ® ÁöÁ¤
+		GetMesh()->SetSkeletalMesh(CharaterMeshRef.Object); //ë¶„ìˆ˜ëŒ€ ë§Œë“¤ì—ˆì„ ë•Œì²˜ëŸ¼ ì˜¤ë¸Œì íŠ¸ ì§€ì •
 	}
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstanceRef(TEXT("/Game/Blueprint/ABP_OV_Character.ABP_OV_Character_C"));
 	if (AnimInstanceRef.Class)
 	{
-		GetMesh()->SetAnimInstanceClass(AnimInstanceRef.Class); //Å¬·¡½º Á¤º¸ °¡Áö°í ¿Í¼­ ÁöÁ¤
+		GetMesh()->SetAnimInstanceClass(AnimInstanceRef.Class); //í´ë˜ìŠ¤ ì •ë³´ ê°€ì§€ê³  ì™€ì„œ ì§€ì •
 	}
 
 	static ConstructorHelpers::FObjectFinder<UOVCharacterControlData> ShoulderDataRef(TEXT("/Script/Overcome.OVCharacterControlData'/Game/CharacterControl/ABC_Shouler.ABC_Shouler'"));
