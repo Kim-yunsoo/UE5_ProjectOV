@@ -33,3 +33,23 @@ void AOVCharacterNonPlayer::SetDead()
 		}
 	), DeadEventDelayTime, false);
 }
+
+float AOVCharacterNonPlayer::GetAIPatrolRadius()
+{
+	return 800.f;
+}
+
+float AOVCharacterNonPlayer::GetAIDetectRange()
+{
+	return 400.f;
+}
+
+float AOVCharacterNonPlayer::GetAIAttackRange()
+{
+	return 0;
+}
+
+float AOVCharacterNonPlayer::GetAITurnSpeed()
+{
+	return 0;
+}

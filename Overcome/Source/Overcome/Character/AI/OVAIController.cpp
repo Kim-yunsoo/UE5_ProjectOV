@@ -4,7 +4,8 @@
 #include "Character/AI/OVAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
-#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "AI/OVAI.h"
 
 AOVAIController::AOVAIController()
 {
@@ -26,7 +27,7 @@ void AOVAIController::RunAI()
 	UBlackboardComponent* BlackboardPtr = Blackboard.Get();
 	if (UseBlackboard(BBAsset, BlackboardPtr))
 	{
-		//Blackboard->SetValueAsVector(BBKEY_HOMEPOS, GetPawn()->GetActorLocation());
+		Blackboard->SetValueAsVector(BBKEY_HOMEPOS, GetPawn()->GetActorLocation()); //홈포지션 설정
 
 		bool RunResult = RunBehaviorTree(BTAsset);
 		ensure(RunResult);
