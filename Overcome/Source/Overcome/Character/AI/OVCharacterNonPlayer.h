@@ -17,10 +17,7 @@ class OVERCOME_API AOVCharacterNonPlayer : public AOVCharacterBase, public IOVCh
 public:
 	AOVCharacterNonPlayer();
 	
-protected:
-	float DeadEventDelayTime = 3.0f;
-	
-	virtual void SetDead() override;
+
 
 	// AI Section
 protected:
@@ -28,4 +25,14 @@ protected:
 	virtual float GetAIDetectRange() override;
 	virtual float GetAIAttackRange() override;
 	virtual float GetAITurnSpeed() override;
+	
+	//Dead Section
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UAnimMontage> DeadMontage;
+	
+	float DeadEventDelayTime = 3.0f;
+	void SetDead() override;
+	void PlayDeadAnimation();
+
+	
 };

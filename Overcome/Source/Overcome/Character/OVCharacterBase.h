@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interface/OVAnimationAttackInterface.h"
 #include "Interface/OVCharateWidgetInterface.h"
 #include "OVCharacterBase.generated.h"
 
@@ -18,7 +19,7 @@ enum class ECharacterControlType : uint8
 };
 
 UCLASS()
-class OVERCOME_API AOVCharacterBase : public ACharacter, public IOVCharateWidgetInterface
+class OVERCOME_API AOVCharacterBase : public ACharacter, public IOVCharateWidgetInterface, public IOVAnimationAttackInterface
 {
 	GENERATED_BODY()
 
@@ -59,4 +60,10 @@ protected:
 	TObjectPtr<class UOVWidgetComponent> HpBar;
 
 	virtual void SetupCharacterWidget(UOVUserWidget* InUserWidget) override;
+
+
+	//Attack Hit Section
+protected:
+	virtual void AttackHitCheck() override;
+	
 };

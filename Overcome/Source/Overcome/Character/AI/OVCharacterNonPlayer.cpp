@@ -17,6 +17,13 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 		GetMesh()->SetSkeletalMesh(CharaterMeshRef.Object); 
 	}
 
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> DeadMontageRef(TEXT("/Script/Engine.AnimMontage'/Game/DarkMetalPack/ZombotMike/Animations/Anim_Zombot_Mikey_Death_Montage.Anim_Zombot_Mikey_Death_Montage'"));
+	if (DeadMontageRef.Object)
+	{
+		DeadMontage = DeadMontageRef.Object;
+	}
+	
+
 	AIControllerClass = AOVAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned; 
 }
@@ -24,7 +31,7 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 void AOVCharacterNonPlayer::SetDead()
 {
 	Super::SetDead();
-	
+	PlayDeadAnimation();
 	FTimerHandle DeadTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
 		[&]()
@@ -32,6 +39,13 @@ void AOVCharacterNonPlayer::SetDead()
 			Destroy();
 		}
 	), DeadEventDelayTime, false);
+}
+
+void AOVCharacterNonPlayer::PlayDeadAnimation()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(DeadMontage, 1.0f);
 }
 
 float AOVCharacterNonPlayer::GetAIPatrolRadius()
