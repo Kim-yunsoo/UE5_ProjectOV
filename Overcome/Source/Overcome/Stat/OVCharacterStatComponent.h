@@ -31,6 +31,7 @@ public:
 	FOnStatChangedDelegate OnStatChanged;
 
 	FORCEINLINE float GetMaxHp() {return MaxHp;}
+	FORCEINLINE void SetMaxHp(float NewHp) {MaxHp = NewHp;}
 	FORCEINLINE float GetCurrentHp() {return CurrentHp;}
 	FORCEINLINE float GetCurrentMp() {return CurrentMp;}
 	FORCEINLINE float GetCurrentAttack() {return CurrentAttack;}

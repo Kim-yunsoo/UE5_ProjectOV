@@ -4,6 +4,7 @@
 #include "Character/AI/OVCharacterNonPlayer.h"
 
 #include "OVAIController.h"
+#include "Stat/OVCharacterStatComponent.h"
 
 AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 {
@@ -23,7 +24,7 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 		DeadMontage = DeadMontageRef.Object;
 	}
 	
-
+	
 	AIControllerClass = AOVAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned; 
 }
@@ -48,6 +49,13 @@ void AOVCharacterNonPlayer::PlayDeadAnimation()
 	AnimInstance->Montage_Play(DeadMontage, 1.0f);
 }
 
+void AOVCharacterNonPlayer::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Stat->SetMaxHp(50);
+}
+
 float AOVCharacterNonPlayer::GetAIPatrolRadius()
 {
 	return 800.f;
@@ -60,10 +68,35 @@ float AOVCharacterNonPlayer::GetAIDetectRange()
 
 float AOVCharacterNonPlayer::GetAIAttackRange()
 {
-	return 0;
+	return 100.f; // 공격 범위 정하자
 }
 
 float AOVCharacterNonPlayer::GetAITurnSpeed()
 {
-	return 0;
+	return 2.0f;
+}
+
+void AOVCharacterNonPlayer::SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished)
+{
+	OnAttackFinished = InOnAttackFinished;
+}
+
+void AOVCharacterNonPlayer::AttackByAI()
+{
+	//ProcessComboCommand();
+	//1초뒤 공격 끝난다
+	UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
+	FTimerHandle DeadTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
+		[&]()
+		{
+			NotifyActionEnd();
+		}
+	), 1.0f, false);
+}
+
+void AOVCharacterNonPlayer::NotifyActionEnd()
+{
+	Super::NotifyActionEnd();
+	OnAttackFinished.ExecuteIfBound();
 }

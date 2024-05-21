@@ -156,4 +156,9 @@ void AOVCharacterBase::AttackHitCheck()
 #endif
 }
 
+void AOVCharacterBase::NotifyActionEnd()
+{
+	//attack이 끝나면 이 함수 호출
+}
+
 

@@ -17,14 +17,19 @@ class OVERCOME_API AOVCharacterNonPlayer : public AOVCharacterBase, public IOVCh
 public:
 	AOVCharacterNonPlayer();
 	
-
-
 	// AI Section
 protected:
 	virtual float GetAIPatrolRadius() override;
 	virtual float GetAIDetectRange() override;
 	virtual float GetAIAttackRange() override;
 	virtual float GetAITurnSpeed() override;
+
+	virtual void SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished) override;
+	virtual void AttackByAI() override;
+
+	FAICharacterAttackFinished OnAttackFinished;
+
+	virtual void NotifyActionEnd() override;
 	
 	//Dead Section
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
@@ -34,5 +39,6 @@ protected:
 	void SetDead() override;
 	void PlayDeadAnimation();
 
-	
+	virtual void BeginPlay() override;
+
 };

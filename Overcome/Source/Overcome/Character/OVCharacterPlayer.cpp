@@ -133,6 +133,8 @@ void AOVCharacterPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Stat->SetMaxHp(100);
+
 	if(HasAuthority())
 	{
 		Gun = GetWorld()->SpawnActor<AOVGun>(GunClass);
