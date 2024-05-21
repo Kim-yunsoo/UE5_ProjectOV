@@ -9,12 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_MainMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_MainMenu.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_OVInteractionWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_OVInteractionWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/YSMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/YSMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Item/OVItemData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Item/OVItemData.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +31,8 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Object/OVPickup.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/Interaction/OVInteractionWidget.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -155,7 +151,7 @@
       <workItem from="1715961920123" duration="2406000" />
       <workItem from="1716098637207" duration="20696000" />
       <workItem from="1716135487977" duration="5109000" />
-      <workItem from="1716265115326" duration="7463000" />
+      <workItem from="1716265115326" duration="10144000" />
     </task>
     <servers />
   </component>
