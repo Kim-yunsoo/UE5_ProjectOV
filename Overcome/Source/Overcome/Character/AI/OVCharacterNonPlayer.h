@@ -34,11 +34,15 @@ protected:
 	//Dead Section
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UAnimMontage> DeadMontage;
-	
+
 	float DeadEventDelayTime = 3.0f;
 	void SetDead() override;
 	void PlayDeadAnimation();
 
 	virtual void BeginPlay() override;
+
+	//Attack
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+	TObjectPtr<class UAnimMontage> AttackMontage;
 
 };

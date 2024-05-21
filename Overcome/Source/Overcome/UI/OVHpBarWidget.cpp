@@ -9,6 +9,7 @@
 UOVHpBarWidget::UOVHpBarWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	MaxHp = -1.0f;
+	CurrentHp = MaxHp;
 }
 
 void UOVHpBarWidget::NativeConstruct()

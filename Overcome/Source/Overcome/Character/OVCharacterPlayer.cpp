@@ -127,6 +127,8 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	bIsActiveShieldSkill = true;
 
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
+
+	Stat->SetMaxHp(100);
 }
 
 void AOVCharacterPlayer::BeginPlay()

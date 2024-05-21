@@ -6,7 +6,7 @@
 // Sets default values for this component's properties
 UOVCharacterStatComponent::UOVCharacterStatComponent()
 {
-	MaxHp = 100;
+	//MaxHp = 100;
 	CurrentHp = MaxHp;
 	CurrentAttack = 10;
 	CurrentMp = 100;
@@ -17,7 +17,7 @@ UOVCharacterStatComponent::UOVCharacterStatComponent()
 void UOVCharacterStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	//MaxHp = 100;
 	SetHp(MaxHp);
 	
 }

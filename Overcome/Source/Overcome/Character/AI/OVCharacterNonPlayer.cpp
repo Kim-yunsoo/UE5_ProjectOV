@@ -24,7 +24,12 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 		DeadMontage = DeadMontageRef.Object;
 	}
 	
-	
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> AttackMontageRef(TEXT("/Script/Engine.AnimMontage'/Game/DarkMetalPack/ZombotMike/Animations/Anim_Zombot_Mikey_ClawRT_Montage.Anim_Zombot_Mikey_ClawRT_Montage'"));
+	if (AttackMontageRef.Object)
+	{
+		AttackMontage = AttackMontageRef.Object;
+	}
+	Stat->SetMaxHp(50);
 	AIControllerClass = AOVAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned; 
 }
@@ -53,7 +58,7 @@ void AOVCharacterNonPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Stat->SetMaxHp(50);
+
 }
 
 float AOVCharacterNonPlayer::GetAIPatrolRadius()
@@ -85,7 +90,10 @@ void AOVCharacterNonPlayer::AttackByAI()
 {
 	//ProcessComboCommand();
 	//1초뒤 공격 끝난다
-	UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(AttackMontage, 1.0f);
+	
 	FTimerHandle DeadTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
 		[&]()
