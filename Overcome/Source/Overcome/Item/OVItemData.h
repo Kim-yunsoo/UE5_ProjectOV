@@ -96,5 +96,7 @@ struct FItemData: public FTableRowBase
 
 	UPROPERTY(EditAnyWhere,Category="Item Data")
 	FItemAssetData AssetData;
+
+
 	
 };
