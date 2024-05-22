@@ -16,9 +16,15 @@ AOVGun::AOVGun()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	
 	SetRootComponent(Root);
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));	
 	Mesh->SetupAttachment(Root);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshRef(TEXT("/Script/Engine.StaticMesh'/Game/Asset/Gun/rifle.rifle'"));
+	if (MeshRef.Object)
+	{
+		Mesh->SetStaticMesh(MeshRef.Object);
+	}
 	this->SetReplicates(true);
 	this->SetActorEnableCollision(false);
 	
