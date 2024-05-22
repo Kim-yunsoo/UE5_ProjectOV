@@ -157,7 +157,7 @@ protected:
 	void Shoot();
 	void StopShoot();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gun")
+	UPROPERTY(Replicated,EditAnywhere, BlueprintReadWrite, Category = "Gun")
 	uint8 bIsShooting : 1;
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Gun", Meta = (AllowPrivateAccess = "true"))
@@ -178,6 +178,9 @@ public:
 
 	UFUNCTION(Server, Unreliable)
 	void ServerRPCIsGun(bool IsGun);
+
+	UFUNCTION(Server, Unreliable)
+	void ServerRPCShoot();
 
 	
 protected:

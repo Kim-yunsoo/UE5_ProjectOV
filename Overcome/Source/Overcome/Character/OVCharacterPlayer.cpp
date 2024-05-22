@@ -418,19 +418,8 @@ void AOVCharacterPlayer::Shoot()
 	if (!bIsShooting)
 	{
 		bIsShooting = true;
-		if(Gun->GetBulletCount())
-		{
-			Gun->PullTrigger();
-			PlayAnimMontage(Shooting_Gun, 0.5);
-
-			FTimerHandle TimerHandle;
-
-			// Set up the timer to call the ResetTurning function after 0.2 seconds
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-				{
-					bIsShooting = false;
-				}, 0.5, false);
-		}
+		ServerRPCShoot();
+		
 	}
 }
 
@@ -459,11 +448,28 @@ void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
 }
 
 
+void AOVCharacterPlayer::ServerRPCShoot_Implementation()
+{
+	if(Gun->GetBulletCount())
+	{
+		bIsShooting = true;
+		Gun->PullTrigger();
+		PlayAnimMontage(Shooting_Gun, 0.5);
+		FTimerHandle TimerHandle;
+		// Set up the timer to call the ResetTurning function after 0.2 seconds
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+			{
+				bIsShooting = false;
+			}, 0.5, false);
+	}
+}
+
 void AOVCharacterPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AOVCharacterPlayer, bIsAiming);
 	DOREPLIFETIME(AOVCharacterPlayer, bIsGun);
+	DOREPLIFETIME(AOVCharacterPlayer, bIsShooting);
 }
 
 void AOVCharacterPlayer::Tick(float DeltaSeconds)

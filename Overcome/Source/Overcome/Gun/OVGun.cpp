@@ -68,10 +68,10 @@ void AOVGun::PullTrigger()
 		{
 			AOVCharacterPlayer* CharacterPlayer = Cast<AOVCharacterPlayer>(GetOwner());
 			Damage = CharacterPlayer->GetAttack();
-			UE_LOG(LogTemp, Warning, TEXT("Damage %f"), Damage);
+			//UE_LOG(LogTemp, Warning, TEXT("Damage %f"), Damage);
 			FPointDamageEvent DamageEvent{ Damage, Hit, ShotDirection, nullptr };
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, Hit.Location, FRotator::ZeroRotator);
 			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+			MulticastEffect(Hit.Location);
 		}
 	}
 }
@@ -88,5 +88,10 @@ void AOVGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AOVGun::MulticastEffect_Implementation(FVector Location)
+{
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, Location, FRotator::ZeroRotator);
 }
 

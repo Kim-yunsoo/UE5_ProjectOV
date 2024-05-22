@@ -46,4 +46,7 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<UNiagaraSystem> EmitterHit;
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastEffect(FVector Location);
 };
