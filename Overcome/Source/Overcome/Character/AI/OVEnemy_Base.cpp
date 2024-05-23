@@ -3,11 +3,14 @@
 
 #include "Character/AI/OVEnemy_Base.h"
 
+#include "Stat/OVCharacterStatComponent.h"
+
 // Sets default values
 AOVEnemy_Base::AOVEnemy_Base()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	Stat->SetMaxHp(200);
 
 }
 
@@ -25,10 +28,5 @@ void AOVEnemy_Base::Tick(float DeltaTime)
 
 }
 
-// Called to bind functionality to input
-void AOVEnemy_Base::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-}
 

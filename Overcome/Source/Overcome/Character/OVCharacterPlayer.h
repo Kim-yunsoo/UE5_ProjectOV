@@ -182,7 +182,7 @@ public:
 	UFUNCTION(Server, Unreliable)
 	void ServerRPCShoot();
 
-	
+	virtual void SetDead() override;
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

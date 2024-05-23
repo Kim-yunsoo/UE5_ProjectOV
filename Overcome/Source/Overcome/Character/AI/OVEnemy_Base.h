@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "Character/OVCharacterBase.h"
 #include "OVEnemy_Base.generated.h"
 
 UCLASS()
-class OVERCOME_API AOVEnemy_Base : public ACharacter
+class OVERCOME_API AOVEnemy_Base : public AOVCharacterBase
 {
 	GENERATED_BODY()
 
@@ -23,7 +23,5 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };

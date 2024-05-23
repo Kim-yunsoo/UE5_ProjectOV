@@ -464,6 +464,12 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 	}
 }
 
+void AOVCharacterPlayer::SetDead()
+{
+	Super::SetDead();
+	UE_LOG(LogTemp,Warning ,TEXT("Character Dead"));
+}
+
 void AOVCharacterPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

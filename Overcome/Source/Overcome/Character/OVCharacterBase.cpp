@@ -46,7 +46,7 @@ AOVCharacterBase::AOVCharacterBase()
 		GetMesh()->SetSkeletalMesh(CharaterMeshRef.Object); //분수대 만들었을 때처럼 오브젝트 지정
 	}
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstanceRef(TEXT("/Game/Blueprint/ABP_OV_Character.ABP_OV_Character_C"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstanceRef(TEXT("/Game/Blueprint/Animation/ABP_OV_Character.ABP_OV_Character_C"));
 	if (AnimInstanceRef.Class)
 	{
 		GetMesh()->SetAnimInstanceClass(AnimInstanceRef.Class); //클래스 정보 가지고 와서 지정
@@ -110,7 +110,7 @@ void AOVCharacterBase::SetDead()
 {
 	UE_LOG(LogTemp, Warning, TEXT("DEAD!!!"));
 	SetActorEnableCollision(false);
-	HpBar->SetHiddenInGame(true);
+	//HpBar->SetHiddenInGame(true);
 	// Destroy(this);
 	//SetActorHiddenInGame(true);
 }

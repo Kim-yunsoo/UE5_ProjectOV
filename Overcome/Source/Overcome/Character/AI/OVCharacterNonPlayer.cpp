@@ -51,6 +51,7 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 void AOVCharacterNonPlayer::SetDead()
 {
 	Super::SetDead();
+	HpBar->SetHiddenInGame(true);
 	PlayDeadAnimation();
 	FTimerHandle DeadTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
