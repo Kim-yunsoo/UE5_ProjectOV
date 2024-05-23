@@ -21,7 +21,7 @@ void UOVAIBossAnimInstance::NativeInitializeAnimation()
 	{
 		Movement = Owner->GetCharacterMovement();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("AISecond"));
+	//UE_LOG(LogTemp, Warning, TEXT("AISecond"));
 }
 
 void UOVAIBossAnimInstance::NativeUpdateAnimation(float DeltaSeconds)

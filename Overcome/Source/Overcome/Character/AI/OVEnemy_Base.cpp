@@ -3,6 +3,7 @@
 
 #include "Character/AI/OVEnemy_Base.h"
 
+#include "OVAIBossController.h"
 #include "Stat/OVCharacterStatComponent.h"
 
 // Sets default values
@@ -10,8 +11,10 @@ AOVEnemy_Base::AOVEnemy_Base()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	Stat->SetMaxHp(200);
+	//Stat->SetMaxHp(200);
 
+	AIControllerClass = AOVAIBossController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 // Called when the game starts or when spawned

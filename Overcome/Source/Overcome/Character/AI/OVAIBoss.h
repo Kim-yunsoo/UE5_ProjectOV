@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/OVCharacterBase.h"
+#include "OVEnemy_Base.h"
 #include "Sword/OVSword.h"
 #include "OVAIBoss.generated.h"
 
@@ -11,12 +11,11 @@
  * 
  */
 UCLASS()
-class OVERCOME_API AOVAIBoss : public AOVCharacterBase
+class OVERCOME_API AOVAIBoss : public AOVEnemy_Base
 {
 	GENERATED_BODY()
 public:
 	AOVAIBoss();
-
 
 protected:
 	virtual void BeginPlay() override;

@@ -4,25 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "OVAIEnemyBaseController.h"
-#include "OVAIBossController.generated.h"
+#include "OVAIEnemyBaseController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class OVERCOME_API AOVAIBossController : public AAIController
+class OVERCOME_API AOVAIEnemyBaseController : public AAIController
 {
 	GENERATED_BODY()
 public:
-	AOVAIBossController();
+	AOVAIEnemyBaseController();
 
 	void RunAI();
-	//void StopAI();
+	void StopAI();
 	
 protected:
-	virtual void OnPossess(APawn* InPawn) override; //컨트롤러가 폰에 빙의해서 조종할 때 발생되는 이벤트 함수
-
+	virtual void OnPossess(APawn* InPawn) override; 
 
 private:
 	UPROPERTY()

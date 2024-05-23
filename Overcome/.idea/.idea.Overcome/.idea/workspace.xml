@@ -9,27 +9,19 @@
   <component name="ChangeListManager">
     <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/ABP_OV_AI.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/ABP_OV_Boss.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/ABP_OV_Character.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/BP_OVAIBoss.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/BP_OVCharacterNonPlayer.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/BP_OVCharacterPlayer.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/MyOVCharacterBase.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CharacterControl/ABC_Quater.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CharacterControl/ABC_Quater.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CharacterControl/ABC_Shouler.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CharacterControl/ABC_Shouler.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BP_Enemy_Base.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_Boss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVEnemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVEnemy_Base.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_TargetWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_TargetWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/AITest.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AITest.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/OVAI.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/OVAI.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Animation/OVAIBossAnimInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Animation/OVAIBossAnimInstance.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +61,7 @@
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVAnimationAttackInterface.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVAnimationAttackInterface.h" root0="FORCE_HIGHLIGHTING" />
@@ -194,7 +187,8 @@
       <workItem from="1716375969236" duration="4383000" />
       <workItem from="1716429696330" duration="11723000" />
       <workItem from="1716451442651" duration="355000" />
-      <workItem from="1716451826136" duration="2693000" />
+      <workItem from="1716451826136" duration="9204000" />
+      <workItem from="1716461800512" duration="2357000" />
     </task>
     <servers />
   </component>

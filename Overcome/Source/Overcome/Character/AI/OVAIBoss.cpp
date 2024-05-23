@@ -25,8 +25,9 @@ AOVAIBoss::AOVAIBoss()
 
 	Stat->SetMaxHp(200);
 
-	AIControllerClass = AOVAIBossController::StaticClass();
-	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	//구조 짜기 
+	// AIControllerClass = AOVAIBossController::StaticClass();
+	// AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	bIsEquipSword = false;
 	bIsWieldingWeapon = false;
