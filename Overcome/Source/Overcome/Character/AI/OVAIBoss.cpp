@@ -21,20 +21,51 @@ AOVAIBoss::AOVAIBoss()
 	}
 	//Sword
 	Sword = CreateDefaultSubobject<AOVSword>(TEXT("Sword"));
-	
+	Sword_l = CreateDefaultSubobject<AOVSword>(TEXT("Sword_l"));
+
 	Stat->SetMaxHp(200);
 
 	AIControllerClass = AOVAIBossController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+
+	bIsEquipSword = false;
 
 }
 
 void AOVAIBoss::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	Sword = GetWorld()->SpawnActor<AOVSword>(SwordClass);
-	Sword->SetOwner(this);
-	Sword->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Back_Socket"));
+	//Test용
+	EauipWeapon();
+}
+
+void AOVAIBoss::EauipWeapon()
+{
+	//Server
+	if (HasAuthority())
+	{
+		Sword = GetWorld()->SpawnActor<AOVSword>(SwordClass);
+		//Sword_l = GetWorld()->SpawnActor<AOVSword>(SwordClass);
+		if (!Sword)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Not Sword"));
+		}
+		else
+		{
+			Sword->SetOwner(this);
+			//Sword_l->SetOwner(this);
+			Sword->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Saber"));
+			//Sword_l->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Saber_l"));
+			bIsEquipSword = true;
+		}
+	}
+}
+
+void AOVAIBoss::UneauipWeapon()
+{
+	//Server
+	Destroy(Sword);
+	//Destroy(Sword_l);
+	bIsEquipSword = false;
 }
 

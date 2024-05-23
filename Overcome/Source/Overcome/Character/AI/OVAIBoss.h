@@ -24,6 +24,17 @@ protected:
 	UPROPERTY()
 	AOVSword* Sword;
 
+	UPROPERTY()
+	AOVSword* Sword_l;
+
+	UPROPERTY()
+	uint8 bIsEquipSword : 1;
+
+	UFUNCTION()
+	void EauipWeapon();
+	
+	UFUNCTION()
+	void UneauipWeapon();
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Sword")
 	TSubclassOf<AOVSword> SwordClass;
