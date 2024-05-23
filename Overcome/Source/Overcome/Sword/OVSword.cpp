@@ -22,7 +22,7 @@ AOVSword::AOVSword()
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshRef(TEXT("/Script/Engine.SkeletalMesh'/Game/DarkMetalPack/DarkMetalOniCyclone/ONISaber/SM_ONISaber.SM_ONISaber'"));
 	if (MeshRef.Object)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("MESH"));
+		//UE_LOG(LogTemp, Warning, TEXT("MESH"));
 		Mesh->SetSkeletalMesh(MeshRef.Object);
 	}
 	Mesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);

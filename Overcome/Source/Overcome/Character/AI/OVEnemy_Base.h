@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Character/OVCharacterBase.h"
+#include "Interface/OVEnemyAIInterface.h"
 #include "OVEnemy_Base.generated.h"
 
 UCLASS()
-class OVERCOME_API AOVEnemy_Base : public AOVCharacterBase
+class OVERCOME_API AOVEnemy_Base : public AOVCharacterBase, public IOVEnemyAIInterface
 {
 	GENERATED_BODY()
 
@@ -23,5 +24,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	FAIEnemyAttackFinished OnDefaultAttackFinished;
+	
+	virtual void SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished) override;
+	virtual void DefaultAttack() override;
 
+	//Montage
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UAnimMontage> DefaultAttackMontage;
+
+	UFUNCTION()
+	void OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 };

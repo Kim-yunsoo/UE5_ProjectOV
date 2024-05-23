@@ -2,9 +2,7 @@
 
 
 #include "Character/AI/OVEnemy_Base.h"
-
 #include "OVAIBossController.h"
-#include "Stat/OVCharacterStatComponent.h"
 
 // Sets default values
 AOVEnemy_Base::AOVEnemy_Base()
@@ -13,7 +11,7 @@ AOVEnemy_Base::AOVEnemy_Base()
 	PrimaryActorTick.bCanEverTick = true;
 	//Stat->SetMaxHp(200);
 
-	AIControllerClass = AOVAIBossController::StaticClass();
+	AIControllerClass = AOVAIEnemyBaseController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
@@ -21,7 +19,7 @@ AOVEnemy_Base::AOVEnemy_Base()
 void AOVEnemy_Base::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	DefaultAttack();
 }
 
 // Called every frame
@@ -31,5 +29,28 @@ void AOVEnemy_Base::Tick(float DeltaTime)
 
 }
 
+void AOVEnemy_Base::SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished)
+{
+	OnDefaultAttackFinished = InOnAttackFinished;
+}
+
+void AOVEnemy_Base::DefaultAttack()
+{
+	UE_LOG(LogTemp, Warning, TEXT("DefaultAttack"));
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(DefaultAttackMontage, 1.0f);
+
+	//몽타주 완료 델리게이트
+	FOnMontageEnded CompleteDelegate;
+	CompleteDelegate.BindUObject(this, &AOVEnemy_Base::OnDefaultAttackMontageEnded);
+	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, DefaultAttackMontage);
+}
+
+void AOVEnemy_Base::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	OnDefaultAttackFinished.ExecuteIfBound();
+}
 
 
