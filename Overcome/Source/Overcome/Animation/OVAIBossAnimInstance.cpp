@@ -1,33 +1,32 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Animation/OVAIAnimInstance.h"
+#include "Animation/OVAIBossAnimInstance.h"
 
+#include "KismetAnimationLibrary.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-UOVAIAnimInstance::UOVAIAnimInstance()
+UOVAIBossAnimInstance::UOVAIBossAnimInstance()
 {
 	MovingThreshould = 3.0f;
 	JumpingThreshould = 100.0f;
 }
 
-void UOVAIAnimInstance::NativeInitializeAnimation()
+void UOVAIBossAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
-
 	Owner = Cast<ACharacter>(GetOwningActor());
 	if (Owner)
 	{
 		Movement = Owner->GetCharacterMovement();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("AIFirst"));
+	UE_LOG(LogTemp, Warning, TEXT("AISecond"));
 }
 
-void UOVAIAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
+void UOVAIBossAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
-
 	if (Movement)
 	{
 		Velocity = Movement->Velocity;
@@ -35,5 +34,13 @@ void UOVAIAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bIsIdle = GroundSpeed < MovingThreshould;
 		bIsFalling = Movement->IsFalling();
 		bIsJumping = bIsFalling & (Velocity.Z > JumpingThreshould);
+		Direction = UKismetAnimationLibrary::CalculateDirection(Velocity, Owner->GetActorRotation());
+		FVector CurrentAccelaration =  Movement->GetCurrentAcceleration();
+		if(CurrentAccelaration.Z != 0 && GroundSpeed > 3)
+			ShouldMove = true;
+		else
+		{
+			ShouldMove = false;
+		}
 	}
 }

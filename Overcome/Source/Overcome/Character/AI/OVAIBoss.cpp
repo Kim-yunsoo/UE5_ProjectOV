@@ -29,7 +29,7 @@ AOVAIBoss::AOVAIBoss()
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	bIsEquipSword = false;
-
+	bIsWieldingWeapon = false;
 }
 
 void AOVAIBoss::BeginPlay()
@@ -57,6 +57,7 @@ void AOVAIBoss::EauipWeapon()
 			Sword->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Saber"));
 			//Sword_l->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("Saber_l"));
 			bIsEquipSword = true;
+			bIsWieldingWeapon = true;
 		}
 	}
 }
@@ -64,8 +65,10 @@ void AOVAIBoss::EauipWeapon()
 void AOVAIBoss::UneauipWeapon()
 {
 	//Server
-	Destroy(Sword);
+	Sword->Destroy();
 	//Destroy(Sword_l);
 	bIsEquipSword = false;
+	bIsWieldingWeapon = false;
+
 }
 

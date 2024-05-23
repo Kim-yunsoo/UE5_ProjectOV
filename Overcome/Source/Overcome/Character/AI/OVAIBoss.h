@@ -30,6 +30,10 @@ protected:
 	UPROPERTY()
 	uint8 bIsEquipSword : 1;
 
+	UPROPERTY()
+	uint8 bIsWieldingWeapon : 1;
+	
+
 	UFUNCTION()
 	void EauipWeapon();
 	
