@@ -4,17 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTDecorator.h"
-#include "BTDecorator_AttackInRange.generated.h"
+#include "BTDecorator_IsWieldingSword.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class OVERCOME_API UBTDecorator_AttackInRange : public UBTDecorator
+class OVERCOME_API UBTDecorator_IsWieldingSword : public UBTDecorator
 {
 	GENERATED_BODY()
 public:
-	UBTDecorator_AttackInRange();
+	UBTDecorator_IsWieldingSword();
+
 protected:
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const override;
 };

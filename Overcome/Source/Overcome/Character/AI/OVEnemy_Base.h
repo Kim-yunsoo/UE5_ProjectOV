@@ -7,6 +7,8 @@
 #include "Interface/OVEnemyAIInterface.h"
 #include "OVEnemy_Base.generated.h"
 
+class AOVSword;
+
 UCLASS()
 class OVERCOME_API AOVEnemy_Base : public AOVCharacterBase, public IOVEnemyAIInterface
 {
@@ -30,6 +32,33 @@ protected:
 	virtual void SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished) override;
 	virtual void DefaultAttack() override;
 
+
+	//Sword
+	UPROPERTY()
+	AOVSword* Sword;
+
+	UPROPERTY()
+	AOVSword* Sword_l;
+
+	
+	
+public:
+	UFUNCTION()
+	void EauipWeapon();
+	
+	UFUNCTION()
+	void UneauipWeapon();
+
+	UPROPERTY()
+	uint8 bIsEquipSword : 1;
+
+	UPROPERTY()
+	uint8 bIsWieldingWeapon : 1;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Sword")
+	TSubclassOf<AOVSword> SwordClass;
+protected:
+	
 	//Montage
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UAnimMontage> DefaultAttackMontage;
