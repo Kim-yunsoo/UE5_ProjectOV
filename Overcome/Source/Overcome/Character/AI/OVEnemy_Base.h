@@ -60,9 +60,10 @@ public:
 protected:
 	
 	//Montage
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> DefaultAttackMontage;
-
+	
 	UFUNCTION()
 	void OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
 };
