@@ -7,6 +7,19 @@
 #include "Interface/OVEnemyAIInterface.h"
 #include "OVEnemy_Base.generated.h"
 
+UENUM(BlueprintType)
+enum class E_MovementSpeed : uint8
+{
+	Idle UMETA(DisplayName = "Idle"),
+	walking UMETA(DisplayName = "Idle"),
+	Jogging UMETA(DisplayName = "Idle"),
+	Sprinting UMETA(DisplayName = "Idle"),
+	
+};
+
+
+
+
 class AOVSword;
 
 UCLASS()
@@ -42,22 +55,25 @@ protected:
 
 	
 	
-public:
 	UFUNCTION()
-	void EauipWeapon();
+	virtual void EauipWeapon() override;
 	
 	UFUNCTION()
-	void UneauipWeapon();
+	virtual void UneauipWeapon() override;
+
+	virtual float GetIsWieldingWeapon();
+
 
 	UPROPERTY()
 	uint8 bIsEquipSword : 1;
 
 	UPROPERTY()
 	uint8 bIsWieldingWeapon : 1;
+
+	
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Sword")
 	TSubclassOf<AOVSword> SwordClass;
-protected:
 	
 	//Montage
 	UPROPERTY(EditAnywhere)

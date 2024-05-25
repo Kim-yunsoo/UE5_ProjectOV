@@ -16,9 +16,13 @@ EBTNodeResult::Type UBTTask_WieldSword::ExecuteTask(UBehaviorTreeComponent& Owne
 		return EBTNodeResult::Failed;
 	}
 
-	AOVEnemy_Base * Enemy_Base = Cast<AOVEnemy_Base>(ControllingPawn);
+	IOVEnemyAIInterface* AIPawn = Cast<IOVEnemyAIInterface>(ControllingPawn);
+	if(nullptr == AIPawn)
+	{
+		return EBTNodeResult::Failed;
+	}
 
-	Enemy_Base->EauipWeapon();
+	AIPawn->EauipWeapon();
 	return EBTNodeResult::Succeeded;
 }
 

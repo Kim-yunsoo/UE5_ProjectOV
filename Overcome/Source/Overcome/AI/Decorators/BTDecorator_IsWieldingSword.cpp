@@ -21,8 +21,13 @@ bool UBTDecorator_IsWieldingSword::CalculateRawConditionValue(UBehaviorTreeCompo
 		return false;
 	}
 
-	AOVEnemy_Base * Enemy_Base = Cast<AOVEnemy_Base>(ControllingPawn);
-	if(Enemy_Base->bIsWieldingWeapon)
+	IOVEnemyAIInterface* AIPawn = Cast<IOVEnemyAIInterface>(ControllingPawn);
+	if (nullptr == AIPawn)
+	{
+		return EBTNodeResult::Failed;
+	}
+	
+	if(AIPawn->GetIsWieldingWeapon())
 	{
 		return true;
 	}

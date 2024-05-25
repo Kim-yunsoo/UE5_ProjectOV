@@ -23,7 +23,11 @@ class OVERCOME_API IOVEnemyAIInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	virtual float GetIsWieldingWeapon() = 0;
 	
 	virtual void SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished) = 0;
 	virtual void DefaultAttack() = 0;
+	virtual void EauipWeapon() = 0;
+	virtual void UneauipWeapon() = 0;
+
 };

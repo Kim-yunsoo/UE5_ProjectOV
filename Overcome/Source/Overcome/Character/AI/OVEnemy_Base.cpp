@@ -100,6 +100,11 @@ void AOVEnemy_Base::UneauipWeapon()
 	bIsWieldingWeapon = false;
 }
 
+float AOVEnemy_Base::GetIsWieldingWeapon()
+{
+	return bIsWieldingWeapon;
+}
+
 void AOVEnemy_Base::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	OnDefaultAttackFinished.ExecuteIfBound();
