@@ -4,6 +4,7 @@
 #include "Character/AI/OVEnemy_Base.h"
 #include "OVAIBossController.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Math/UnitConversion.h"
 #include "Sword/OVSword.h"
 
 // Sets default values
@@ -103,6 +104,37 @@ void AOVEnemy_Base::UneauipWeapon()
 float AOVEnemy_Base::GetIsWieldingWeapon()
 {
 	return bIsWieldingWeapon;
+}
+
+void AOVEnemy_Base::SetMovementSpeed(E_MovementSpeed SpeedValue)
+{
+	if(SpeedValue == E_MovementSpeed::Idle)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 0.f;
+	}
+	else if(SpeedValue == E_MovementSpeed::Walking)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 100.f;
+	}
+	else if(SpeedValue == E_MovementSpeed::Walking)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 300.f;
+	}
+	else if(SpeedValue == E_MovementSpeed::Walking)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	}
+}
+
+E_AIState AOVEnemy_Base::GetAIState()
+{
+	SetMovementSpeed(E_AIState::Passive);
+	return AIState;
+}
+
+void AOVEnemy_Base::SetMovementSpeed(E_AIState StateValue)
+{
+	AIState = StateValue;
 }
 
 void AOVEnemy_Base::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)

@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "OVAIEnemyBaseController.generated.h"
 
+enum class E_AIState : uint8;
 /**
  * 
  */
@@ -28,4 +29,7 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<class UBehaviorTree> BTAsset;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAIPerceptionComponent> AIPerception;
 };

@@ -7,7 +7,9 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "AI/OVAI.h"
 #include "Character/OVCharacterPlayer.h"
+#include "Interface/OVEnemyAIInterface.h"
 #include "Kismet/GameplayStatics.h"
+#include "Perception/AIPerceptionComponent.h"
 
 class AOVCharacterPlayer;
 
@@ -24,6 +26,8 @@ AOVAIEnemyBaseController::AOVAIEnemyBaseController()
 	{
 		BTAsset = BTAssetRef.Object;
 	}
+
+	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
 }
 
 void AOVAIEnemyBaseController::RunAI()
@@ -34,9 +38,12 @@ void AOVAIEnemyBaseController::RunAI()
 		//멀티로 한다면 이렇게 하면 안될 것 같음
 		//시간을 주자 액터 생명주기 확인
 		AOVCharacterPlayer* CharacterPlayer = Cast<AOVCharacterPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(),0));
+		
 		if(!CharacterPlayer)
 			UE_LOG(LogTemp, Warning, TEXT("CharacterPlayer Wrong"));
-		Blackboard->SetValueAsObject(BBKEY_ATTACKTARGET, CharacterPlayer); 
+		Blackboard->SetValueAsObject(BBKEY_ATTACKTARGET, CharacterPlayer);
+		// IOVEnemyAIInterface* AIPawn = Cast<IOVEnemyAIInterface>(this);
+		// Blackboard->SetValueAsEnum(BBKEY_STATE, AIPawn->GetAIState()); 
 		bool RunResult = RunBehaviorTree(BTAsset);
 		ensure(RunResult);
 	}

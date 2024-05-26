@@ -7,16 +7,6 @@
 #include "Interface/OVEnemyAIInterface.h"
 #include "OVEnemy_Base.generated.h"
 
-UENUM(BlueprintType)
-enum class E_MovementSpeed : uint8
-{
-	Idle UMETA(DisplayName = "Idle"),
-	walking UMETA(DisplayName = "Idle"),
-	Jogging UMETA(DisplayName = "Idle"),
-	Sprinting UMETA(DisplayName = "Idle"),
-	
-};
-
 
 
 
@@ -44,7 +34,7 @@ protected:
 	
 	virtual void SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished) override;
 	virtual void DefaultAttack() override;
-
+	
 
 	//Sword
 	UPROPERTY()
@@ -52,8 +42,6 @@ protected:
 
 	UPROPERTY()
 	AOVSword* Sword_l;
-
-	
 	
 	UFUNCTION()
 	virtual void EauipWeapon() override;
@@ -61,8 +49,13 @@ protected:
 	UFUNCTION()
 	virtual void UneauipWeapon() override;
 
-	virtual float GetIsWieldingWeapon();
+	virtual float GetIsWieldingWeapon() override;
 
+	virtual  void SetMovementSpeed(E_MovementSpeed SpeedValue) override;
+
+	virtual E_AIState GetAIState() override;
+
+	void SetMovementSpeed(E_AIState StateValue) ;
 
 	UPROPERTY()
 	uint8 bIsEquipSword : 1;
@@ -70,7 +63,7 @@ protected:
 	UPROPERTY()
 	uint8 bIsWieldingWeapon : 1;
 
-	
+	E_MovementSpeed MovementSpeed;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Sword")
 	TSubclassOf<AOVSword> SwordClass;
@@ -81,5 +74,9 @@ protected:
 	
 	UFUNCTION()
 	void OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
+
+	UPROPERTY(EditAnywhere)
+	E_AIState AIState;
 
 };
