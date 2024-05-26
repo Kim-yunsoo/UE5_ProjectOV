@@ -61,5 +61,4 @@ protected:
 	{
 		return this->ID == OtherID;
 	}
-	
 };
