@@ -54,23 +54,41 @@ UOVItemBase* UOVInventoryComponent::FindNextPartialStack(UOVItemBase* ItemIn) co
 		InventoryContents.FindByPredicate([&ItemIn](const UOVItemBase* InventoryItem)
 		{
 			return InventoryItem->ID == ItemIn->ID && !InventoryItem->IsFullItemStack();
+			//반환 조건을 정의한다. 
 		}
 		))
 	{
-		return *Result;
+		return *Result;			//ItemIn->ID와 일치하고, 완전히 채워지지 않은 아이템 스택을 배열에서 찾아서 반환한다.
 	}
+
+	return nullptr; // 찾지못하면 nullptr 반환. 
 }
 
-void UOVInventoryComponent::RemoveSingleInstanceOfItem(UOVItemBase* ItemIn)
+void UOVInventoryComponent::RemoveSingleInstanceOfItem(UOVItemBase* ItemToRemove)
 {
+	InventoryContents.RemoveSingle(ItemToRemove);
+	OnInventoryUpdated.Broadcast();
 }
 
 int32 UOVInventoryComponent::RemoveAmountOfItem(UOVItemBase* ItemIn, int32 DesiredAmountToRemove)
 {
+	const int32 ActualAmountToRemove = FMath::Min(DesiredAmountToRemove, ItemIn->Quantity);
+	ItemIn->SetQuantity(ItemIn->Quantity - ActualAmountToRemove);
+
+	OnInventoryUpdated.Broadcast();
+
+	return ActualAmountToRemove;
+	
 }
 
 void UOVInventoryComponent::SplitExistingStack(UOVItemBase* ItemIn, const int32 AmountToSplit)
 {
+	if(!(InventoryContents.Num() + 1 > InventorySlotsCapacity)) //인벤토리 용량이 넘지 않을 때 
+	{
+		RemoveAmountOfItem(ItemIn,AmountToSplit); //일부를 제거하고
+		AddNewItem(ItemIn, AmountToSplit); //분할 
+	}
+
 }
 
 FItemAddResult UOVInventoryComponent::HandleNonStackableItems(UOVItemBase*, int32 RequestedAddAmount)
@@ -81,8 +99,11 @@ int32 UOVInventoryComponent::HandleStackableItems(UOVItemBase*, int32 RequestedA
 {
 }
 
-int32 UOVInventoryComponent::CalculateNumberForFullStack(UOVItemBase* ExistingItem, int32 InitialRequestedAddAmount)
+int32 UOVInventoryComponent::CalculateNumberForFullStack(UOVItemBase* StackableItem, int32 InitialRequestedAddAmount)
 {
+	const int32 AddAmountToMakeFullStack = StackableItem->ItemNumericData.MaxStackSize - StackableItem->Quantity;
+	//스택 남은 것
+	return FMath::Min(InitialRequestedAddAmount, AddAmountToMakeFullStack);
 }
 
 void UOVInventoryComponent::AddNewItem(UOVItemBase* Item, const int32 AmountToAdd)

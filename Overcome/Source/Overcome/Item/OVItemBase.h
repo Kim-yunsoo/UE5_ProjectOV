@@ -3,14 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-//#include "Character/OVCharacterPlayer.h"
 #include "Item/OVItemData.h"
 #include "OVItemBase.generated.h"
 
+class UOVInventoryComponent;
 /**
  * 
  */
 class AOVCharacterPlayer;
+
 UCLASS()
 class OVERCOME_API UOVItemBase : public UObject
 {
@@ -18,8 +19,11 @@ class OVERCOME_API UOVItemBase : public UObject
 
 public:
 
-	// UPROPERTY()
-	// UInventoryComponent* OwningInventory;
+	/**
+	 * 
+	 */
+	UPROPERTY()
+	TObjectPtr<UOVInventoryComponent> OwningInventory;
 
 	UPROPERTY(VisibleAnywhere,Category = "Item")
 	int32 Quantity; //아이템 수량

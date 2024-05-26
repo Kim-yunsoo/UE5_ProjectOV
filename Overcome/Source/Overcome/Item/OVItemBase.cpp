@@ -3,6 +3,8 @@
 
 #include "Item/OVItemBase.h"
 
+#include "Component/OVInventoryComponent.h"
+
 UOVItemBase::UOVItemBase()
 {
 }
@@ -27,7 +29,15 @@ void UOVItemBase::SetQuantity(const int32 NewQuantity)
 	if(NewQuantity!=Quantity)
 	{
 		Quantity = FMath::Clamp(NewQuantity,0,ItemNumericData.bIsStackable? ItemNumericData.MaxStackSize:1);
-		//bIsStackable가 true인경우 아닌경우 
+		//bIsStackable가 true인경우 아닌경우
+
+		if(OwningInventory)
+		{
+			if(Quantity<=0)
+			{
+				OwningInventory->RemoveSingleInstanceOfItem(this); //수량이 0이면 인벤토리에서 아이템을 삭제한다. 
+			} 
+		}
 	}
 }
 

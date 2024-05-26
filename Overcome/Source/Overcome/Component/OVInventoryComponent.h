@@ -85,8 +85,7 @@ public:
 	UFUNCTION(Category="Inventory")
 	UOVItemBase* FindNextPartialStack(UOVItemBase* ItemIn)const;
 	UFUNCTION(Category="Inventory")
-	void RemoveSingleInstanceOfItem(UOVItemBase* ItemIn);
-	UFUNCTION(Category="Inventory")
+	void RemoveSingleInstanceOfItem(UOVItemBase* ItemToRemove);
 	int32 RemoveAmountOfItem(UOVItemBase* ItemIn, int32 DesiredAmountToRemove);
 	UFUNCTION(Category="Inventory")
 	void SplitExistingStack(UOVItemBase* ItemIn, const int32 AmountToSplit);
@@ -108,9 +107,9 @@ protected:
 	
 	virtual void BeginPlay() override;
 
-	FItemAddResult HandleNonStackableItems(UOVItemBase*, int32 RequestedAddAmount);
-	int32 HandleStackableItems(UOVItemBase*, int32 RequestedAddAmount);
-	int32 CalculateNumberForFullStack(UOVItemBase* ExistingItem ,int32 InitialRequestedAddAmount);
+	FItemAddResult HandleNonStackableItems(UOVItemBase* ItemIn, int32 RequestedAddAmount);
+	int32 HandleStackableItems(UOVItemBase*ItemIn, int32 RequestedAddAmount);
+	int32 CalculateNumberForFullStack(UOVItemBase* StackableItem ,int32 InitialRequestedAddAmount);
 
 	void AddNewItem(UOVItemBase* Item, const int32 AmountToAdd);
 };
