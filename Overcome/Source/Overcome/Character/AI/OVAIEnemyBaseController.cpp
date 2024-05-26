@@ -10,8 +10,10 @@
 #include "Interface/OVEnemyAIInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Damage.h"
+#include "Perception/AISenseConfig_Hearing.h"
+#include "Perception/AISenseConfig_Sight.h"
 
-class AOVCharacterPlayer;
 
 AOVAIEnemyBaseController::AOVAIEnemyBaseController()
 {
@@ -27,7 +29,7 @@ AOVAIEnemyBaseController::AOVAIEnemyBaseController()
 		BTAsset = BTAssetRef.Object;
 	}
 
-	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
+	SetPerceptionSystem();
 }
 
 void AOVAIEnemyBaseController::RunAI()
@@ -43,7 +45,8 @@ void AOVAIEnemyBaseController::RunAI()
 			UE_LOG(LogTemp, Warning, TEXT("CharacterPlayer Wrong"));
 		Blackboard->SetValueAsObject(BBKEY_ATTACKTARGET, CharacterPlayer);
 		// IOVEnemyAIInterface* AIPawn = Cast<IOVEnemyAIInterface>(this);
-		// Blackboard->SetValueAsEnum(BBKEY_STATE, AIPawn->GetAIState()); 
+		// Blackboard->SetValueAsEnum(BBKEY_STATE, AIPawn->GetAIState());
+		SetState(E_AIState::Passive);
 		bool RunResult = RunBehaviorTree(BTAsset);
 		ensure(RunResult);
 	}
@@ -62,4 +65,92 @@ void AOVAIEnemyBaseController::OnPossess(APawn* InPawn)
 	{
 		RunAI();
 	}, 0.2f, false);
+}
+
+void AOVAIEnemyBaseController::SetPerceptionSystem()
+{
+	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
+
+	if(AIPerception)
+	{
+		//시각
+		{
+			UAISenseConfig_Sight* SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
+			SightConfig->SightRadius = 800;
+			SightConfig->LoseSightRadius = 1200;
+			SightConfig->PeripheralVisionAngleDegrees = 60;
+			SightConfig->SetMaxAge(5.0);
+			SightConfig->DetectionByAffiliation.bDetectEnemies = true;
+			SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
+			SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
+			AIPerception->ConfigureSense(*SightConfig);
+
+			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleSightSense);
+		}
+
+		//청각
+		{
+			UAISenseConfig_Hearing* SoundConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("SoundConfig"));
+			SoundConfig->HearingRange = 500.f;
+			SoundConfig->SetMaxAge(3.0);
+			SoundConfig->DetectionByAffiliation.bDetectEnemies = true;
+			SoundConfig->DetectionByAffiliation.bDetectNeutrals = true;
+			SoundConfig->DetectionByAffiliation.bDetectFriendlies = true;
+			AIPerception->ConfigureSense(*SoundConfig);
+
+			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleSoundSense);
+		}
+
+		// 데미지
+		{
+			UAISenseConfig_Damage* DamageConfig = CreateDefaultSubobject<UAISenseConfig_Damage>(TEXT("DamageConfig"));
+			DamageConfig->SetMaxAge(5.0);
+			AIPerception->ConfigureSense(*DamageConfig);
+
+			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleDamageSense);
+		}
+		AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandlePerceptionUpdated);
+	}
+}
+
+void AOVAIEnemyBaseController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus)
+{
+	SetState(E_AIState::Attacking);
+}
+
+void AOVAIEnemyBaseController::HandleSoundSense(AActor* Actor, FAIStimulus Stimulus)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Sound"));
+
+}
+
+void AOVAIEnemyBaseController::HandleDamageSense(AActor* Actor, FAIStimulus Stimulus)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Damage"));
+
+}
+
+void AOVAIEnemyBaseController::HandlePerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *Stimulus.Type.Name.ToString());
+
+	if (Stimulus.Type.Name == "Default__AISense_Sight")
+	{
+		HandleSightSense(Actor, Stimulus);
+	}
+	if (Stimulus.Type.Name == "Default__AISense_Hearing")
+	{
+		HandleSoundSense(Actor, Stimulus);
+	}
+	if (Stimulus.Type.Name == "Default__AISense_Damage")
+	{
+		HandleDamageSense(Actor, Stimulus);
+	}
+}
+
+void AOVAIEnemyBaseController::SetState(E_AIState AIStateValue)
+{
+	AIState = AIStateValue;
+	UE_LOG(LogTemp, Warning, TEXT("%hhd"), AIState);
+
 }

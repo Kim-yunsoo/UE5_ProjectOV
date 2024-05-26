@@ -53,9 +53,6 @@ protected:
 
 	virtual  void SetMovementSpeed(E_MovementSpeed SpeedValue) override;
 
-	virtual E_AIState GetAIState() override;
-
-	void SetMovementSpeed(E_AIState StateValue) ;
 
 	UPROPERTY()
 	uint8 bIsEquipSword : 1;
@@ -76,7 +73,6 @@ protected:
 	void OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
 
-	UPROPERTY(EditAnywhere)
-	E_AIState AIState;
+
 
 };

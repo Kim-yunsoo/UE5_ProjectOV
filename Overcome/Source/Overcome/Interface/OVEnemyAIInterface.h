@@ -52,6 +52,4 @@ public:
 
 	virtual void SetMovementSpeed(E_MovementSpeed SpeedValue) = 0;
 
-	virtual E_AIState GetAIState() = 0;
-
 };

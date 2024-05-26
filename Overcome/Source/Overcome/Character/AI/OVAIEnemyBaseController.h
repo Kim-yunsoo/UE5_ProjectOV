@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Perception/AIPerceptionTypes.h"
 #include "OVAIEnemyBaseController.generated.h"
 
 enum class E_AIState : uint8;
@@ -19,17 +20,40 @@ public:
 
 	void RunAI();
 	void StopAI();
+
+	UPROPERTY(EditAnywhere)
+	E_AIState AIState;
+	
+	UFUNCTION()
+	void SetState(E_AIState AIStateValue);
 	
 protected:
 	virtual void OnPossess(APawn* InPawn) override; 
 
-private:
+protected:
 	UPROPERTY()
 	TObjectPtr<class UBlackboardData> BBAsset;
 	
 	UPROPERTY()
 	TObjectPtr<class UBehaviorTree> BTAsset;
 
+	//Perception AI
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAIPerceptionComponent> AIPerception;
+
+	UFUNCTION()
+	void SetPerceptionSystem();
+
+	UFUNCTION()
+	void HandleSightSense(AActor *Actor, FAIStimulus Stimulus);
+
+	UFUNCTION()
+	void HandleSoundSense(AActor *Actor, FAIStimulus Stimulus);
+
+	UFUNCTION()
+	void HandleDamageSense(AActor *Actor, FAIStimulus Stimulus);
+
+	UFUNCTION()
+	void HandlePerceptionUpdated(AActor *Actor, FAIStimulus Stimulus);
+
 };

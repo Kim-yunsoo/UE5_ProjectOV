@@ -126,16 +126,8 @@ void AOVEnemy_Base::SetMovementSpeed(E_MovementSpeed SpeedValue)
 	}
 }
 
-E_AIState AOVEnemy_Base::GetAIState()
-{
-	SetMovementSpeed(E_AIState::Passive);
-	return AIState;
-}
 
-void AOVEnemy_Base::SetMovementSpeed(E_AIState StateValue)
-{
-	AIState = StateValue;
-}
+
 
 void AOVEnemy_Base::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
