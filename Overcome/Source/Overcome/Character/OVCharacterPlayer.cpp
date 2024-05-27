@@ -122,8 +122,13 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	{
 		InteractionAction = InteractionActionRef.Object;
 	}
-	
 
+	static ConstructorHelpers::FObjectFinder<UInputAction> ToggleMenuTabRef(
+TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ToggleMenu.IA_OV_ToggleMenu'"));
+	if (nullptr != ToggleMenuTabRef.Object)
+	{
+		ToggleMenuTab = ToggleMenuTabRef.Object;
+	}
 	
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
@@ -211,6 +216,8 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	                                   &AOVCharacterPlayer::TeleportSkill);
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
 	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
+
+	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
 	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
 	//EndInteraction 안함
 }
@@ -796,7 +803,10 @@ void AOVCharacterPlayer::UpdateInteractionWidget() const
 		HUDWidget->UpdateInteractionWidget(&TargetInteractable->InteractableData);
 	}
 }
-
+void AOVCharacterPlayer::ToggleMenu()
+{
+	HUDWidget->ToggleMenu();
+}
 void AOVCharacterPlayer::Interact()
 {
 	GetWorldTimerManager().ClearTimer(TimerHandle_Interaction); // 타이머 초기화
@@ -806,6 +816,8 @@ void AOVCharacterPlayer::Interact()
 		TargetInteractable->Interact(this);
 	}
 }
+
+
 
 
 void AOVCharacterPlayer::ServerRPCAiming_Implementation()

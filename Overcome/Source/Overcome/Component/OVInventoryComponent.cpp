@@ -95,7 +95,7 @@ FItemAddResult UOVInventoryComponent::HandleAddItem(UOVItemBase* InputItem)
 		// non-stackable items
 		if(!InputItem->ItemNumericData.bIsStackable)
 		{
-			return HandleNonStackableItems(InputItem,InitialRequestedAddAmount);
+			return HandleNonStackableItems(InputItem);
 		}
 
 		//handle stackable
@@ -129,7 +129,7 @@ FItemAddResult UOVInventoryComponent::HandleAddItem(UOVItemBase* InputItem)
 	return FItemAddResult::AddedNone(FText::FromString("TryAddItem fallthrough error. GetOwner() check somehow failed"));
 	
 }
-FItemAddResult UOVInventoryComponent::HandleNonStackableItems(UOVItemBase* InputItem, int32 RequestedAddAmount)
+FItemAddResult UOVInventoryComponent::HandleNonStackableItems(UOVItemBase* InputItem)
 {
 	//인벤토리 슬롯이 꽉찬 경우
 	 if(InventoryContents.Num()+1 > InventorySlotsCapacity)
@@ -138,9 +138,9 @@ FItemAddResult UOVInventoryComponent::HandleNonStackableItems(UOVItemBase* Input
 	 		FText::FromString("Could not add {0} to the inventory. All inventory slots are full."),InputItem->TextData.Name));
 	 }
 
-	AddNewItem(InputItem,RequestedAddAmount);
-	return FItemAddResult::AddedAll(RequestedAddAmount,FText::Format(
-		FText::FromString("Successfully added {0} {1} to the inventory. "), RequestedAddAmount,InputItem->TextData.Name));
+	AddNewItem(InputItem,1);
+	return FItemAddResult::AddedAll(1,FText::Format(
+		FText::FromString("Successfully added a single {0} to the inventory. "),InputItem->TextData.Name));
 }
 
 int32 UOVInventoryComponent::HandleStackableItems(UOVItemBase* ItemIn, int32 RequestedAddAmount)

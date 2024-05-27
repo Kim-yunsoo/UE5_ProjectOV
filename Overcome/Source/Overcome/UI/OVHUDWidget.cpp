@@ -68,6 +68,25 @@ void UOVHUDWidget::HideMenu()
 	}
 }
 
+void UOVHUDWidget::ToggleMenu()
+{
+	if(bIsMenuVisible)
+	{
+		HideMenu();
+
+		const FInputModeGameOnly InputMode;
+		GetOwningPlayer()->SetInputMode(InputMode);
+		GetOwningPlayer()->SetShowMouseCursor(false);
+	}
+	else
+	{
+		DisplayMenu();
+		const FInputModeGameAndUI InputMode;
+		GetOwningPlayer()->SetInputMode(InputMode);
+		GetOwningPlayer()->SetShowMouseCursor(true);
+	}
+}
+
 void UOVHUDWidget::ShowInteractionWidget() const
 {
 	if(InteractionWidget)

@@ -128,6 +128,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> InteractionAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> ToggleMenuTab;
+
 	
 	void ShoulderMove(const FInputActionValue& Value);
 	void ShoulderLookX(const FInputActionValue& Value);
@@ -315,5 +319,7 @@ protected:
 	void BeginInteract();
 	void EndInteract();
 	void Interact();
+
+	void ToggleMenu() ;
 	
 };
