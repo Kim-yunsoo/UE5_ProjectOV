@@ -16,6 +16,7 @@
  * 
  */
 
+class UOVInventoryComponent;
 class IOVInteractionInterface;
 class UOVHUDWidget;
 DECLARE_LOG_CATEGORY_EXTERN(LogOVCharacter, Log, All);
@@ -289,12 +290,18 @@ public:
 	void TeleportSkill(const FInputActionValue& Value);
 	void ShieldSkill(const FInputActionValue& Value);
 
+	FORCEINLINE UOVInventoryComponent* GetInventory() const {return PlayerInventory;};
 	FORCEINLINE bool IsInteracting() const {return GetWorldTimerManager().IsTimerActive(TimerHandle_Interaction); };
+
+	void UpdateInteractionWidget() const ;
 	//상호작용 중인지 체크한다. 
 protected:
 	UPROPERTY(VisibleAnywhere,Category = "Caracter | Interaction")
 	TScriptInterface<IOVInteractionInterface> TargetInteractable; //라인트레이스에 히트된 타겟을 처리
 
+	UPROPERTY(VisibleAnywhere, Category = "Character|Inventory")
+	TObjectPtr<UOVInventoryComponent> PlayerInventory;
+	
 	float InteractionCheckFrequency; //체크 빈도
 	float InteractionCheckDistance; //얼마나 멀리 라인트레이스?
 

@@ -5,8 +5,14 @@
 
 #include "Component/OVInventoryComponent.h"
 
-UOVItemBase::UOVItemBase()
+UOVItemBase::UOVItemBase() :bIsCopy(false),  bIsPickup(false)
 {
+}
+
+void UOVItemBase::ResetItemFlags()
+{
+	bIsCopy = false;
+	bIsPickup = false;
 }
 
 UOVItemBase* UOVItemBase::CreateItemCopy() const  //원본을 복사한다. 그 사본을 리턴! 
@@ -19,6 +25,7 @@ UOVItemBase* UOVItemBase::CreateItemCopy() const  //원본을 복사한다. 그 사본을 �
 	ItemCopy->ItemNumericData = this->ItemNumericData;
 	ItemCopy->ItemStatistics = this->ItemStatistics;
 	ItemCopy->AssetData = this -> AssetData;
+	ItemCopy->bIsCopy = true;
 
 	return ItemCopy;
 	

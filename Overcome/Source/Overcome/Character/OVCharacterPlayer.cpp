@@ -21,6 +21,7 @@
 #include "UI/OVHUDWidget.h"
 #include "UI/OVStatWidget.h"
 #include "DrawDebugHelpers.h"
+#include "Component/OVInventoryComponent.h"
 #include "Player/OVPlayerController.h"
 
 DEFINE_LOG_CATEGORY(LogOVCharacter);
@@ -157,6 +158,9 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	InteractionCheckDistance = 225.0f;
 	BaseEyeHeight = 74.0f;
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
+
+	PlayerInventory = CreateDefaultSubobject<UOVInventoryComponent>(TEXT("PlayerInventory"));
+	PlayerInventory->SetSlotsCapacity(20);
 
 
 }
@@ -656,6 +660,8 @@ void AOVCharacterPlayer::ShieldSkill(const FInputActionValue& Value)
 	}
 }
 
+
+
 void AOVCharacterPlayer::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -780,6 +786,14 @@ void AOVCharacterPlayer::EndInteract()
 	if(IsValid(TargetInteractable.GetObject()))
 	{
 		TargetInteractable->EndInteract();
+	}
+}
+
+void AOVCharacterPlayer::UpdateInteractionWidget() const
+{
+	if(IsValid(TargetInteractable.GetObject()))
+	{
+		HUDWidget->UpdateInteractionWidget(&TargetInteractable->InteractableData);
 	}
 }
 

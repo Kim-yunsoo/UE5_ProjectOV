@@ -46,8 +46,14 @@ public:
 	UPROPERTY(VisibleAnywhere,Category="Item")
 	FItemAssetData AssetData;
 
+	bool bIsCopy;
+	bool bIsPickup;
+
 	UOVItemBase();
 
+	void ResetItemFlags();
+
+	
 	UOVItemBase* CreateItemCopy() const;
 
 	//FORCEINLINE float GetItemStackWeight() const{return Quantity* ItemNumericData.Weight};  무게 코드

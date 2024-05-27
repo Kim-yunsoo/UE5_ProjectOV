@@ -3,6 +3,7 @@
 
 #include "Object/OVPickup.h"
 
+#include "Component/OVInventoryComponent.h"
 #include "Item/OVItemBase.h"
 
 // Sets default values
@@ -92,8 +93,35 @@ void AOVPickup::TakePickup(const AOVCharacterPlayer* Taker)
 {
 	if(!IsPendingKillPending()) // 액터가 현재 파괴중이 아니라면 ?? 
 	{
-		//if(UInventoryComponent* PlayerInventory = Taker->GetInventory())
-		
+		if(ItemReference)
+		{
+			if (UOVInventoryComponent* PlayerInventory = Taker->GetInventory())
+			{
+				const FItemAddResult AddResult = PlayerInventory->HandleAddItem(ItemReference);
+
+				switch (AddResult.OperationResult)
+				{
+				case EItemAddResult::IAR_NoItemAdded:
+					break;
+				case EItemAddResult::IAR_PartialAmountItemAdd:
+					UpdateInteractableData();
+					Taker->UpdateInteractionWidget();
+					break;
+				case EItemAddResult::IAR_AllItemAdded:
+					Destroy(); //완전히 인벤토리에 추가 됨을 나타낸다. 삭제가 일어난다. 
+					break;
+				}
+				UE_LOG(LogTemp,Warning,TEXT("%s"), *AddResult.ResultMessage.ToString());
+			}
+			else
+			{
+				UE_LOG(LogTemp,Warning,TEXT("Player inventory component is null!"));
+			}
+		}
+		else
+		{
+			UE_LOG(LogTemp,Warning,TEXT("Pickup internal item reference was somehow null!"));
+		}
 	}
 }
 
