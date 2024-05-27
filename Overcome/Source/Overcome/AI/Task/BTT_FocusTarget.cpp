@@ -28,7 +28,7 @@ EBTNodeResult::Type UBTT_FocusTarget::ExecuteTask(UBehaviorTreeComponent& OwnerC
 	}
 
 	AActor* TargetPawn = Cast<AActor>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(BBKEY_ATTACKTARGET));
-UE_LOG(LogTemp, Warning, TEXT("%s"), *TargetPawn->GetName())
+//UE_LOG(LogTemp, Warning, TEXT("%s"), *TargetPawn->GetName())
 	if (nullptr == TargetPawn)
 	{
 		return EBTNodeResult::Failed;
@@ -36,5 +36,4 @@ UE_LOG(LogTemp, Warning, TEXT("%s"), *TargetPawn->GetName())
 	
 	OwnerComp.GetAIOwner()->SetFocus(TargetPawn, EAIFocusPriority::Gameplay);
 	return EBTNodeResult::Succeeded;
-	
 }

@@ -7,6 +7,7 @@
 #include "Perception/AIPerceptionTypes.h"
 #include "OVAIEnemyBaseController.generated.h"
 
+class AOVEnemy_Base;
 class AOVCharacterPlayer;
 enum class E_AIState : uint8;
 /**
@@ -22,14 +23,6 @@ public:
 	void RunAI();
 	void StopAI();
 
-	UPROPERTY(EditAnywhere)
-	E_AIState AIState;
-	
-	UFUNCTION()
-	void SetState(E_AIState AIStateValue);
-
-	// UFUNCTION()
-	// E_AIState GetCurrentState();
 	
 protected:
 	virtual void OnPossess(APawn* InPawn) override; 
@@ -46,7 +39,7 @@ protected:
 	TObjectPtr<class UAIPerceptionComponent> AIPerception;
 
 	UFUNCTION()
-	void SetPerceptionSystem();
+	virtual void SetPerceptionSystem();
 
 
 	UFUNCTION()
@@ -63,4 +56,7 @@ protected:
 
 	UPROPERTY()
 	AOVCharacterPlayer* CharacterPlayer;
+
+	UPROPERTY()
+	AOVEnemy_Base *Enemy_Base;
 };

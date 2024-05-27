@@ -71,8 +71,13 @@ protected:
 	
 	UFUNCTION()
 	void OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	
+	UPROPERTY(EditAnywhere)
+	E_AIState AIState;
+public:
+	UFUNCTION()
+	virtual void SetState(E_AIState AIStateValue) override;
 
-
-
-
+	UFUNCTION()
+	virtual E_AIState GetState() override;
 };

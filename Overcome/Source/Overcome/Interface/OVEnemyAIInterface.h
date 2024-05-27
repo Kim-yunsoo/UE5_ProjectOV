@@ -49,7 +49,8 @@ public:
 	virtual void DefaultAttack() = 0;
 	virtual void EauipWeapon() = 0;
 	virtual void UneauipWeapon() = 0;
-
+	virtual void SetState(E_AIState AIStateValue) = 0;
+	virtual E_AIState GetState() = 0;
 	virtual void SetMovementSpeed(E_MovementSpeed SpeedValue) = 0;
 
 };

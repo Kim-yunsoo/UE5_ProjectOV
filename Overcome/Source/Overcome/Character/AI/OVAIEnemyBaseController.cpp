@@ -2,6 +2,8 @@
 
 
 #include "Character/AI/OVAIEnemyBaseController.h"
+
+#include "OVEnemy_Base.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BehaviorTree.h"
@@ -46,11 +48,14 @@ void AOVAIEnemyBaseController::RunAI()
 			UE_LOG(LogTemp, Warning, TEXT("CharacterPlayer Wrong"));
 		}
 		Blackboard->SetValueAsObject(BBKEY_ATTACKTARGET, CharacterPlayer);
-		Blackboard->SetValueAsEnum(BBKEY_STATE, static_cast<uint8>(AIState));
-
+		// if(!Enemy_Base)
+		// {
+		// 	UE_LOG(LogTemp, Warning, TEXT("Enemy_Base Wrong"));
+		// }
+		Blackboard->SetValueAsEnum(BBKEY_STATE, static_cast<uint8> (Enemy_Base->GetState()));
 		// IOVEnemyAIInterface* AIPawn = Cast<IOVEnemyAIInterface>(this);
 		// Blackboard->SetValueAsEnum(BBKEY_STATE, AIPawn->GetAIState());
-		SetState(E_AIState::Passive);
+		Enemy_Base->SetState(E_AIState::Passive);
 		bool RunResult = RunBehaviorTree(BTAsset);
 		ensure(RunResult);
 	}
@@ -63,7 +68,7 @@ void AOVAIEnemyBaseController::StopAI()
 void AOVAIEnemyBaseController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
-	//UE_LOG(LogTemp, Warning, TEXT("OnPossess"));
+	Enemy_Base = Cast<AOVEnemy_Base>(GetPawn());
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
 	{
@@ -72,13 +77,12 @@ void AOVAIEnemyBaseController::OnPossess(APawn* InPawn)
 }
 
 void AOVAIEnemyBaseController::SetPerceptionSystem()
-{
+{ 
 	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
 
 	if(AIPerception)
 	{
 		//시각
-		{
 			UAISenseConfig_Sight* SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
 			SightConfig->SightRadius = 800;
 			SightConfig->LoseSightRadius = 1200;
@@ -88,12 +92,9 @@ void AOVAIEnemyBaseController::SetPerceptionSystem()
 			SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
 			SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 			AIPerception->ConfigureSense(*SightConfig);
-
 			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleSightSense);
-		}
 
 		//청각
-		{
 			UAISenseConfig_Hearing* SoundConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("SoundConfig"));
 			SoundConfig->HearingRange = 500.f;
 			SoundConfig->SetMaxAge(3.0);
@@ -103,38 +104,39 @@ void AOVAIEnemyBaseController::SetPerceptionSystem()
 			AIPerception->ConfigureSense(*SoundConfig);
 
 			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleSoundSense);
-		}
 
 		// 데미지
-		{
 			UAISenseConfig_Damage* DamageConfig = CreateDefaultSubobject<UAISenseConfig_Damage>(TEXT("DamageConfig"));
 			DamageConfig->SetMaxAge(5.0);
 			AIPerception->ConfigureSense(*DamageConfig);
 
 			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleDamageSense);
-		}
+		AIPerception->SetDominantSense(SightConfig->GetSenseImplementation());
+
 		AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandlePerceptionUpdated);
 	}
 }
 
 void AOVAIEnemyBaseController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	if((AIState == E_AIState::Passive || AIState == E_AIState::Investigating) && (Actor == CharacterPlayer))
+	if ((Enemy_Base->GetState() == E_AIState::Passive || Enemy_Base->GetState() == E_AIState::Investigating) && (
+		Actor == CharacterPlayer))
 	{
-		SetState(E_AIState::Attacking);
+		Enemy_Base->SetState(E_AIState::Attacking);
+		UE_LOG(LogTemp, Warning, TEXT("Sight Attack"));
 	}
 	
 }
 
 void AOVAIEnemyBaseController::HandleSoundSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	if((AIState == E_AIState::Passive || AIState == E_AIState::Investigating))
+	if((Enemy_Base->GetState() == E_AIState::Passive || Enemy_Base->GetState() == E_AIState::Investigating))
 	{
-		SetState(E_AIState::Investigating);
+		Enemy_Base->SetState(E_AIState::Investigating);
 		FVector Location = Stimulus.StimulusLocation;
 		UE_LOG(LogTemp, Warning, TEXT("Sound"));
-		// UBlackboardComponent* BlackboardPtr = Blackboard.Get();
-		// if (UseBlackboard(BBAsset, BlackboardPtr))
+		UBlackboardComponent* BlackboardPtr = Blackboard.Get();
+		if (UseBlackboard(BBAsset, BlackboardPtr))
 		{
 			Blackboard->SetValueAsVector(BBKEY_POINTOFINTEREST, Location);
 		}
@@ -144,15 +146,15 @@ void AOVAIEnemyBaseController::HandleSoundSense(AActor* Actor, FAIStimulus Stimu
 void AOVAIEnemyBaseController::HandleDamageSense(AActor* Actor, FAIStimulus Stimulus)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage"));
-	if((AIState == E_AIState::Passive || AIState == E_AIState::Investigating))
+	if((Enemy_Base->GetState() == E_AIState::Passive || Enemy_Base->GetState() == E_AIState::Investigating))
 	{
-		SetState(E_AIState::Attacking);
+		Enemy_Base->SetState(E_AIState::Attacking);
 	}
 }
 
 void AOVAIEnemyBaseController::HandlePerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("%s"), *Stimulus.Type.Name.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *Stimulus.Type.Name.ToString());
 
 	if (Stimulus.Type.Name == "Default__AISense_Sight")
 	{
@@ -168,12 +170,19 @@ void AOVAIEnemyBaseController::HandlePerceptionUpdated(AActor* Actor, FAIStimulu
 	}
 }
 
-void AOVAIEnemyBaseController::SetState(E_AIState AIStateValue)
-{
-	AIState = AIStateValue;
-	//UE_LOG(LogTemp, Warning, TEXT("%hhd"), AIState);
-	//Blackboard->SetValueAsEnum(BBKEY_STATE, static_cast<uint8>(AIState));
-}
+// void AOVAIEnemyBaseController::SetState(E_AIState AIStateValue)
+// {
+// 	AIState = AIStateValue;
+// 	//UE_LOG(LogTemp, Warning, TEXT("%hhd"), AIState);
+// 	UE_LOG(LogTemp, Warning, TEXT("BaseSetState"));
+// 	UBlackboardComponent* BlackboardPtr = Blackboard.Get();
+// 	if (UseBlackboard(BBAsset, BlackboardPtr))
+// 	{
+// 		Blackboard->SetValueAsEnum(BBKEY_STATE, static_cast<uint8>(AIState));
+// 		UE_LOG(LogTemp, Warning, TEXT("%hhu"), static_cast<uint8>(AIState));
+// 	}
+//
+// }
 
 // E_AIState AOVAIEnemyBaseController::GetCurrentState()
 // {

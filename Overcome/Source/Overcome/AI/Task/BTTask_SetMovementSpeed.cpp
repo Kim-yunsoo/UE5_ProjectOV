@@ -4,6 +4,7 @@
 #include "AI/Task/BTTask_SetMovementSpeed.h"
 
 #include "AIController.h"
+#include "Character/AI/OVAIEnemyBaseController.h"
 #include "Interface/OVEnemyAIInterface.h"
 
 UBTTask_SetMovementSpeed::UBTTask_SetMovementSpeed()

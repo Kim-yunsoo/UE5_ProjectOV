@@ -41,4 +41,6 @@ protected:
 	//
 	// UPROPERTY(EditDefaultsOnly, Category = "Sword")
 	// TSubclassOf<AOVSword> SwordClass;
+
+	virtual  void SetMovementSpeed(E_MovementSpeed SpeedValue) override;
 };

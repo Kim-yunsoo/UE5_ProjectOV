@@ -4,6 +4,9 @@
 #include "AI/Decorators/BTDecorator_Condition.h"
 
 #include "AIController.h"
+#include "AI/OVAI.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Character/AI/OVAIBossController.h"
 #include "Character/AI/OVAIEnemyBaseController.h"
 #include "Interface/OVEnemyAIInterface.h"
 
@@ -27,16 +30,12 @@ bool UBTDecorator_Condition::CalculateRawConditionValue(UBehaviorTreeComponent& 
 	IOVEnemyAIInterface* AIPawn = Cast<IOVEnemyAIInterface>(ControllingPawn);
 	if (nullptr == AIPawn)
 	{
-		return EBTNodeResult::Failed;
+		return false;
 	}
 
-	AOVAIEnemyBaseController* AIController = Cast<AOVAIEnemyBaseController>(OwnerComp.GetAIOwner());
-	if (AIController == nullptr)
-	{
-		return false; 
-	}
-	
-	if(AIController->AIState == AIStateCondition)
+	uint8 CurrentStateint = OwnerComp.GetBlackboardComponent()->GetValueAsEnum(BBKEY_STATE);
+	E_AIState CurrentState = static_cast<E_AIState>(CurrentStateint);
+	if(CurrentState == AIStateCondition)
 	{
 		return true;
 	}

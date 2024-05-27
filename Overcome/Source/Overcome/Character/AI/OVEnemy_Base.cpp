@@ -23,8 +23,7 @@ AOVEnemy_Base::AOVEnemy_Base()
 	//Sword
 	Sword = CreateDefaultSubobject<AOVSword>(TEXT("Sword"));
 	Sword_l = CreateDefaultSubobject<AOVSword>(TEXT("Sword_l"));
-
-		
+	
 	AIControllerClass = AOVAIEnemyBaseController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	
@@ -32,7 +31,6 @@ AOVEnemy_Base::AOVEnemy_Base()
 	bIsWieldingWeapon = false;
 
 	//Stat->SetMaxHp(200);
-
 }
 
 // Called when the game starts or when spawned
@@ -57,7 +55,7 @@ void AOVEnemy_Base::SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InO
 
 void AOVEnemy_Base::DefaultAttack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("DefaultAttack"));
+	//UE_LOG(LogTemp, Warning, TEXT("DefaultAttack"));
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
@@ -108,6 +106,8 @@ float AOVEnemy_Base::GetIsWieldingWeapon()
 
 void AOVEnemy_Base::SetMovementSpeed(E_MovementSpeed SpeedValue)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Base SetMovementSpeed"));
+
 	if(SpeedValue == E_MovementSpeed::Idle)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 0.f;
@@ -116,20 +116,29 @@ void AOVEnemy_Base::SetMovementSpeed(E_MovementSpeed SpeedValue)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 100.f;
 	}
-	else if(SpeedValue == E_MovementSpeed::Walking)
+	else if(SpeedValue == E_MovementSpeed::Jogging)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Jogging"));
 		GetCharacterMovement()->MaxWalkSpeed = 300.f;
 	}
-	else if(SpeedValue == E_MovementSpeed::Walking)
+	else if(SpeedValue == E_MovementSpeed::Sprinting)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	}
 }
 
 
-
-
 void AOVEnemy_Base::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	OnDefaultAttackFinished.ExecuteIfBound();
+}
+
+void AOVEnemy_Base::SetState(E_AIState AIStateValue)
+{
+	AIState = AIStateValue;
+}
+
+E_AIState AOVEnemy_Base::GetState()
+{
+	return AIState;
 }
