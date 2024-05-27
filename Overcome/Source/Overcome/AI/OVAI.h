@@ -7,3 +7,4 @@
 //Boss KEY
 #define BBKEY_ATTACKTARGET TEXT("AttackTarget")
 #define BBKEY_STATE TEXT("State")
+#define BBKEY_POINTOFINTEREST TEXT("PointOfInterest")

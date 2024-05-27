@@ -7,6 +7,7 @@
 #include "Perception/AIPerceptionTypes.h"
 #include "OVAIEnemyBaseController.generated.h"
 
+class AOVCharacterPlayer;
 enum class E_AIState : uint8;
 /**
  * 
@@ -26,6 +27,9 @@ public:
 	
 	UFUNCTION()
 	void SetState(E_AIState AIStateValue);
+
+	// UFUNCTION()
+	// E_AIState GetCurrentState();
 	
 protected:
 	virtual void OnPossess(APawn* InPawn) override; 
@@ -44,6 +48,7 @@ protected:
 	UFUNCTION()
 	void SetPerceptionSystem();
 
+
 	UFUNCTION()
 	void HandleSightSense(AActor *Actor, FAIStimulus Stimulus);
 
@@ -56,4 +61,6 @@ protected:
 	UFUNCTION()
 	void HandlePerceptionUpdated(AActor *Actor, FAIStimulus Stimulus);
 
+	UPROPERTY()
+	AOVCharacterPlayer* CharacterPlayer;
 };

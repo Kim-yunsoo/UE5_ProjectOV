@@ -39,11 +39,15 @@ void AOVAIEnemyBaseController::RunAI()
 	{
 		//멀티로 한다면 이렇게 하면 안될 것 같음
 		//시간을 주자 액터 생명주기 확인
-		AOVCharacterPlayer* CharacterPlayer = Cast<AOVCharacterPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(),0));
+		CharacterPlayer = Cast<AOVCharacterPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(),0));
 		
 		if(!CharacterPlayer)
+		{
 			UE_LOG(LogTemp, Warning, TEXT("CharacterPlayer Wrong"));
+		}
 		Blackboard->SetValueAsObject(BBKEY_ATTACKTARGET, CharacterPlayer);
+		Blackboard->SetValueAsEnum(BBKEY_STATE, static_cast<uint8>(AIState));
+
 		// IOVEnemyAIInterface* AIPawn = Cast<IOVEnemyAIInterface>(this);
 		// Blackboard->SetValueAsEnum(BBKEY_STATE, AIPawn->GetAIState());
 		SetState(E_AIState::Passive);
@@ -59,7 +63,7 @@ void AOVAIEnemyBaseController::StopAI()
 void AOVAIEnemyBaseController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
-	UE_LOG(LogTemp, Warning, TEXT("OnPossess"));
+	//UE_LOG(LogTemp, Warning, TEXT("OnPossess"));
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
 	{
@@ -115,24 +119,40 @@ void AOVAIEnemyBaseController::SetPerceptionSystem()
 
 void AOVAIEnemyBaseController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	SetState(E_AIState::Attacking);
+	if((AIState == E_AIState::Passive || AIState == E_AIState::Investigating) && (Actor == CharacterPlayer))
+	{
+		SetState(E_AIState::Attacking);
+	}
+	
 }
 
 void AOVAIEnemyBaseController::HandleSoundSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Sound"));
-
+	if((AIState == E_AIState::Passive || AIState == E_AIState::Investigating))
+	{
+		SetState(E_AIState::Investigating);
+		FVector Location = Stimulus.StimulusLocation;
+		UE_LOG(LogTemp, Warning, TEXT("Sound"));
+		// UBlackboardComponent* BlackboardPtr = Blackboard.Get();
+		// if (UseBlackboard(BBAsset, BlackboardPtr))
+		{
+			Blackboard->SetValueAsVector(BBKEY_POINTOFINTEREST, Location);
+		}
+	}
 }
 
 void AOVAIEnemyBaseController::HandleDamageSense(AActor* Actor, FAIStimulus Stimulus)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage"));
-
+	if((AIState == E_AIState::Passive || AIState == E_AIState::Investigating))
+	{
+		SetState(E_AIState::Attacking);
+	}
 }
 
 void AOVAIEnemyBaseController::HandlePerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *Stimulus.Type.Name.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("%s"), *Stimulus.Type.Name.ToString());
 
 	if (Stimulus.Type.Name == "Default__AISense_Sight")
 	{
@@ -151,6 +171,11 @@ void AOVAIEnemyBaseController::HandlePerceptionUpdated(AActor* Actor, FAIStimulu
 void AOVAIEnemyBaseController::SetState(E_AIState AIStateValue)
 {
 	AIState = AIStateValue;
-	UE_LOG(LogTemp, Warning, TEXT("%hhd"), AIState);
-
+	//UE_LOG(LogTemp, Warning, TEXT("%hhd"), AIState);
+	//Blackboard->SetValueAsEnum(BBKEY_STATE, static_cast<uint8>(AIState));
 }
+
+// E_AIState AOVAIEnemyBaseController::GetCurrentState()
+// {
+// 	return AIState;
+// }

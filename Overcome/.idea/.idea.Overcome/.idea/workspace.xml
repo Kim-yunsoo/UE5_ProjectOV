@@ -9,18 +9,12 @@
   <component name="ChangeListManager">
     <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BB_Enemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BB_Enemy_Base.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Base.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/Task/BTT_MoveAlongPatrolRoute.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/Task/BTT_MoveAlongPatrolRoute.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVEnemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVEnemy_Base.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AITest.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AITest.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Decorators/BTDecorator_Condition.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Decorators/BTDecorator_Condition.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Decorators/BTDecorator_Condition.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Decorators/BTDecorator_Condition.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/OVAI.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/OVAI.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +54,7 @@
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_ClearFocus.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_DefaultAttack.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetMovementSpeed.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetSTateAsPassive.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackHitCheck.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackHitCheck.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/OVAIAnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -201,6 +196,7 @@
       <workItem from="1716480887556" duration="4337000" />
       <workItem from="1716528482931" duration="4633000" />
       <workItem from="1716695280869" duration="23098000" />
+      <workItem from="1716775439148" duration="4579000" />
     </task>
     <servers />
   </component>
