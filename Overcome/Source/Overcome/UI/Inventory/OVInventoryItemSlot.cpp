@@ -58,7 +58,13 @@ void UOVInventoryItemSlot::NativeConstruct()
 
 FReply UOVInventoryItemSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	//return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	FReply Reply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	if(InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
+	{
+		return Reply.Handled().DetectDrag(TakeWidget(),EKeys::LeftMouseButton);
+	}
+	return Reply.Unhandled();  // 다른 것을 누를 시 아무동작이 일어나지 않도록 반환한다. 
 }
 
 void UOVInventoryItemSlot::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
@@ -66,7 +72,8 @@ void UOVInventoryItemSlot::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 	Super::NativeOnMouseLeave(InMouseEvent);
 }
 
-void UOVInventoryItemSlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, //끌기를 감지한다. 
+void UOVInventoryItemSlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, //끌기를 감지한다.
+	//마우스 클릭 자체를 감지하진 않는다. 
 	UDragDropOperation*& OutOperation)
 {
 	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
@@ -83,6 +90,9 @@ void UOVInventoryItemSlot::NativeOnDragDetected(const FGeometry& InGeometry, con
 		DragItemOperation->SourceInventory = ItemReference->OwningInventory;
 
 		DragItemOperation->DefaultDragVisual = DragVisual; // TObjectPtr 의 경우 가능
+		DragItemOperation->Pivot = EDragPivot::TopLeft;
+
+		OutOperation = DragItemOperation; //Main에서 Drop할때 InOperation의 인자 값와 동일한 종류가 된다. 그래서 캐스트에 성공할 수 있다.
 		
 	}
 }

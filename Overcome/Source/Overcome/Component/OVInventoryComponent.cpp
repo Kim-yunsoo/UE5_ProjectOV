@@ -158,16 +158,31 @@ int32 UOVInventoryComponent::HandleStackableItems(UOVItemBase* ItemIn, int32 Req
 	while (ExistingItem) //부분적으로 넣을 스택이 있다면?
 	{
 		//const int32 AmountToMakeFullStack = CalculateNumberForFullStack(ExistingItem, AmountToDistribute);
-		ExistingItem->SetQuantity(ExistingItem->Quantity + RequestedAddAmount); //요청한거 그대로 올려두기
-		ItemIn->SetQuantity(0);  //바닥에 남은 것 -> 다 줍기! 
+		//int32 RemainAmount = ExistingItem->ItemNumericData.MaxStackSize
+		int32 CalCulateNumber = ExistingItem->ItemNumericData.MaxStackSize - ExistingItem->Quantity; // 수용될 수 있는 양
+		if(CalCulateNumber >= RequestedAddAmount) //수용될 수 있는 양이 요청 값보단 많다면? 
+		{
+			ExistingItem->SetQuantity(ExistingItem->Quantity + RequestedAddAmount); //요청한거 그대로 올려두기
+			ItemIn->SetQuantity(0); //바닥에 남은 것 -> 다 줍기! 
 
-		OnInventoryUpdated.Broadcast();
-		return RequestedAddAmount;// 전부 추가하도록 요청 금액 리턴 
+			OnInventoryUpdated.Broadcast();
+			return RequestedAddAmount; // 전부 추가하도록 요청 금액 리턴 
+		}
+		else
+		{
+			int32 RemainItemAmount = RequestedAddAmount - CalCulateNumber; //바닥에 남을 값
+			ExistingItem->SetQuantity(ExistingItem->Quantity + CalCulateNumber); //요청한거 그대로 올려두기
+			ItemIn->SetQuantity(RemainItemAmount);
+
+			OnInventoryUpdated.Broadcast();
+			return CalCulateNumber; // 전부 추가하도록 요청 금액 리턴 
+			
+		}
 	}
 
 	if(InventoryContents.Num()+1 <= InventorySlotsCapacity) // 다 넣을 수 있을 경우와 인벤토리 용량이 남은 경우 
 	{
-		const int32 AddAmount = RequestedAddAmount;
+		//const int32 AddAmount = RequestedAddAmount;
 		ItemIn->SetQuantity(0);  //바닥에 남은 것 -> 다 줍기!
 		AddNewItem(ItemIn->CreateItemCopy(),RequestedAddAmount);
 		OnInventoryUpdated.Broadcast();
