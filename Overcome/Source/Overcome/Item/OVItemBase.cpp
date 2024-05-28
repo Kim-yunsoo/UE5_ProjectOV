@@ -45,6 +45,10 @@ void UOVItemBase::SetQuantity(const int32 NewQuantity)
 				OwningInventory->RemoveSingleInstanceOfItem(this); //수량이 0이면 인벤토리에서 아이템을 삭제한다. 
 			} 
 		}
+		else
+		{
+			//UE_LOG(LogTemp,Error,TEXT("ItemBase OwningInventory was null! "));
+		}
 	}
 }
 

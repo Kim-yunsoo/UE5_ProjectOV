@@ -2,8 +2,9 @@
 
 
 #include "UI/OVMainMenu.h"
-
 #include "Character/OVCharacterPlayer.h"
+#include "Inventory/OVItemDragDropOperation.h"
+#include "Item/OVItemBase.h"
 
 void UOVMainMenu::NativeOnInitialized()
 {
@@ -13,17 +14,20 @@ void UOVMainMenu::NativeOnInitialized()
 void UOVMainMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
-
-	PlayerCharacter = Cast<AOVCharacterPlayer>(GetOwningPlayer());
+	PlayerCharacter = Cast<AOVCharacterPlayer>(GetOwningPlayerPawn());
 }
 
 bool UOVMainMenu::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
 	UDragDropOperation* InOperation)
 {
-	return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
+	//return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 
-	//cast operation to item drag drop, ensure player is valid, call drop item on player
-	
+	const UOVItemDragDropOperation* ItemDragDrop = Cast<UOVItemDragDropOperation>(InOperation);
 
-	
+	if(PlayerCharacter && ItemDragDrop->SourceItem)
+	{
+		PlayerCharacter->DropItem(ItemDragDrop->SourceItem,ItemDragDrop->SourceItem->Quantity);
+		return true;
+	}
+	return false;
 }

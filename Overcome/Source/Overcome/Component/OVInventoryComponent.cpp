@@ -174,7 +174,6 @@ int32 UOVInventoryComponent::HandleStackableItems(UOVItemBase* ItemIn, int32 Req
 		return RequestedAddAmount;
 	}
 	return 0;
-
 }
 
 int32 UOVInventoryComponent::CalculateNumberForFullStack(UOVItemBase* StackableItem, int32 InitialRequestedAddAmount)

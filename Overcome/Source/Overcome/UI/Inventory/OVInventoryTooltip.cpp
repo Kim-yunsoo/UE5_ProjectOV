@@ -37,6 +37,8 @@ void UOVInventoryTooltip::NativeConstruct()
 	}
 	else
 	{
-		MaxStackSize->SetVisibility(ESlateVisibility::Collapsed);
+		MaxStackSize->SetText(FText::AsNumber(1));
+
+		//MaxStackSize->SetVisibility(ESlateVisibility::Collapsed);
 	}
 }

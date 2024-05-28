@@ -14,7 +14,6 @@
 #include "Interface/OVInteractionInterface.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Item/OVHpItemData.h"
 #include "Skill/OVShieldSkill.h"
 #include "Skill/OVTeleportSkill.h"
 #include "Stat/OVCharacterStatComponent.h"
@@ -22,6 +21,7 @@
 #include "UI/OVStatWidget.h"
 #include "DrawDebugHelpers.h"
 #include "Component/OVInventoryComponent.h"
+#include "Object/OVPickup.h"
 #include "Player/OVPlayerController.h"
 
 DEFINE_LOG_CATEGORY(LogOVCharacter);
@@ -216,7 +216,6 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	                                   &AOVCharacterPlayer::TeleportSkill);
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
 	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
-
 	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
 	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
 	//EndInteraction 안함
@@ -252,18 +251,16 @@ void AOVCharacterPlayer::SetCharacterControl(ECharacterControlType NewCharacterC
 	}
 
 	UOVCharacterControlData* NewCharacterControl = CharacterControlManager[NewCharacterControlType];
-	//��Ʈ�� ������ ������ �´�
-	check(NewCharacterControl); //�ݵ�� �ִ��� Ȯ��
+	check(NewCharacterControl); 
 
 	SetCharacterControlData(NewCharacterControl);
 
 	APlayerController* PlayerController = CastChecked<APlayerController>(GetController());
-	//��Ʈ�ѷ� ������ ���� CastChecked�� Ȯ��
 
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
 		PlayerController->GetLocalPlayer()))
 	{
-		Subsystem->ClearAllMappings(); //���� �ʱ�ȭ
+		Subsystem->ClearAllMappings(); 
 		UInputMappingContext* NewMappingContext = NewCharacterControl->InputMappingContext;
 		if (NewMappingContext)
 		{
@@ -807,6 +804,25 @@ void AOVCharacterPlayer::ToggleMenu()
 {
 	HUDWidget->ToggleMenu();
 }
+
+void AOVCharacterPlayer::DropItem(UOVItemBase* ItemToDrop, const int32 QuantityToDrop)
+{
+	if(PlayerInventory->FindMatchingItem(ItemToDrop))
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner =this;
+		SpawnParams.bNoFail =true;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+		const FVector SpawnLocation{GetActorLocation() + (GetActorForwardVector() * 50.f)};
+		const FTransform SpawnTransform(GetActorRotation(), SpawnLocation);
+		const int32 RemovedQuantity = PlayerInventory->RemoveAmountOfItem(ItemToDrop,QuantityToDrop); //인벤토리에서 숫자 뺴기
+		AOVPickup* Pickup = GetWorld()->SpawnActor<AOVPickup>(AOVPickup::StaticClass() , SpawnTransform, SpawnParams );
+
+		Pickup->InitializeDrop(ItemToDrop, RemovedQuantity);
+	}
+}
+
 void AOVCharacterPlayer::Interact()
 {
 	GetWorldTimerManager().ClearTimer(TimerHandle_Interaction); // 타이머 초기화

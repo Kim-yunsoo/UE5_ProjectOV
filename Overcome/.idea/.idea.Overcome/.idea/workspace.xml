@@ -10,18 +10,17 @@
     <list default="true" id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_InventoryItemSlot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_InventoryItemSlot.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_InventoryPanel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_InventoryPanel.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_MainMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_MainMenu.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/YSMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/YSMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_InventoryToolTip.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_InventoryToolTip.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Item/OVItemBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Item/OVItemBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Item/OVItemBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Item/OVItemBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVDragItemVisual.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVDragItemVisual.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryTooltip.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryTooltip.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryTooltip.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryTooltip.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +176,7 @@
       <workItem from="1716778511771" duration="24138000" />
       <workItem from="1716809747815" duration="22016000" />
       <workItem from="1716887200569" duration="860000" />
-      <workItem from="1716888748013" duration="2963000" />
+      <workItem from="1716888748013" duration="9428000" />
     </task>
     <servers />
   </component>

@@ -6,6 +6,8 @@
 #include "Blueprint/DragDropOperation.h"
 #include "OVItemDragDropOperation.generated.h"
 
+class UOVInventoryComponent;
+class UOVItemBase;
 /**
  * 
  */
@@ -13,5 +15,13 @@ UCLASS()
 class OVERCOME_API UOVItemDragDropOperation : public UDragDropOperation
 {
 	GENERATED_BODY()
+
+public:
+	
+	UPROPERTY()
+	TObjectPtr<UOVItemBase> SourceItem;
+
+	UPROPERTY()
+	TObjectPtr<UOVInventoryComponent> SourceInventory;
 	
 };

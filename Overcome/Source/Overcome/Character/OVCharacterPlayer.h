@@ -16,6 +16,7 @@
  * 
  */
 
+class UOVItemBase;
 class UOVInventoryComponent;
 class IOVInteractionInterface;
 class UOVHUDWidget;
@@ -320,6 +321,9 @@ protected:
 	void EndInteract();
 	void Interact();
 
-	void ToggleMenu() ;
+	void ToggleMenu();
+
+public:
+	void DropItem(UOVItemBase* ItemToDrop, const int32 QuantityToDrop);
 	
 };
