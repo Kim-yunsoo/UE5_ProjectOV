@@ -314,9 +314,7 @@ protected:
 
 	FInteractionData InteractionData; // 라인트레이스로 인터렉트하는데 사용할 정보들 구조체  
 
-	void PerformInteractionCheck(); // 매틱마다 호출하며 라인트레이스
 	void FoundInteractable(AActor* NewInteractable); // 상호작용 가능한 액터인지 체크
-	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출
 	void BeginInteract();
 	void EndInteract();
 	void Interact();
@@ -324,6 +322,8 @@ protected:
 	void ToggleMenu();
 
 public:
+	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출
+	void PerformInteractionCheck(AActor* MyActor); // 매틱마다 호출하며 라인트레이스
 	void DropItem(UOVItemBase* ItemToDrop, const int32 QuantityToDrop);
 	
 };

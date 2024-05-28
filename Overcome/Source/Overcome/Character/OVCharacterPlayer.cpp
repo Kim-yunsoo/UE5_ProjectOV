@@ -671,50 +671,18 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	AimOffset(DeltaSeconds);
 
-	if (GetWorld()->TimeSince(InteractionData.LastInteractionCheckTime) > InteractionCheckFrequency)
-	{
-		PerformInteractionCheck();
-	}
+	// if (GetWorld()->TimeSince(InteractionData.LastInteractionCheckTime) > InteractionCheckFrequency)
+	// {
+	// 	PerformInteractionCheck();
+	// }
 }
 
-void AOVCharacterPlayer::PerformInteractionCheck()
+void AOVCharacterPlayer::PerformInteractionCheck(AActor* MyActor)
 {
-	//todo
-	InteractionData.LastInteractionCheckTime = GetWorld()->GetTimeSeconds();
 
-	FVector TraceStart{GetPawnViewLocation()}; //폰의 뷰 위치가 시작 자동으로 눈 높의를 나타내는 특정 값으로 초기화
-	FVector TraceEnd{TraceStart + (GetViewRotation().Vector() * InteractionCheckDistance)}; //캐릭터 컨트롤러의 회전 값
-
-	float LookDirection = FVector::DotProduct(GetActorForwardVector(), GetViewRotation().Vector());
-
-	if (LookDirection > 0) //시선 벡터가 양수인 경우 앞을 보고 있다는 의미니까! 
+	if (MyActor->GetClass()->ImplementsInterface(UOVInteractionInterface::StaticClass()))
 	{
-		DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f, 0, 2.0f);
-
-		FCollisionQueryParams QueryParams;
-		QueryParams.AddIgnoredActor(this);
-		FHitResult TraceHit;
-
-		if (GetWorld()->LineTraceSingleByChannel(TraceHit, TraceStart, TraceEnd, ECC_Visibility, QueryParams))
-		{
-			if (TraceHit.GetActor()->GetClass()->ImplementsInterface(UOVInteractionInterface::StaticClass()))
-			{
-				//특정 인터페이스가 있는지 확인 
-				//const float Distance = (TraceStart - TraceHit.ImpactPoint).Size();
-
-				if (TraceHit.GetActor() != InteractionData.CurrentInteractable )
-				{
-					FoundInteractable(TraceHit.GetActor()); // 상호작용 가능한 액터를 찾음
-					return;
-				}
-
-				if (TraceHit.GetActor() == InteractionData.CurrentInteractable)
-				{
-					return; // 여전히 같은 것을 보고 있다
-				}
-			}
-		}
-		NoInteractableFound(); //아무것도 못찾은 경우 반환 
+		FoundInteractable(MyActor);
 	}
 }
 
@@ -759,7 +727,7 @@ void AOVCharacterPlayer::NoInteractableFound()
 
 void AOVCharacterPlayer::BeginInteract()
 {
-	PerformInteractionCheck(); //보고 있다는 것을 확인
+	//PerformInteractionCheck(); //보고 있다는 것을 확인
 
 	if (InteractionData.CurrentInteractable)
 	{

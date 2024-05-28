@@ -2,8 +2,8 @@
 
 
 #include "Object/OVPickup.h"
-
 #include "Component/OVInventoryComponent.h"
+#include "Components/BoxComponent.h"
 #include "Item/OVItemBase.h"
 
 // Sets default values
@@ -12,14 +12,22 @@ AOVPickup::AOVPickup()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PickupMesh"));
+	PickupMesh->SetupAttachment(Trigger);
+	PickupMesh->SetMobility(EComponentMobility::Movable);
 	PickupMesh->SetSimulatePhysics(true);
 	SetRootComponent(PickupMesh);
+	
+	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
+	Trigger->SetupAttachment(PickupMesh);
+    Trigger->SetMobility(EComponentMobility::Movable);
 }
 
 // Called when the game starts or when spawned
 void AOVPickup::BeginPlay()
 {
 	Super::BeginPlay();
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AOVPickup::OnTriggerEnter);
+	Trigger->OnComponentEndOverlap.AddDynamic(this, &AOVPickup::OnTriggerExit);
 
 	InitializePickup(UOVItemBase::StaticClass(),ItemQuantity);
 	
@@ -124,6 +132,28 @@ void AOVPickup::TakePickup(const AOVCharacterPlayer* Taker)
 		}
 	}
 }
+
+void AOVPickup::OnTriggerEnter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	AOVCharacterPlayer* MyPlayer = Cast<AOVCharacterPlayer>(OtherActor);
+	if(MyPlayer)
+	{
+		MyPlayer->PerformInteractionCheck(this);
+	}
+}
+
+void AOVPickup::OnTriggerExit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex)
+{
+	AOVCharacterPlayer* MyPlayer = Cast<AOVCharacterPlayer>(OtherActor);
+	if(MyPlayer)
+	{
+		MyPlayer->NoInteractableFound();
+	}
+}
+
+
 
 void AOVPickup::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) //에디터에서 메쉬를 바꿀 때 바로 로드되도록 해줌
 {

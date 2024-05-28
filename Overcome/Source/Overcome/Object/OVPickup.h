@@ -8,6 +8,7 @@
 #include "Interface/OVInteractionInterface.h"
 #include "OVPickup.generated.h"
 
+class UBoxComponent;
 class UDataTable;
 class UOVItemBase;
 
@@ -44,6 +45,9 @@ protected:
 	int32 ItemQuantity;
 	UPROPERTY(VisibleInstanceOnly, Category = "Pickup | Interaction")
 	FInteractableData InstanceInteractableData;
+
+	UPROPERTY(EditAnywhere, Category = "Pickup|Trigger")
+	TObjectPtr<UBoxComponent> Trigger;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -52,6 +56,12 @@ protected:
 
 
 	void TakePickup(const AOVCharacterPlayer* Taker);
+
+	UFUNCTION()
+	void OnTriggerEnter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnTriggerExit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 #if WITH_EDITOR
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
