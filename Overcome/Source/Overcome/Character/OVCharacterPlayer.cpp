@@ -679,7 +679,6 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 
 void AOVCharacterPlayer::PerformInteractionCheck(AActor* MyActor)
 {
-
 	if (MyActor->GetClass()->ImplementsInterface(UOVInteractionInterface::StaticClass()))
 	{
 		FoundInteractable(MyActor);
