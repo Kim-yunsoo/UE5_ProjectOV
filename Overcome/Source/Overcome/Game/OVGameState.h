@@ -10,6 +10,7 @@
  * 
  */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBossHpChanged, float, NewHp);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBossAttackStateChanged, bool, bIsAttacking);
 
 UCLASS()
 class OVERCOME_API AOVGameState : public AGameStateBase
@@ -19,16 +20,20 @@ class OVERCOME_API AOVGameState : public AGameStateBase
 public:
 	AOVGameState();
 
-	// 보스 HP를 설정하는 함수
 	void SetBossHp(float NewHp);
 
-	// 보스 HP를 가져오는 함수
 	float GetBossHp() const;
 
-	// 보스 HP 변경 이벤트
+	void BossState(bool start);
+	
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnBossHpChanged OnBossHpChanged;
 
+	//공격 상태인지
+	FOnBossAttackStateChanged OnBossAttackState;
+
 private:
 	float BossHp;
+
+	bool BossStart;
 };

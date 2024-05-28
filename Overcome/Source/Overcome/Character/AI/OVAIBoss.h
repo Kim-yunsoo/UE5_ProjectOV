@@ -12,6 +12,7 @@ class UOVHUDWidget;
 /**
  * 
  */
+
 UCLASS()
 class OVERCOME_API AOVAIBoss : public AOVCharacterBase, public IOVEnemyAIInterface
 {
@@ -26,9 +27,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	FAIEnemyAttackFinished OnDefaultAttackFinished;
 
 protected:
-	FAIEnemyAttackFinished OnDefaultAttackFinished;
+	
 	
 	virtual void SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished) override;
 	virtual void DefaultAttack() override;
@@ -51,7 +53,9 @@ protected:
 
 	virtual  void SetMovementSpeed(E_MovementSpeed SpeedValue) override;
 
-
+	UPROPERTY()
+	uint8 bIsFirst : 1;
+	
 	UPROPERTY()
 	uint8 bIsEquipSword : 1;
 

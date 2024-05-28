@@ -529,7 +529,7 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 	UOVBossHpWidget* BossHpWidget = InUserWidget->BossHpWidget;
 	if(BossHpWidget)
 	{
-		//InUserWidget->UpdateBossUI(false);
+		InUserWidget->UpdateBossUI(false);
 		// BossHpWidget->UpdateHpBar(Stat->GetCurrentHp());
 		// Stat->OnHpchanged.AddUObject(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
 		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))

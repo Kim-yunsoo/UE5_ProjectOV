@@ -8,6 +8,7 @@
 
 UOVBossHpWidget::UOVBossHpWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
+	MaxHp = 500;
 }
 
 void UOVBossHpWidget::UpdateBossUI(bool bIsVisible)
@@ -27,8 +28,6 @@ void UOVBossHpWidget::NativeConstruct()
 	BossHpProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("ProgressBar")));
 
 	BossText = Cast<UTextBlock>(GetWidgetFromName(TEXT("BossName")));
-
-
 }
 
 void UOVBossHpWidget::UpdateHpBar(float NewCurrentHp)
@@ -36,6 +35,7 @@ void UOVBossHpWidget::UpdateHpBar(float NewCurrentHp)
 	ensure(MaxHp > 0.0f);
 	if(BossHpProgressBar)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Boss uypdateHpbar %f"),  NewCurrentHp);
 		BossHpProgressBar->SetPercent(NewCurrentHp/MaxHp);
 	}
 	CurrentHp = NewCurrentHp;

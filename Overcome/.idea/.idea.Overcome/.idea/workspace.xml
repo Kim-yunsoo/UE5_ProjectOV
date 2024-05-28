@@ -9,14 +9,15 @@
   <component name="ChangeListManager">
     <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_BossHpBar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_BossHpBar.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVCharacterStatComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVCharacterStatComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVBossHpWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVBossHpWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.h" afterDir="false" />
     </list>
@@ -71,6 +72,7 @@
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Game/OVGameState.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVAnimationAttackInterface.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVAnimationAttackInterface.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVCharacterAIInterface.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -204,7 +206,7 @@
       <workItem from="1716528482931" duration="4633000" />
       <workItem from="1716695280869" duration="23098000" />
       <workItem from="1716775439148" duration="37890000" />
-      <workItem from="1716854637635" duration="2883000" />
+      <workItem from="1716854637635" duration="8074000" />
     </task>
     <servers />
   </component>

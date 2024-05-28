@@ -17,6 +17,8 @@ class OVERCOME_API UOVHUDWidget : public UUserWidget
 public:
 	UOVHUDWidget(const FObjectInitializer& ObjectInitializer);
 	void UpdateTarget(bool bIsShowUI);
+
+	UFUNCTION()
 	void UpdateBossUI(bool bIsShowUI);
 public:
 	virtual void NativeConstruct() override;

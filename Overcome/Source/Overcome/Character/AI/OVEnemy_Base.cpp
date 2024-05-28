@@ -29,7 +29,7 @@ AOVEnemy_Base::AOVEnemy_Base()
 	
 	bIsEquipSword = false;
 	bIsWieldingWeapon = false;
-
+	bIsFirst = true;
 	//Stat->SetMaxHp(200);
 }
 
@@ -135,6 +135,7 @@ void AOVEnemy_Base::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInt
 void AOVEnemy_Base::SetState(E_AIState AIStateValue)
 {
 	AIState = AIStateValue;
+
 }
 
 E_AIState AOVEnemy_Base::GetState()

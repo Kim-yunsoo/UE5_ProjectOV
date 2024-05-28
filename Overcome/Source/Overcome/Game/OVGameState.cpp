@@ -6,6 +6,7 @@
 AOVGameState::AOVGameState()
 {
 	BossHp = 100.0f;
+	BossStart = false;
 }
 
 void AOVGameState::SetBossHp(float NewHp)
@@ -17,4 +18,10 @@ void AOVGameState::SetBossHp(float NewHp)
 float AOVGameState::GetBossHp() const
 {
 	return BossHp;
+}
+
+void AOVGameState::BossState(bool start)
+{
+	BossStart = start;
+	OnBossAttackState.Broadcast(BossStart);
 }

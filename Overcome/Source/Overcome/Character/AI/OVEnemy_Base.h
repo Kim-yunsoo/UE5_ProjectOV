@@ -11,6 +11,7 @@
 class UOVHUDWidget;
 class AOVSword;
 
+
 UCLASS()
 class OVERCOME_API AOVEnemy_Base : public AOVCharacterBase, public IOVEnemyAIInterface
 {
@@ -58,6 +59,9 @@ protected:
 
 	UPROPERTY()
 	uint8 bIsWieldingWeapon : 1;
+	
+	UPROPERTY()
+	uint8 bIsFirst : 1;
 
 	E_MovementSpeed MovementSpeed;
 	
@@ -73,6 +77,7 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	E_AIState AIState;
+
 
 
 public:

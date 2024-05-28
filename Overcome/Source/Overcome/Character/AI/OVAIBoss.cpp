@@ -4,7 +4,9 @@
 #include "Character/AI/OVAIBoss.h"
 #include "OVAIBossController.h"
 #include "Components/WidgetComponent.h"
+#include "Game/OVGameState.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Stat/OVCharacterStatComponent.h"
 #include "UI/OVBossHpWidget.h"
 #include "UI/OVHUDWidget.h"
@@ -46,6 +48,7 @@ AOVAIBoss::AOVAIBoss()
 	
 	bIsEquipSword = false;
 	bIsWieldingWeapon = false;
+	bIsFirst = true;
 }
 
 void AOVAIBoss::BeginPlay()
@@ -119,14 +122,21 @@ void AOVAIBoss::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterru
 void AOVAIBoss::SetState(E_AIState AIStateValue)
 {
 	AIState = AIStateValue;
+	if(bIsFirst && AIState == E_AIState::Attacking)
+	{
+		bIsFirst = false;
+		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
+		{
+			GameState->BossState(true);
+			UE_LOG(LogTemp,Warning, TEXT("SetState BOSS"));
+		}
+	}
 }
 
 E_AIState AOVAIBoss::GetState()
 {
 	return AIState;
 }
-
-
 
 // void AOVAIBoss::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 // {
