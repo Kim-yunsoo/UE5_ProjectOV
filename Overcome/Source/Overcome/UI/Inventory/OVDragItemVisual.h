@@ -16,7 +16,7 @@ class OVERCOME_API UOVDragItemVisual : public UUserWidget
 {
 	GENERATED_BODY()
 
-protected:
+public:
 	UPROPERTY(VisibleAnywhere, Category = "Drag Item Visual",meta = (BindWidget))
 	TObjectPtr<UBorder> ItemBorder;
 	

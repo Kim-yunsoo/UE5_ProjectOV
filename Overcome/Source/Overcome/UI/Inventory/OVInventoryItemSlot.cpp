@@ -3,11 +3,13 @@
 
 #include "UI/Inventory/OVInventoryItemSlot.h"
 
+#include "OVItemDragDropOperation.h"
 #include "Components/Border.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Item/OVItemBase.h"
 #include "UI/Inventory/OVInventoryTooltip.h"
+#include "UI/Inventory/OVDragItemVisual.h"
 
 void UOVInventoryItemSlot::NativeOnInitialized()
 {
@@ -68,6 +70,21 @@ void UOVInventoryItemSlot::NativeOnDragDetected(const FGeometry& InGeometry, con
 	UDragDropOperation*& OutOperation)
 {
 	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
+
+	if(DragItemVisualClass)
+	{
+		const TObjectPtr<UOVDragItemVisual> DragVisual = CreateWidget<UOVDragItemVisual>(this, DragItemVisualClass);
+		DragVisual->ItemIcon->SetBrushFromTexture(ItemReference->AssetData.Icon);
+		DragVisual->ItemBorder->SetBrushColor(ItemBorder->GetBrushColor());
+		DragVisual->ItemQuantity->SetText(FText::AsNumber(ItemReference->Quantity));
+
+		UOVItemDragDropOperation* DragItemOperation = NewObject<UOVItemDragDropOperation>();
+		DragItemOperation->SourceItem =ItemReference;
+		DragItemOperation->SourceInventory = ItemReference->OwningInventory;
+
+		DragItemOperation->DefaultDragVisual = DragVisual; // TObjectPtr 의 경우 가능
+		
+	}
 }
 
 bool UOVInventoryItemSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
