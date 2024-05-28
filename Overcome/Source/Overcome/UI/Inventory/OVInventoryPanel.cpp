@@ -4,6 +4,7 @@
 #include "UI/Inventory/OVInventoryPanel.h"
 
 #include "OVInventoryItemSlot.h"
+#include "OVItemDragDropOperation.h"
 #include "Character/OVCharacterPlayer.h"
 #include "Component/OVInventoryComponent.h"
 #include "Components/TextBlock.h"
@@ -55,5 +56,13 @@ void UOVInventoryPanel::RefreshInventory()
 bool UOVInventoryPanel::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
 	UDragDropOperation* InOperation)
 {
-	return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
+	//return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
+	const UOVItemDragDropOperation* ItemDragDrop = Cast<UOVItemDragDropOperation>(InOperation);
+
+	if(ItemDragDrop->SourceItem && InventoryReference)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Detected an item drop on InventoryPanel"));
+		return true;
+	}
+	return false;
 }

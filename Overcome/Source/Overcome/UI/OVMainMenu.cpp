@@ -18,7 +18,7 @@ void UOVMainMenu::NativeConstruct()
 }
 
 bool UOVMainMenu::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
-	UDragDropOperation* InOperation)
+	UDragDropOperation* InOperation) //Main보다 먼저 감지하는듯한 ...
 {
 	//return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 
