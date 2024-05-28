@@ -3,8 +3,11 @@
 
 #include "Game/OVGameMode.h"
 
+#include "OVGameState.h"
+
 AOVGameMode::AOVGameMode()
 {
+	GameStateClass = AOVGameState::StaticClass();
 	static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(TEXT("/Game/Blueprint/Character/BP_OVCharacterPlayer.BP_OVCharacterPlayer_C"));
 	if (DefaultPawnClassRef.Class)
 	{

@@ -8,8 +8,7 @@
 #include "OVEnemy_Base.generated.h"
 
 
-
-
+class UOVHUDWidget;
 class AOVSword;
 
 UCLASS()
@@ -74,6 +73,8 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	E_AIState AIState;
+
+
 public:
 	UFUNCTION()
 	virtual void SetState(E_AIState AIStateValue) override;

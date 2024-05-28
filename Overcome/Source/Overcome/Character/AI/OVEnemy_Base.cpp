@@ -45,7 +45,6 @@ void AOVEnemy_Base::BeginPlay()
 void AOVEnemy_Base::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AOVEnemy_Base::SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished)

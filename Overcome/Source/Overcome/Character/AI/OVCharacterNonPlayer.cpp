@@ -72,8 +72,6 @@ void AOVCharacterNonPlayer::PlayDeadAnimation()
 void AOVCharacterNonPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-
-
 }
 
 float AOVCharacterNonPlayer::GetAIPatrolRadius()

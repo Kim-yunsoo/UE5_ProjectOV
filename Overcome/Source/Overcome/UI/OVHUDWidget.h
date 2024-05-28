@@ -17,14 +17,16 @@ class OVERCOME_API UOVHUDWidget : public UUserWidget
 public:
 	UOVHUDWidget(const FObjectInitializer& ObjectInitializer);
 	void UpdateTarget(bool bIsShowUI);
-
-protected:
+	void UpdateBossUI(bool bIsShowUI);
+public:
 	virtual void NativeConstruct() override;
 
 	UPROPERTY()
 	TObjectPtr<class UOVTargetWidget> TargetWidget;
-public:
+	
 	UPROPERTY()
 	TObjectPtr<class UOVStatWidget> StatWidget;
-	
+
+	UPROPERTY()
+	TObjectPtr<class UOVBossHpWidget> BossHpWidget;
 };

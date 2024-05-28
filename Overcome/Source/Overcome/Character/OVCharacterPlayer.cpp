@@ -11,12 +11,15 @@
 #include "EnhancedInputSubsystems.h"
 #include "Gun/OVGun.h"
 #include "OVCharacterControlData.h"
+#include "Game/OVGameState.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Item/OVHpItemData.h"
+#include "Kismet/GameplayStatics.h"
 #include "Skill/OVShieldSkill.h"
 #include "Skill/OVTeleportSkill.h"
 #include "Stat/OVCharacterStatComponent.h"
+#include "UI/OVBossHpWidget.h"
 #include "UI/OVHUDWidget.h"
 #include "UI/OVStatWidget.h"
 
@@ -523,6 +526,19 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 {
 	OnAimChanged.AddUObject(InUserWidget, &UOVHUDWidget::UpdateTarget);
 	UOVStatWidget* StatWidget = InUserWidget->StatWidget;
+	UOVBossHpWidget* BossHpWidget = InUserWidget->BossHpWidget;
+	if(BossHpWidget)
+	{
+		//InUserWidget->UpdateBossUI(false);
+		// BossHpWidget->UpdateHpBar(Stat->GetCurrentHp());
+		// Stat->OnHpchanged.AddUObject(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
+		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
+		{
+			BossHpWidget->UpdateHpBar(GameState->GetBossHp());
+			UE_LOG(LogTemp, Warning, TEXT(" BOSS %f"), GameState->GetBossHp());
+			GameState->OnBossHpChanged.AddDynamic(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
+		}
+	}
 	if(StatWidget)
 	{
 		StatWidget->UpdateStatWidget(Stat->GetCurrentHp(), Stat->GetCurrentMp(), Stat->GetCurrentAttack());
@@ -551,6 +567,8 @@ void AOVCharacterPlayer::ShieldSkill(const FInputActionValue& Value)
 		Stat->SetMp(MpIncreaseAmount);
 	}
 }
+
+
 
 
 void AOVCharacterPlayer::ServerRPCAiming_Implementation()

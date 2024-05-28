@@ -37,7 +37,9 @@ public:
 	FORCEINLINE float GetCurrentAttack() {return CurrentAttack;}
 	float ApplyDamage(float InDamage);
 	
-
+	void SetIsBoss(bool bIsBoss) { bIsBossCharacter = bIsBoss; }
+	bool IsBoss() const { return bIsBossCharacter; }
+	
 	void SetHp(float NewHp);
 	void SetMp(float NewMp);
 	void SetAttack(float NewAttack);
@@ -54,5 +56,9 @@ protected:
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentAttack;
-		
+
+
+	
+	UPROPERTY(VisibleInstanceOnly, Category = "Boss")
+	bool bIsBossCharacter;
 };

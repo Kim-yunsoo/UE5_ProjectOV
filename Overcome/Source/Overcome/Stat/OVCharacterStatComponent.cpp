@@ -3,13 +3,17 @@
 
 #include "Stat/OVCharacterStatComponent.h"
 
+#include "Game/OVGameState.h"
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values for this component's properties
 UOVCharacterStatComponent::UOVCharacterStatComponent()
 {
 	//MaxHp = 100;
 	CurrentHp = MaxHp;
-	CurrentAttack = 10;
+	CurrentAttack = 30;
 	CurrentMp = 100;
+	bIsBossCharacter = false;
 }
 
 
@@ -31,6 +35,13 @@ float UOVCharacterStatComponent::ApplyDamage(float InDamage)
 	{
 		OnHpZero.Broadcast();
 	}
+	if (bIsBossCharacter)
+	{
+		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
+		{
+			GameState->SetBossHp(CurrentHp);
+		}
+	}
 	return ActualDamage;
 }
 
@@ -39,6 +50,13 @@ void UOVCharacterStatComponent::SetHp(float NewHp)
 	CurrentHp = FMath::Clamp<float>(NewHp, 0.0f, MaxHp);
 	OnHpchanged.Broadcast(CurrentHp);
 	OnStatChanged.Broadcast(CurrentHp, CurrentMp, CurrentAttack);
+	if (bIsBossCharacter)
+	{
+		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
+		{
+			GameState->SetBossHp(CurrentHp);
+		}
+	}
 }
 
 void UOVCharacterStatComponent::SetMp(float NewMp)
