@@ -3,6 +3,7 @@
 
 #include "Component/OVInventoryComponent.h"
 
+#include "IDetailTreeNode.h"
 #include "Item/OVItemBase.h"
 
 // Sets default values for this component's properties
@@ -145,13 +146,41 @@ FItemAddResult UOVInventoryComponent::HandleNonStackableItems(UOVItemBase* Input
 
 int32 UOVInventoryComponent::HandleStackableItems(UOVItemBase* ItemIn, int32 RequestedAddAmount)
 {
-	return 0;	
+	if(RequestedAddAmount<=0)
+	{
+		return 0;
+	}
+
+	int32 AmountToDistribute = RequestedAddAmount;
+
+	UOVItemBase* ExistingItem = FindNextPartialStack(ItemIn);
+
+	while (ExistingItem) //부분적으로 넣을 스택이 있다면?
+	{
+		//const int32 AmountToMakeFullStack = CalculateNumberForFullStack(ExistingItem, AmountToDistribute);
+		ExistingItem->SetQuantity(ExistingItem->Quantity + RequestedAddAmount); //요청한거 그대로 올려두기
+		ItemIn->SetQuantity(0);  //바닥에 남은 것 -> 다 줍기! 
+
+		OnInventoryUpdated.Broadcast();
+		return RequestedAddAmount;// 전부 추가하도록 요청 금액 리턴 
+	}
+
+	if(InventoryContents.Num()+1 <= InventorySlotsCapacity) // 다 넣을 수 있을 경우와 인벤토리 용량이 남은 경우 
+	{
+		const int32 AddAmount = RequestedAddAmount;
+		ItemIn->SetQuantity(0);  //바닥에 남은 것 -> 다 줍기!
+		AddNewItem(ItemIn->CreateItemCopy(),RequestedAddAmount);
+		OnInventoryUpdated.Broadcast();
+		return RequestedAddAmount;
+	}
+	return 0;
+
 }
 
 int32 UOVInventoryComponent::CalculateNumberForFullStack(UOVItemBase* StackableItem, int32 InitialRequestedAddAmount)
 {
 	const int32 AddAmountToMakeFullStack = StackableItem->ItemNumericData.MaxStackSize - StackableItem->Quantity;
-	//스택 남은 것
+	// 스택, 
 	return FMath::Min(InitialRequestedAddAmount, AddAmountToMakeFullStack);
 }
 

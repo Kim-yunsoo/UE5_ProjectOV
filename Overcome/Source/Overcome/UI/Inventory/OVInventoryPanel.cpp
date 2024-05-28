@@ -8,6 +8,7 @@
 #include "Component/OVInventoryComponent.h"
 #include "Components/TextBlock.h"
 #include "Components/WrapBox.h"
+#include "Item/OVItemBase.h"
 
 void UOVInventoryPanel::NativeOnInitialized()
 {
@@ -40,7 +41,12 @@ void UOVInventoryPanel::RefreshInventory()
 	{
 		InventoryPanel->ClearChildren(); // 추가하기 전에 자식 UI를 정리
 
-		for 
+		for(UOVItemBase* const& InventoryItem : InventoryReference ->GetInventoryContents())
+		{
+			UOVInventoryItemSlot* ItemSlot = CreateWidget<UOVInventoryItemSlot>(this, InventorySlotClass);
+			ItemSlot->SetItemReference(InventoryItem);
+			InventoryPanel->AddChildToWrapBox(ItemSlot);
+		}
 		
 		
 	}

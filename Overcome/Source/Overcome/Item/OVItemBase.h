@@ -19,9 +19,6 @@ class OVERCOME_API UOVItemBase : public UObject
 
 public:
 
-	/**
-	 * 
-	 */
 	UPROPERTY()
 	TObjectPtr<UOVInventoryComponent> OwningInventory;
 

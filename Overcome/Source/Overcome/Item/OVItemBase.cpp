@@ -40,7 +40,7 @@ void UOVItemBase::SetQuantity(const int32 NewQuantity)
 
 		if(OwningInventory)
 		{
-			if(Quantity<=0)
+			if(Quantity<=0) //수량이 0과 같다면? 
 			{
 				OwningInventory->RemoveSingleInstanceOfItem(this); //수량이 0이면 인벤토리에서 아이템을 삭제한다. 
 			} 
