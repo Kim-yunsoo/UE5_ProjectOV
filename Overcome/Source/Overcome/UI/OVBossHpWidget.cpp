@@ -35,7 +35,7 @@ void UOVBossHpWidget::UpdateHpBar(float NewCurrentHp)
 	ensure(MaxHp > 0.0f);
 	if(BossHpProgressBar)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Boss uypdateHpbar %f"),  NewCurrentHp);
+		//UE_LOG(LogTemp, Warning, TEXT("Boss uypdateHpbar %f"),  NewCurrentHp);
 		BossHpProgressBar->SetPercent(NewCurrentHp/MaxHp);
 	}
 	CurrentHp = NewCurrentHp;

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "OVEnemy_Base.h"
-#include "Interface/OVCharacterHUDInterface.h"
 #include "Sword/OVSword.h"
 #include "OVAIBoss.generated.h"
 

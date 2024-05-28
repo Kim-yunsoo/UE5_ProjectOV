@@ -3,14 +3,10 @@
 
 #include "Character/AI/OVAIBoss.h"
 #include "OVAIBossController.h"
-#include "Components/WidgetComponent.h"
 #include "Game/OVGameState.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Stat/OVCharacterStatComponent.h"
-#include "UI/OVBossHpWidget.h"
-#include "UI/OVHUDWidget.h"
-#include "UI/OVWidgetComponent.h"
 
 AOVAIBoss::AOVAIBoss()
 {
@@ -27,18 +23,6 @@ AOVAIBoss::AOVAIBoss()
 	}
 	Stat->SetIsBoss(true);
 	Stat->SetMaxHp(500);
-
-	// HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
-	// HpBar->SetupAttachment(GetMesh());
-	// HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
-	// static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
-	// if (HpBarWidgetRef.Class)
-	// {
-	// 	HpBar->SetWidgetClass(HpBarWidgetRef.Class);
-	// 	HpBar->SetWidgetSpace(EWidgetSpace::Screen);
-	// 	HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
-	// 	HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	// }
 
 	Sword = CreateDefaultSubobject<AOVSword>(TEXT("Sword"));
 	Sword_l = CreateDefaultSubobject<AOVSword>(TEXT("Sword_l"));
@@ -152,7 +136,7 @@ E_AIState AOVAIBoss::GetState()
 
 void AOVAIBoss::SetMovementSpeed(E_MovementSpeed SpeedValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Boss SetMovementSpeed"));
+	//UE_LOG(LogTemp, Warning, TEXT("Boss SetMovementSpeed"));
 
 	if(SpeedValue == E_MovementSpeed::Idle)
 	{

@@ -6,7 +6,6 @@
 #include "OVBossHpWidget.h"
 #include "OVStatWidget.h"
 #include "OVTargetWidget.h"
-#include "Character/AI/OVAIBoss.h"
 #include "Components/VerticalBox.h"
 #include "Game/OVGameState.h"
 #include "Interface/OVCharacterHUDInterface.h"

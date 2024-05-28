@@ -28,4 +28,5 @@ EBTNodeResult::Type UBTTask_WieldSword::ExecuteTask(UBehaviorTreeComponent& Owne
 
 UBTTask_WieldSword::UBTTask_WieldSword()
 {
+	NodeName = TEXT("EquipWeapon");
 }

@@ -3,6 +3,8 @@
 
 #include "AI/Task/BTTask_SetSTateAsPassive.h"
 
+#include "AI/OVAI.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Character/AI/OVAIBoss.h"
 #include "Character/AI/OVAIBossController.h"
 #include "Character/AI/OVAIEnemyBaseController.h"
@@ -28,6 +30,7 @@ EBTNodeResult::Type UBTTask_SetSTateAsPassive::ExecuteTask(UBehaviorTreeComponen
 		return EBTNodeResult::Failed;
 	}
 	AIPawn->SetState(E_AIState::Passive);
+	OwnerComp.GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(AIPawn->GetState()));
 	return EBTNodeResult::Succeeded;
 
 }

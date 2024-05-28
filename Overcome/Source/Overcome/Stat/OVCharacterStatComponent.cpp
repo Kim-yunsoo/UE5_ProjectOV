@@ -39,7 +39,7 @@ float UOVCharacterStatComponent::ApplyDamage(float InDamage)
 	{
 		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("ApplyDamage Boss %f"), PrevHp - ActualDamage);
+			//UE_LOG(LogTemp, Warning, TEXT("ApplyDamage Boss %f"), PrevHp - ActualDamage);
 			GameState->SetBossHp(CurrentHp);
 		}
 	}

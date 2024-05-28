@@ -5,10 +5,8 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "OVCharacterControlData.h"
-#include "Components/WidgetComponent.h"
 #include "Engine/DamageEvents.h"
 #include "Stat/OVCharacterStatComponent.h"
-#include "UI/OVWidgetComponent.h"
 #include "UI/OVHpBarWidget.h"
 #include "Physics/OVCollision.h"
 
@@ -68,18 +66,7 @@ AOVCharacterBase::AOVCharacterBase()
 	//Stat Component
 	Stat = CreateDefaultSubobject<UOVCharacterStatComponent>(TEXT("Stat"));
 
-	// //Widget Component
-	// HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
-	// HpBar->SetupAttachment(GetMesh());
-	// HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
-	// static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
-	// if (HpBarWidgetRef.Class)
-	// {
-	// 	HpBar->SetWidgetClass(HpBarWidgetRef.Class);
-	// 	HpBar->SetWidgetSpace(EWidgetSpace::Screen);
-	// 	HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
-	// 	HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	// }
+
 }
 
 void AOVCharacterBase::PostInitializeComponents()

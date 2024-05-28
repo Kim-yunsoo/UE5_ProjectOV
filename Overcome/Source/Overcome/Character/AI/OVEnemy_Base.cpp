@@ -105,7 +105,7 @@ float AOVEnemy_Base::GetIsWieldingWeapon()
 
 void AOVEnemy_Base::SetMovementSpeed(E_MovementSpeed SpeedValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Base SetMovementSpeed"));
+	//UE_LOG(LogTemp, Warning, TEXT("Base SetMovementSpeed"));
 
 	if(SpeedValue == E_MovementSpeed::Idle)
 	{

@@ -8,6 +8,7 @@
 
 UBTT_SheathSword::UBTT_SheathSword()
 {
+	NodeName = TEXT("UnEquipWeapon");
 }
 
 EBTNodeResult::Type UBTT_SheathSword::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
