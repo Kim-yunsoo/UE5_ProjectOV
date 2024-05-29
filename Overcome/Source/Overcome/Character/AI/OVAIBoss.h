@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "OVEnemy_Base.h"
+#include "Interface/OVDamagableInterface.h"
 #include "Sword/OVSword.h"
 #include "OVAIBoss.generated.h"
 
@@ -13,7 +14,7 @@ class UOVHUDWidget;
  */
 
 UCLASS()
-class OVERCOME_API AOVAIBoss : public AOVCharacterBase, public IOVEnemyAIInterface
+class OVERCOME_API AOVAIBoss : public AOVCharacterBase, public IOVEnemyAIInterface, public IOVDamagableInterface
 {
 	GENERATED_BODY()
 public:
@@ -85,4 +86,23 @@ public:
 	virtual E_AIState GetState() override;
 
 
+	virtual void PostInitializeComponents() override;
+
+	//Damage
+	virtual float GetCurrentHealth();
+	virtual float GetMaxHealth();
+	virtual float Heal(float Amount); 
+	virtual bool TakeDamage(FDamageInfo DamageInfo);
+
+	void Blocked(bool CanBeParried);
+	void DamageResponse(E_DamageResponses DamageResponses);
+	virtual void SetDead() override;
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UOVDamageComponent> DamageComponent;
+
+	//TEST ATTACK
+	UFUNCTION()
+	void TestAttack();
+	
 };

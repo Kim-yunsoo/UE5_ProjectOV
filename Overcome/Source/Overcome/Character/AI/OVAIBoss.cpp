@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Stat/OVCharacterStatComponent.h"
+#include "Stat/OVDamageComponent.h"
 
 AOVAIBoss::AOVAIBoss()
 {
@@ -22,7 +23,9 @@ AOVAIBoss::AOVAIBoss()
 	}
 	Stat->SetIsBoss(true);
 	Stat->SetMaxHp(500);
-
+	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
+	DamageComponent->SetMaxHealth(500);
+	
 	Sword = CreateDefaultSubobject<AOVSword>(TEXT("Sword"));
 	Sword_l = CreateDefaultSubobject<AOVSword>(TEXT("Sword_l"));
 	
@@ -37,6 +40,15 @@ AOVAIBoss::AOVAIBoss()
 void AOVAIBoss::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FTimerHandle DeadTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
+		                                       [&]()
+		                                       {
+			                                       TestAttack();
+		                                       }
+	                                       ), 2, false);
+	
 }
 
 void AOVAIBoss::Tick(float DeltaTime)
@@ -121,17 +133,85 @@ E_AIState AOVAIBoss::GetState()
 	return AIState;
 }
 
-// void AOVAIBoss::SetupHUDWidget(UOVHUDWidget* InUserWidget)
-// {
-// 	UOVBossHpWidget* BossWidget = InUserWidget->BossHpWidget;
-// 	if(BossWidget)
-// 	{
-// 		InUserWidget->UpdateBossUI(false);
-// 		UE_LOG(LogTemp, Warning, TEXT("BOSSWidget"));
-// 		//StatWidget->UpdateStatWidget(Stat->GetCurrentHp(), Stat->GetCurrentMp(), Stat->GetCurrentAttack());
-// 		//Stat->OnStatChanged.AddUObject(StatWidget, &UOVStatWidget::UpdateStatWidget);
-// 	}
-// }
+void AOVAIBoss::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	DamageComponent->OnDeath.AddUObject(this, &AOVAIBoss::SetDead);
+	DamageComponent->OnBlocked.AddUObject(this, &AOVAIBoss::Blocked);
+	DamageComponent->OnDamageResponse.AddUObject(this, &AOVAIBoss::DamageResponse);
+}
+
+float AOVAIBoss::GetCurrentHealth()
+{
+	return Stat->GetCurrentHp();
+}
+
+float AOVAIBoss::GetMaxHealth()
+{
+	return Stat->GetMaxHp();
+}
+
+float AOVAIBoss::Heal(float Amount)
+{
+	DamageComponent->Heal(Amount);
+	Stat->SetHp(DamageComponent->Health);
+	return DamageComponent->Health;
+}
+
+bool AOVAIBoss::TakeDamage(FDamageInfo DamageInfo)
+{
+	DamageComponent->TakeDamage(DamageInfo);
+	Stat->SetHp(DamageComponent->Health);
+	return true;
+}
+
+void AOVAIBoss::Blocked(bool CanBeParried)
+{
+	UE_LOG(LogTemp,Warning ,TEXT("Boss Blocked"));
+}
+
+void AOVAIBoss::DamageResponse(E_DamageResponses DamageResponses)
+{
+	UE_LOG(LogTemp,Warning ,TEXT("Boss DamageResponse"));
+
+}
+
+void AOVAIBoss::SetDead()
+{
+	//Super::SetDead();
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); //랙돌 만들기
+	UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
+}
+
+void AOVAIBoss::TestAttack()
+{
+	if(!DamageComponent->bIsDead)
+	{
+		TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
+		ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+		TArray<AActor*> ActorsToNotTargeting;
+		ActorsToNotTargeting.Add(this);
+		FVector Start = GetActorLocation();
+		FVector End = GetActorForwardVector() * 100 + Start;
+		FHitResult HitResult;
+		bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, 20, ObjectArray, false,ActorsToNotTargeting
+		,EDrawDebugTrace::ForDuration, HitResult,  true,
+				FLinearColor::Red, FLinearColor::Yellow, 1.f);
+
+		//테스트 공격 100 
+		FDamageInfo DamageInfo = {50, E_DamageType::Melee, E_DamageResponses::HitReaction, false, false, false, false };
+		if(bResult)
+		{
+			IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
+			if(DamagableInterface)
+			{
+				DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
+			}
+		}
+	}
+	
+}
 
 void AOVAIBoss::SetMovementSpeed(E_MovementSpeed SpeedValue)
 {

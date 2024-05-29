@@ -9,8 +9,11 @@
 #include "InputMappingContext.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "NiagaraFunctionLibrary.h"
 #include "Gun/OVGun.h"
 #include "OVCharacterControlData.h"
+#include "Evaluation/Blending/MovieSceneBlendType.h"
+#include "stat/OVDamageComponent.h"
 #include "Game/OVGameState.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -104,6 +107,12 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 		ShieldAction = ShieldActionRef.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UInputAction> HealActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_HealSkill.IA_OV_HealSkill'"));
+	if (nullptr != HealActionRef.Object)
+	{
+		 HealAction = HealActionRef.Object;
+	}
+
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
 
@@ -130,8 +139,10 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	bIsActiveShieldSkill = true;
 
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
+	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
 
 	Stat->SetMaxHp(100);
+	DamageComponent->SetMaxHealth(100);
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -163,7 +174,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Jumping);
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-	EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeCharacterControl);
+	EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::TestAttack);
 	EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderMove);
 	EnhancedInputComponent->BindAction(ShoulderLookActionX, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookX);
 	EnhancedInputComponent->BindAction(ShoulderLookActionY, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookY);
@@ -175,6 +186,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(WheelAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeWeapon);
 	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::TeleportSkill);
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
+	EnhancedInputComponent->BindAction(HealAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::HealSkill);
 }
 
 void AOVCharacterPlayer::SmoothInterpReturn(float Value)
@@ -469,7 +481,14 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 
 void AOVCharacterPlayer::SetDead()
 {
-	Super::SetDead();
+	//Super::SetDead();
+	// GetMesh()->SetSimulatePhysics(true);
+	// GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); //랙돌 만들기
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	if(PlayerController) //죽으면 키 입력 없애기
+	{
+		DisableInput(PlayerController);
+	}
 	UE_LOG(LogTemp,Warning ,TEXT("Character Dead"));
 }
 
@@ -568,11 +587,87 @@ void AOVCharacterPlayer::ShieldSkill(const FInputActionValue& Value)
 	}
 }
 
-
-
+void AOVCharacterPlayer::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	DamageComponent->OnDeath.AddUObject(this, &AOVCharacterPlayer::SetDead);
+	DamageComponent->OnBlocked.AddUObject(this, &AOVCharacterPlayer::Blocked);
+	DamageComponent->OnDamageResponse.AddUObject(this, &AOVCharacterPlayer::DamageResponse);
+}
 
 void AOVCharacterPlayer::ServerRPCAiming_Implementation()
 {
 	bIsAiming = true;
 }
+
+
+float AOVCharacterPlayer::GetCurrentHealth()
+{
+	return Stat->GetCurrentHp();
+}
+
+float AOVCharacterPlayer::GetMaxHealth()
+{
+	return Stat->GetMaxHp();
+}
+
+float AOVCharacterPlayer::Heal(float Amount) //스스로 힐하기
+{
+	DamageComponent->Heal(Amount);
+	Stat->SetHp(DamageComponent->Health);
+	return DamageComponent->Health;
+}
+
+bool AOVCharacterPlayer::TakeDamage(FDamageInfo DamageInfo)
+{
+	DamageComponent->TakeDamage(DamageInfo);
+	Stat->SetHp(DamageComponent->Health);
+	return true;
+}
+
+void AOVCharacterPlayer::Blocked(bool CanBeParried)
+{
+	UE_LOG(LogTemp,Warning ,TEXT("Character Blocked"));
+}
+
+void AOVCharacterPlayer::DamageResponse(E_DamageResponses DamageResponses)
+{
+	UE_LOG(LogTemp,Warning ,TEXT("Character DamageResponse"));
+
+}
+
+void AOVCharacterPlayer::TestAttack() //V키
+{
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
+	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+	TArray<AActor*> ActorsToNotTargeting;
+	ActorsToNotTargeting.Add(this);
+	FVector Start = GetActorLocation();
+	FVector End = GetActorForwardVector() * 100 + Start;
+	FHitResult HitResult;
+	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, 20, ObjectArray, false,ActorsToNotTargeting
+	,EDrawDebugTrace::ForDuration, HitResult,  true,
+			FLinearColor::Red, FLinearColor::Green, 1.f);
+
+	//테스트 공격 100 
+	FDamageInfo DamageInfo = {100, E_DamageType::Melee, E_DamageResponses::HitReaction, false, false, false, false };
+	if(bResult)
+	{
+		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
+		if(DamagableInterface)
+		{
+			DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
+		}
+	}
+
+	
+}
+
+void AOVCharacterPlayer::HealSkill(const FInputActionValue& Value)
+{
+	Heal(50);
+	//UE_LOG(LogTemp, Warning, TEXT("HealSkill"));
+}
+
+
 

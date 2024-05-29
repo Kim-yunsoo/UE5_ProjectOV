@@ -29,13 +29,13 @@ AOVAIBossController::AOVAIBossController()
 	{
 		BTAsset = BTAssetRef.Object;
 	}
-
 	SetPerceptionSystem();
 }
 
 void AOVAIBossController::RunAI()
 {
 	bool RunResult = RunBehaviorTree(BTAsset);
+	Boss->SetState(E_AIState::Passive);
 	ensure(RunResult);
 }
 
@@ -122,21 +122,12 @@ void AOVAIBossController::SetBlackBoardKey()
 
 void AOVAIBossController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	
-	if ((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating) && (
-		Actor == CharacterPlayer))
+	AOVCharacterPlayer* player = Cast<AOVCharacterPlayer>(Actor);
+	if ((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating) && player ) //&& (Actor == CharacterPlayer))
 	{
-		
-		// UBlackboardComponent* BlackboardPtr = Blackboard.Get();
-		// if (UseBlackboard(BBAsset, BlackboardPtr))
-		// {
-		// 	Blackboard->SetValueAsObject(BBKEY_ATTACKTARGET, CharacterPlayer);
-		// 	Blackboard->SetValueAsEnum(BBKEY_STATE, static_cast<uint8>(Boss->GetState()));
-		// }
 		Boss->SetState(E_AIState::Attacking);
 		UE_LOG(LogTemp, Warning, TEXT("Sight Attack"));
 		SetBlackBoardKey();
-		
 	}
 }
 
@@ -158,7 +149,7 @@ void AOVAIBossController::HandleSoundSense(AActor* Actor, FAIStimulus Stimulus)
 
 void AOVAIBossController::HandleDamageSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Damage"));
+	//UE_LOG(LogTemp, Warning, TEXT("Damage"));
 	if((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating))
 	{
 		Boss->SetState(E_AIState::Attacking);

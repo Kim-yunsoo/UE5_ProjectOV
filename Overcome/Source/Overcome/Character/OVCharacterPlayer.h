@@ -10,6 +10,7 @@
 #include "Interface/OVCharacterItemInterface.h"
 #include "Stat/OVCharacterStatComponent.h"
 #include "TurningInPlace.h"
+#include "Interface/OVDamagableInterface.h"
 #include "OVCharacterPlayer.generated.h"
 
 /**
@@ -33,7 +34,7 @@ struct FTakeItemDelegateWrapper
 };
 
 UCLASS()
-class OVERCOME_API AOVCharacterPlayer : public AOVCharacterBase, public IOVCharacterItemInterface, public IOVCharacterHUDInterface
+class OVERCOME_API AOVCharacterPlayer : public AOVCharacterBase, public IOVCharacterItemInterface, public IOVCharacterHUDInterface, public IOVDamagableInterface
 {
 	GENERATED_BODY()
 
@@ -225,5 +226,28 @@ public:
 	void TeleportSkill(const FInputActionValue& Value);
 	void ShieldSkill(const FInputActionValue& Value);
 
+	virtual void PostInitializeComponents() override;
 
+	//Damage
+	virtual float GetCurrentHealth();
+	virtual float GetMaxHealth();
+	virtual float Heal(float Amount); 
+	virtual bool TakeDamage(FDamageInfo DamageInfo);
+
+	void Blocked(bool CanBeParried);
+	void DamageResponse(E_DamageResponses DamageResponses);
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UOVDamageComponent> DamageComponent;
+
+
+	//TEST ATTACK
+	UFUNCTION()
+	void TestAttack();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> HealAction;
+
+	void HealSkill(const FInputActionValue& Value);
 };
