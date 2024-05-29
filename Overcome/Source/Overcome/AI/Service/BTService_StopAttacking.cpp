@@ -11,7 +11,7 @@
 
 UBTService_StopAttacking::UBTService_StopAttacking()
 {
-	NodeName = TEXT("StopAttacking");
+	NodeName = TEXT("StopAttackingIfTargetIsDead");
 	Interval = 1.0f;
 }
 

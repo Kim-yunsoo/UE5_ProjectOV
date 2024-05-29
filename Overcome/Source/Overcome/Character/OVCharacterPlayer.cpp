@@ -625,6 +625,11 @@ bool AOVCharacterPlayer::TakeDamage(FDamageInfo DamageInfo)
 	return true;
 }
 
+bool AOVCharacterPlayer::IsDead()
+{
+	return DamageComponent->bIsDead;
+}
+
 void AOVCharacterPlayer::Blocked(bool CanBeParried)
 {
 	UE_LOG(LogTemp,Warning ,TEXT("Character Blocked"));
@@ -650,7 +655,7 @@ void AOVCharacterPlayer::TestAttack() //V키
 			FLinearColor::Red, FLinearColor::Green, 1.f);
 
 	//테스트 공격 100 
-	FDamageInfo DamageInfo = {100, E_DamageType::Melee, E_DamageResponses::HitReaction, false, false, false, false };
+	FDamageInfo DamageInfo = {50, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
 	if(bResult)
 	{
 		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());

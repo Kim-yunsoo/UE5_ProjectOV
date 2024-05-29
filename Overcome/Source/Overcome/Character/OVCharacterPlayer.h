@@ -233,6 +233,7 @@ public:
 	virtual float GetMaxHealth();
 	virtual float Heal(float Amount); 
 	virtual bool TakeDamage(FDamageInfo DamageInfo);
+	virtual bool IsDead() override;
 
 	void Blocked(bool CanBeParried);
 	void DamageResponse(E_DamageResponses DamageResponses);

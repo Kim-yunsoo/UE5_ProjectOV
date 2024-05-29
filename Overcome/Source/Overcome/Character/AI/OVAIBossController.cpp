@@ -122,8 +122,8 @@ void AOVAIBossController::SetBlackBoardKey()
 
 void AOVAIBossController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	AOVCharacterPlayer* player = Cast<AOVCharacterPlayer>(Actor);
-	if ((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating) && player ) //&& (Actor == CharacterPlayer))
+	//AOVCharacterPlayer* player = Cast<AOVCharacterPlayer>(Actor);
+	if ((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating)) // && player ) //&& (Actor == CharacterPlayer))
 	{
 		Boss->SetState(E_AIState::Attacking);
 		UE_LOG(LogTemp, Warning, TEXT("Sight Attack"));

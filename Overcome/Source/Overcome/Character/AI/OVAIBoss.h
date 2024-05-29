@@ -8,6 +8,7 @@
 #include "Sword/OVSword.h"
 #include "OVAIBoss.generated.h"
 
+class AOVAIBossController;
 class UOVHUDWidget;
 /**
  * 
@@ -28,6 +29,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	FAIEnemyAttackFinished OnDefaultAttackFinished;
+
+	UPROPERTY()
+	AOVAIBossController* BossController;
 
 protected:
 	
@@ -70,9 +74,15 @@ protected:
 	//Montage
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> DefaultAttackMontage;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> StaggerMontage;
 	
 	UFUNCTION()
 	void OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
+	UFUNCTION()
+	void OnStaggerMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	
 	UPROPERTY(EditAnywhere)
 	E_AIState AIState;
@@ -93,16 +103,26 @@ public:
 	virtual float GetMaxHealth();
 	virtual float Heal(float Amount); 
 	virtual bool TakeDamage(FDamageInfo DamageInfo);
+	virtual bool IsDead() override;
 
 	void Blocked(bool CanBeParried);
 	void DamageResponse(E_DamageResponses DamageResponses);
 	virtual void SetDead() override;
+
+	
 public:
+	void SlashCheck();
+		
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UOVDamageComponent> DamageComponent;
 
+
+
+	
 	//TEST ATTACK
 	UFUNCTION()
 	void TestAttack();
+
+	
 	
 };
