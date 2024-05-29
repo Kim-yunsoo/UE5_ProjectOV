@@ -10,7 +10,6 @@
 
 AOVAIBoss::AOVAIBoss()
 {
-	
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -100.f), FRotator(0.0f, -90.0f, 0.0f));
 	// //GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);

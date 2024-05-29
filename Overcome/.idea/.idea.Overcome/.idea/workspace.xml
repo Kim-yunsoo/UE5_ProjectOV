@@ -9,21 +9,14 @@
   <component name="ChangeListManager">
     <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BB_Enemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BB_Enemy_Base.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_AI.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_AI.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterNonPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterNonPlayer.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/OVAI.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/OVAI.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_SheathSword.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_SheathSword.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetSTateAsPassive.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetSTateAsPassive.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_WieldSword.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_WieldSword.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/BTService_Detect.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/BTService_Detect.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Service/BTService_UpdateDistanceToTarget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Service/BTService_UpdateDistanceToTarget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVCharacterStatComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVCharacterStatComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVBossHpWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVBossHpWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,6 +209,8 @@
       <workItem from="1716775439148" duration="37890000" />
       <workItem from="1716854637635" duration="8201000" />
       <workItem from="1716869167276" duration="4137000" />
+      <workItem from="1716877526208" duration="9958000" />
+      <workItem from="1716917285850" duration="3196000" />
     </task>
     <servers />
   </component>

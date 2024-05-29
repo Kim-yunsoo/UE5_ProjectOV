@@ -41,6 +41,5 @@ void UBTService_UpdateDistanceToTarget::TickNode(UBehaviorTreeComponent& OwnerCo
 
 	float DistanceToTarget = UKismetMathLibrary::Vector_Distance(ControllingPawn->GetActorLocation(), TargetActor->GetActorLocation());
 	OwnerComp.GetBlackboardComponent()->SetValueAsFloat(BBKEY_DISTANCETARGET, DistanceToTarget);
-	UE_LOG(LogTemp, Warning, TEXT("%f"), DistanceToTarget);
-
+	//UE_LOG(LogTemp, Warning, TEXT("%f"), DistanceToTarget);
 }
