@@ -3,9 +3,13 @@
 
 #include "Character/AI/OVCharacterNonPlayer.h"
 
+#include "BrainComponent.h"
 #include "OVAIController.h"
 #include "Components/WidgetComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Stat/OVAttackComponent.h"
 #include "Stat/OVCharacterStatComponent.h"
+#include "Stat/OVDamageComponent.h"
 #include "UI/OVWidgetComponent.h"
 
 AOVCharacterNonPlayer::AOVCharacterNonPlayer()
@@ -13,7 +17,7 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -100.f), FRotator(0.0f, -90.0f, 0.0f));
 	// //GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	GetMesh()->SetCollisionProfileName(TEXT("CharacterMesh"));
-	
+	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharaterMeshRef(TEXT("/Script/Engine.SkeletalMesh'/Game/DarkMetalPack/ZombotMike/Mesh/SM_Zombot_Mikey.SM_Zombot_Mikey'"));
 	if (CharaterMeshRef.Object)
 	{
@@ -31,7 +35,13 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 	{
 		AttackMontage = AttackMontageRef.Object;
 	}
-	Stat->SetMaxHp(50);
+
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> StaggerMontageRef(TEXT("/Script/Engine.AnimMontage'/Game/DarkMetalPack/ZombotMike/Animations/Anim_Zombot_Mikey_HitRegister_Montage.Anim_Zombot_Mikey_HitRegister_Montage'"));
+	if (StaggerMontageRef.Object)
+	{
+		StaggerMontage = StaggerMontageRef.Object;
+	}
+	
 	AIControllerClass = AOVAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
@@ -46,6 +56,12 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 		HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
 		HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
+
+	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
+	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
+	Stat->SetMaxHp(50);
+	DamageComponent->SetMaxHealth(50);
+	bIsAttacking = false;
 }
 
 void AOVCharacterNonPlayer::SetDead()
@@ -54,6 +70,8 @@ void AOVCharacterNonPlayer::SetDead()
 	HpBar->SetHiddenInGame(true);
 	PlayDeadAnimation();
 	FTimerHandle DeadTimerHandle;
+	AOVAIController* AIController = Cast<AOVAIController>(GetController());
+	AIController->GetBrainComponent()->StopLogic(TEXT("Dead"));
 	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
 		[&]()
 		{
@@ -72,6 +90,54 @@ void AOVCharacterNonPlayer::PlayDeadAnimation()
 void AOVCharacterNonPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void AOVCharacterNonPlayer::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	DamageComponent->OnDeath.AddUObject(this, &AOVCharacterNonPlayer::SetDead);
+	DamageComponent->OnDamageResponse.AddUObject(this, &AOVCharacterNonPlayer::DamageResponse);
+}
+
+float AOVCharacterNonPlayer::GetCurrentHealth()
+{
+	return Stat->GetCurrentHp();
+}
+
+float AOVCharacterNonPlayer::GetMaxHealth()
+{
+	return Stat->GetMaxHp();
+}
+
+float AOVCharacterNonPlayer::Heal(float Amount)
+{
+	return -1;
+}
+
+bool AOVCharacterNonPlayer::TakeDamage(FDamageInfo DamageInfo)
+{
+	DamageComponent->TakeDamage(DamageInfo);
+	Stat->SetHp(DamageComponent->Health);
+	return true;
+}
+
+bool AOVCharacterNonPlayer::IsDead()
+{
+	return DamageComponent->bIsDead;
+}
+
+bool AOVCharacterNonPlayer::IsAttacking()
+{
+	return bIsAttacking;
+}
+
+void AOVCharacterNonPlayer::DamageResponse(E_DamageResponses DamageResponses)
+{
+	UE_LOG(LogTemp,Warning ,TEXT("Mini AI DamageResponse"));
+	GetCharacterMovement()->StopMovementImmediately();
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(StaggerMontage, 1.0f);
 }
 
 float AOVCharacterNonPlayer::GetAIPatrolRadius()

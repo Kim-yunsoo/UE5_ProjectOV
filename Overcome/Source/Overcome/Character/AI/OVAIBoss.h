@@ -99,16 +99,20 @@ public:
 	virtual void PostInitializeComponents() override;
 
 	//Damage
-	virtual float GetCurrentHealth();
-	virtual float GetMaxHealth();
-	virtual float Heal(float Amount); 
-	virtual bool TakeDamage(FDamageInfo DamageInfo);
+	virtual float GetCurrentHealth() override;
+	virtual float GetMaxHealth() override;
+	virtual float Heal(float Amount) override ; 
+	virtual bool TakeDamage(FDamageInfo DamageInfo) override ;
 	virtual bool IsDead() override;
+	virtual bool IsAttacking() override;
+
 
 	void Blocked(bool CanBeParried);
 	void DamageResponse(E_DamageResponses DamageResponses);
 	virtual void SetDead() override;
 
+	UPROPERTY()
+	uint8 bIsAttacking : 1;
 	
 public:
 	void SlashCheck();

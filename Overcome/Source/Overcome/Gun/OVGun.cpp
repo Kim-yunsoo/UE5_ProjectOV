@@ -6,6 +6,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Character/OVCharacterBase.h"
 #include "Character/OVCharacterPlayer.h"
+#include "Character/AI/OVCharacterNonPlayer.h"
 
 // Sets default values
 AOVGun::AOVGun()
@@ -57,18 +58,18 @@ void AOVGun::PullTrigger()
 	FHitResult Hit;
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
 
-	if (bSuccess)
+	if (bSuccess) //이득우 교수님 AI 플레이어
 	{
 		FVector ShotDirection = -Rotation.Vector();
 		//DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
-		AOVCharacterBase* HitActor = Cast<AOVCharacterBase>(Hit.GetActor());
+		AOVCharacterNonPlayer* HitActor = Cast<AOVCharacterNonPlayer>(Hit.GetActor());
 		if (HitActor != nullptr)
 		{
 			AOVCharacterPlayer* CharacterPlayer = Cast<AOVCharacterPlayer>(GetOwner());
 			Damage = CharacterPlayer->GetAttack();
 			//UE_LOG(LogTemp, Warning, TEXT("Damage %f"), Damage);
 			FPointDamageEvent DamageEvent{ Damage, Hit, ShotDirection, nullptr };
-			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+			//HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 			MulticastEffect(Hit.Location);
 		}
 	}

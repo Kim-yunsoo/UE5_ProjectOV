@@ -9,10 +9,8 @@
 #include "InputMappingContext.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "NiagaraFunctionLibrary.h"
 #include "Gun/OVGun.h"
 #include "OVCharacterControlData.h"
-#include "Evaluation/Blending/MovieSceneBlendType.h"
 #include "stat/OVDamageComponent.h"
 #include "Game/OVGameState.h"
 #include "Net/UnrealNetwork.h"
@@ -21,6 +19,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Skill/OVShieldSkill.h"
 #include "Skill/OVTeleportSkill.h"
+#include "Stat/OVAttackComponent.h"
 #include "Stat/OVCharacterStatComponent.h"
 #include "UI/OVBossHpWidget.h"
 #include "UI/OVHUDWidget.h"
@@ -137,9 +136,11 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 
 	ShieldSkillComponent = CreateDefaultSubobject<UOVShieldSkill>(TEXT("ShieldSkillComponent"));
 	bIsActiveShieldSkill = true;
-
+	bIsAttacking = false;
+	
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
 	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
+	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
 
 	Stat->SetMaxHp(100);
 	DamageComponent->SetMaxHealth(100);
@@ -467,8 +468,15 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 {
 	if(Gun->GetBulletCount())
 	{
+		bIsAttacking = true;
 		bIsShooting = true;
-		Gun->PullTrigger();
+		//Gun->PullTrigger();
+		FVector Start;
+		FRotator Rotation;
+		GetController()->GetPlayerViewPoint(Start, Rotation);
+		FVector End = Start + Rotation.Vector() * 1000;
+		FDamageInfo DamageInfo = {30, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
+		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 0.5);
 		FTimerHandle TimerHandle;
 		// Set up the timer to call the ResetTurning function after 0.2 seconds
@@ -593,6 +601,8 @@ void AOVCharacterPlayer::PostInitializeComponents()
 	DamageComponent->OnDeath.AddUObject(this, &AOVCharacterPlayer::SetDead);
 	DamageComponent->OnBlocked.AddUObject(this, &AOVCharacterPlayer::Blocked);
 	DamageComponent->OnDamageResponse.AddUObject(this, &AOVCharacterPlayer::DamageResponse);
+	AttackComponent->OnAttackEnded.AddUObject(this, &AOVCharacterPlayer::AttackEnded);
+
 }
 
 void AOVCharacterPlayer::ServerRPCAiming_Implementation()
@@ -630,6 +640,11 @@ bool AOVCharacterPlayer::IsDead()
 	return DamageComponent->bIsDead;
 }
 
+bool AOVCharacterPlayer::IsAttacking()
+{
+	return bIsAttacking;
+}
+
 void AOVCharacterPlayer::Blocked(bool CanBeParried)
 {
 	UE_LOG(LogTemp,Warning ,TEXT("Character Blocked"));
@@ -637,8 +652,15 @@ void AOVCharacterPlayer::Blocked(bool CanBeParried)
 
 void AOVCharacterPlayer::DamageResponse(E_DamageResponses DamageResponses)
 {
-	UE_LOG(LogTemp,Warning ,TEXT("Character DamageResponse"));
+	//UE_LOG(LogTemp,Warning ,TEXT("Character DamageResponse"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(StaggerMontage, 1.0f);
+}
 
+void AOVCharacterPlayer::AttackEnded()
+{
+	bIsAttacking = false;
 }
 
 void AOVCharacterPlayer::TestAttack() //V키
@@ -664,8 +686,6 @@ void AOVCharacterPlayer::TestAttack() //V키
 			DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
 		}
 	}
-
-	
 }
 
 void AOVCharacterPlayer::HealSkill(const FInputActionValue& Value)

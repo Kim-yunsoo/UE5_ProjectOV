@@ -229,23 +229,34 @@ public:
 	virtual void PostInitializeComponents() override;
 
 	//Damage
-	virtual float GetCurrentHealth();
-	virtual float GetMaxHealth();
-	virtual float Heal(float Amount); 
-	virtual bool TakeDamage(FDamageInfo DamageInfo);
+	virtual float GetCurrentHealth() override;
+	virtual float GetMaxHealth() override;
+	virtual float Heal(float Amount) override; 
+	virtual bool TakeDamage(FDamageInfo DamageInfo) override;
 	virtual bool IsDead() override;
+	virtual bool IsAttacking() override;
+
+	UPROPERTY()
+	uint8 bIsAttacking : 1;
 
 	void Blocked(bool CanBeParried);
 	void DamageResponse(E_DamageResponses DamageResponses);
-
+	void AttackEnded();
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Damage, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UOVDamageComponent> DamageComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UOVAttackComponent> AttackComponent;
 
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> StaggerMontage;
+	
 	//TEST ATTACK
 	UFUNCTION()
 	void TestAttack();
+	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> HealAction;

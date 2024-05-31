@@ -39,6 +39,7 @@ AOVAIBoss::AOVAIBoss()
 	bIsEquipSword = false;
 	bIsWieldingWeapon = false;
 	bIsFirst = true;
+	bIsAttacking = false;
 }
 
 void AOVAIBoss::BeginPlay()
@@ -114,7 +115,7 @@ void AOVAIBoss::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterru
 
 void AOVAIBoss::OnStaggerMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	SetState(E_AIState::Passive);
+	SetState(E_AIState::Attacking);
 	BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
 }
 
@@ -175,6 +176,11 @@ bool AOVAIBoss::IsDead()
 	return DamageComponent->bIsDead;
 }
 
+bool AOVAIBoss::IsAttacking()
+{
+	return bIsAttacking;
+}
+
 void AOVAIBoss::Blocked(bool CanBeParried)
 {
 	UE_LOG(LogTemp,Warning ,TEXT("Boss Blocked"));
@@ -183,17 +189,19 @@ void AOVAIBoss::Blocked(bool CanBeParried)
 void AOVAIBoss::DamageResponse(E_DamageResponses DamageResponses)
 {
 	UE_LOG(LogTemp,Warning ,TEXT("Boss DamageResponse"));
+	//if(GetState() != E_AIState::Frozen) //공격 받고 있지 않을때 공격 들어감!
+	{
+		GetCharacterMovement()->StopMovementImmediately();
+		SetState(E_AIState::Frozen);
+		BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		AnimInstance->StopAllMontages(0.0f);
+		AnimInstance->Montage_Play(StaggerMontage, 1.0f);
 
-	GetCharacterMovement()->StopMovementImmediately();
-	SetState(E_AIState::Frozen);
-	BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	AnimInstance->StopAllMontages(0.0f);
-	AnimInstance->Montage_Play(StaggerMontage, 1.0f);
-
-	FOnMontageEnded CompleteDelegate;
-	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnStaggerMontageEnded);
-	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, StaggerMontage);
+		FOnMontageEnded CompleteDelegate;
+		CompleteDelegate.BindUObject(this, &AOVAIBoss::OnStaggerMontageEnded);
+		AnimInstance->Montage_SetEndDelegate(CompleteDelegate, StaggerMontage);
+	}
 }
 
 void AOVAIBoss::SetDead()

@@ -62,4 +62,5 @@ public:
 	virtual float Heal(float Amount) = 0; //안쓸지도?
 	virtual bool TakeDamage(FDamageInfo DamageInfo)  = 0;
 	virtual bool IsDead() = 0;
+	virtual bool IsAttacking() = 0;
 };
