@@ -6,6 +6,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Character/OVCharacterPlayer.h"
 #include "Interface/OVDamagableInterface.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Perception/AISense_Damage.h"
 
 class AAIController;
@@ -72,6 +73,28 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 	{
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, HitResult.Location, FRotator::ZeroRotator);
 		//UE_LOG(LogTemp, Warning, TEXT("Character"));
+	}
+}
+
+void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo DamageInfo)
+{
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
+	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+	TArray<AActor*> ActorsToNotTargeting;
+	ActorsToNotTargeting.Add(GetOwner());
+	FVector Start = GetOwner()->GetActorLocation();
+	FVector End = GetOwner()->GetActorForwardVector() * Length + Start;
+	FHitResult HitResult;
+	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, Radius, ObjectArray, false,ActorsToNotTargeting
+	,EDrawDebugTrace::ForDuration, HitResult,  true,
+			FLinearColor::Red, FLinearColor::Green, 1.f);
+	if(bResult)
+	{
+		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
+		if(DamagableInterface)
+		{
+			DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
+		}
 	}
 }
 

@@ -10,6 +10,7 @@
 #include "Game/OVGameState.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Stat/OVAttackComponent.h"
 #include "Stat/OVCharacterStatComponent.h"
 #include "Stat/OVDamageComponent.h"
 
@@ -40,6 +41,9 @@ AOVAIBoss::AOVAIBoss()
 	bIsWieldingWeapon = false;
 	bIsFirst = true;
 	bIsAttacking = false;
+
+	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
+
 }
 
 void AOVAIBoss::BeginPlay()
@@ -69,6 +73,15 @@ void AOVAIBoss::DefaultAttack()
 	FOnMontageEnded CompleteDelegate;
 	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
 	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, DefaultAttackMontage);
+}
+
+void AOVAIBoss::BossAttack(E_BossAttack BossAttack)
+{
+	if(BossAttack == E_BossAttack::Combo1)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
+		AttackCombo1();
+	}
 }
 
 void AOVAIBoss::EauipWeapon()
@@ -111,6 +124,8 @@ void AOVAIBoss::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterru
 {
 	DamageComponent->bIsInterruptible = true;
 	OnDefaultAttackFinished.ExecuteIfBound();
+	//Attack End
+	//UE_LOG(LogTemp, Warning, TEXT("MontageEnded"));
 }
 
 void AOVAIBoss::OnStaggerMontageEnded(UAnimMontage* Montage, bool bInterrupted)
@@ -163,7 +178,7 @@ float AOVAIBoss::Heal(float Amount)
 	return DamageComponent->Health;
 }
 
-bool AOVAIBoss::TakeDamage(FDamageInfo DamageInfo)
+bool AOVAIBoss::TakeDamage(FDamageInfo DamageInfo) //영향 받음
 {
 	UE_LOG(LogTemp, Warning, TEXT("TakeDamage"));
 	DamageComponent->TakeDamage(DamageInfo);
@@ -179,6 +194,11 @@ bool AOVAIBoss::IsDead()
 bool AOVAIBoss::IsAttacking()
 {
 	return bIsAttacking;
+}
+
+void AOVAIBoss::SetIsInterruptible(bool bIsInterruptibleValue)
+{
+	DamageComponent->bIsInterruptible = bIsInterruptibleValue;
 }
 
 void AOVAIBoss::Blocked(bool CanBeParried)
@@ -199,6 +219,7 @@ void AOVAIBoss::DamageResponse(E_DamageResponses DamageResponses)
 		AnimInstance->Montage_Play(StaggerMontage, 1.0f);
 
 		FOnMontageEnded CompleteDelegate;
+		//CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
 		CompleteDelegate.BindUObject(this, &AOVAIBoss::OnStaggerMontageEnded);
 		AnimInstance->Montage_SetEndDelegate(CompleteDelegate, StaggerMontage);
 	}
@@ -220,27 +241,21 @@ void AOVAIBoss::SlashCheck()
 {
 	if(!DamageComponent->bIsDead)
 	{
-		TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
-		ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
-		TArray<AActor*> ActorsToNotTargeting;
-		ActorsToNotTargeting.Add(this);
-		FVector Start = GetActorLocation();
-		FVector End = GetActorForwardVector() * 150 + Start;
-		FHitResult HitResult;
-		bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, 20, ObjectArray, false,ActorsToNotTargeting
-		,EDrawDebugTrace::ForDuration, HitResult,  true,
-				FLinearColor::Red, FLinearColor::Green, 1.f);
-
-		FDamageInfo DamageInfo = {25, E_DamageType::Melee, E_DamageResponses::HitReaction, false, false, false, false };
-		if(bResult)
-		{
-			IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
-			if(DamagableInterface)
-			{
-				DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
-			}
-		}
+		FDamageInfo DamageInfo = {20, E_DamageType::Melee, E_DamageResponses::HitReaction, false, true, true, false };
+		AttackComponent->AttackSlash(40, 220, DamageInfo);
 	}
+}
+
+void AOVAIBoss::AttackCombo1()
+{
+	//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(AttackCombo1Montage, 1.0f);
+
+	FOnMontageEnded CompleteDelegate;
+	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
+	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackCombo1Montage);
 }
 
 void AOVAIBoss::TestAttack()
@@ -265,7 +280,7 @@ void AOVAIBoss::TestAttack()
 			IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
 			if(DamagableInterface)
 			{
-				DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
+				//DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
 			}
 		}
 	}

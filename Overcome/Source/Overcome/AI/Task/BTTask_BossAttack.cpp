@@ -1,17 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AI/Task/BTTask_DefaultAttack.h"
+#include "AI/Task/BTTask_BossAttack.h"
 
 #include "AIController.h"
 #include "Interface/OVEnemyAIInterface.h"
 
-UBTTask_DefaultAttack::UBTTask_DefaultAttack()
+UBTTask_BossAttack::UBTTask_BossAttack()
 {
-	
 }
 
-EBTNodeResult::Type UBTTask_DefaultAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTask_BossAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
 
@@ -38,6 +37,6 @@ EBTNodeResult::Type UBTTask_DefaultAttack::ExecuteTask(UBehaviorTreeComponent& O
 	);
 
 	AIPawn->SetAIDefaultAttackDelegate(OnAttackFinished);
-	AIPawn->DefaultAttack();
+	AIPawn->BossAttack(BossAttackValue);
 	return EBTNodeResult::InProgress;
 }

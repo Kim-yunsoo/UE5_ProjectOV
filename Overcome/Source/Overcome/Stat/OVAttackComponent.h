@@ -31,6 +31,8 @@ public:
 	UFUNCTION()
 	void FireBullet(FVector Start, FVector End, FDamageInfo DamageInfo);
 
+	UFUNCTION()
+	void AttackSlash(float Radius, float Length, FDamageInfo DamageInfo);
 
 	UPROPERTY()
 	TObjectPtr<UNiagaraSystem> EmitterHit;

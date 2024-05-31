@@ -33,6 +33,16 @@ enum class E_AIState : uint8
 	Dead UMETA(DisplayName = "Dead")
 };
 
+UENUM(BlueprintType)
+enum class E_BossAttack : uint8
+{
+	Combo1 UMETA(DisplayName = "Combo1")
+	// Attacking UMETA(DisplayName = "Attacking"),
+	// Frozen UMETA(DisplayName = "Frozen"),
+	// Investigating UMETA(DisplayName = "Investigating"),
+	// Dead UMETA(DisplayName = "Dead")
+};
+
 DECLARE_DELEGATE(FAIEnemyAttackFinished);
 /**
  * 
@@ -52,5 +62,7 @@ public:
 	virtual void SetState(E_AIState AIStateValue) = 0;
 	virtual E_AIState GetState() = 0;
 	virtual void SetMovementSpeed(E_MovementSpeed SpeedValue) = 0;
+	virtual void BossAttack(E_BossAttack BossAttack) = 0;
+	virtual void SetIsInterruptible(bool bIsInterruptibleValue) = 0;
 
 };

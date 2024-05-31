@@ -57,6 +57,6 @@ protected:
 	UPROPERTY()
 	AOVCharacterPlayer* CharacterPlayer;
 
-	UPROPERTY()
-	AOVEnemy_Base *Enemy_Base;
+	// UPROPERTY()
+	// AOVEnemy_Base *Enemy_Base;
 };

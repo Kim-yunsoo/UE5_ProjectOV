@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "OVEnemy_Base.h"
+#include "Character/OVCharacterBase.h"
 #include "Interface/OVDamagableInterface.h"
+#include "Interface/OVEnemyAIInterface.h"
 #include "Sword/OVSword.h"
 #include "OVAIBoss.generated.h"
 
@@ -38,7 +40,7 @@ protected:
 	
 	virtual void SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished) override;
 	virtual void DefaultAttack() override;
-	
+	virtual void BossAttack(E_BossAttack BossAttack) override;
 
 	//Sword
 	UPROPERTY()
@@ -94,8 +96,6 @@ public:
 
 	UFUNCTION()
 	virtual E_AIState GetState() override;
-
-
 	virtual void PostInitializeComponents() override;
 
 	//Damage
@@ -105,6 +105,7 @@ public:
 	virtual bool TakeDamage(FDamageInfo DamageInfo) override ;
 	virtual bool IsDead() override;
 	virtual bool IsAttacking() override;
+	virtual void SetIsInterruptible(bool bIsInterruptibleValue);
 
 
 	void Blocked(bool CanBeParried);
@@ -117,16 +118,20 @@ public:
 public:
 	void SlashCheck();
 		
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Damage, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UOVDamageComponent> DamageComponent;
-
-
-
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UOVAttackComponent> AttackComponent;
+	
+	//Attack
+	UFUNCTION()
+	void AttackCombo1();
+	
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> AttackCombo1Montage;
 	
 	//TEST ATTACK
 	UFUNCTION()
 	void TestAttack();
-
-	
-	
 };
