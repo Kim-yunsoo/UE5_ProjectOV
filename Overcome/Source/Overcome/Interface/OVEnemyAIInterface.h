@@ -38,7 +38,9 @@ enum class E_BossAttack : uint8
 {
 	Combo1 UMETA(DisplayName = "Combo1"),
 	Combo2 UMETA(DisplayName = "Combo2"),
-	JumpAttack UMETA(DisplayName = "JumpAttack")
+	JumpAttack UMETA(DisplayName = "JumpAttack"),
+	QuickAttack UMETA(DisplayName = "QuickAttack"),
+	GroundSmash UMETA(DisplayName = "GroundSmash")
 // Attacking UMETA(DisplayName = "Attacking"),
 	// Frozen UMETA(DisplayName = "Frozen"),
 	// Investigating UMETA(DisplayName = "Investigating"),
@@ -70,4 +72,5 @@ public:
 	virtual void BossAttack(E_BossAttack BossAttack) = 0;
 	virtual void SetIsInterruptible(bool bIsInterruptibleValue) = 0;
 	virtual void BossTeleport(FVector Location) = 0;
+	virtual void SetIsInvincible(bool bIsInvincibleValue) = 0;
 };

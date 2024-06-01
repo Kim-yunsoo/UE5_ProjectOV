@@ -109,7 +109,7 @@ void UOVAttackComponent::AttackAOESlash(float Radius, FDamageInfo DamageInfo)
 	TArray<AActor*> ActorsToNotTargeting;
 	ActorsToNotTargeting.Add(GetOwner());
 	TArray<AActor*> HitResultActor;
-	bool bResult =  UKismetSystemLibrary::SphereOverlapActors(GetWorld(), GetOwner()->GetActorLocation(), 300,ObjectArray,nullptr, ActorsToNotTargeting, HitResultActor);
+	bool bResult =  UKismetSystemLibrary::SphereOverlapActors(GetWorld(), GetOwner()->GetActorLocation(), Radius,ObjectArray,nullptr, ActorsToNotTargeting, HitResultActor);
 	DrawDebugSphere(GetWorld(), GetOwner()->GetActorLocation(), Radius, 24, FColor::Green, false, 2.0f);
 	if(bResult)
 	{
@@ -118,6 +118,7 @@ void UOVAttackComponent::AttackAOESlash(float Radius, FDamageInfo DamageInfo)
 			IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(Actor);
 			if (DamagableInterface)
 			{
+				UE_LOG(LogTemp,Warning, TEXT("AOESlash"));
 				DamagableInterface->TakeDamage(DamageInfo);
 			}
 		}
@@ -131,17 +132,17 @@ void UOVAttackComponent::JumpTarget(AActor* AttackTarget)
 	{
 		FVector Location = CalculateFutureActorLocation(AttackTarget, 1.0f);
 		FVector OutLaunchVelocity;
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *Location.ToString())
+		//UE_LOG(LogTemp, Warning, TEXT("%s"), *Location.ToString())
 		double BossTargetDistance;
 		BossTargetDistance = AttackTarget->GetDistanceTo(GetOwner());
 		BossTargetDistance = UKismetMathLibrary::NormalizeToRange(BossTargetDistance, 400, 800);
 		BossTargetDistance = UKismetMathLibrary::FClamp(BossTargetDistance, 0.0, 1.0);
 		BossTargetDistance = UKismetMathLibrary::Lerp(0.5, 0.94, BossTargetDistance);
 		Location.Z += 50;
-		UE_LOG(LogTemp, Warning, TEXT("%f"), BossTargetDistance)
+		//UE_LOG(LogTemp, Warning, TEXT("%f"), BossTargetDistance)
 		//UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), OutLaunchVelocity, GetOwner()->GetActorLocation(),AttackTarget->GetActorLocation(), 0.0, 0.5 );
 		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), OutLaunchVelocity, GetOwner()->GetActorLocation(),Location, 0.0, BossTargetDistance );
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *OutLaunchVelocity.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("%s"), *OutLaunchVelocity.ToString());
 
 		//FVector TestLocation {0,0,500};
 		OwnerCharacter->LaunchCharacter(OutLaunchVelocity, true, true);
@@ -162,7 +163,7 @@ void UOVAttackComponent::OnCharacterLanded(const FHitResult& Hit)
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
 	if(OwnerCharacter)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("OnLanded"));
+		//UE_LOG(LogTemp, Warning, TEXT("OnLanded"));
 		OwnerCharacter->GetCharacterMovement()->StopMovementImmediately();
 		OwnerCharacter->LandedDelegate.RemoveDynamic(this, &UOVAttackComponent::OnCharacterLanded);
 	}

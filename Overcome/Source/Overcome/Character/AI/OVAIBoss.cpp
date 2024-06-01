@@ -95,6 +95,14 @@ void AOVAIBoss::BossAttack(E_BossAttack BossAttack)
 	{
 		AttackJump();
 	}
+	else if(BossAttack == E_BossAttack::QuickAttack)
+	{
+		AttackQuick();
+	}
+	else if(BossAttack == E_BossAttack::GroundSmash)
+	{
+		AttackGroundSmash();
+	}
 }
 
 void AOVAIBoss::EauipWeapon()
@@ -256,6 +264,11 @@ void AOVAIBoss::SetAITeleportDelegate(const FAIEnemyTeleportFinished& InOnTelepo
 	//UE_LOG(LogTemp,Warning, TEXT("SetAITeleportDelegate"));
 }
 
+void AOVAIBoss::SetIsInvincible(bool bIsInvincibleValue)
+{
+	DamageComponent->bIsInvincible = bIsInvincibleValue;
+}
+
 void AOVAIBoss::BossTeleportEnd()
 {
 	GetCharacterMovement()->StopMovementImmediately();
@@ -339,9 +352,18 @@ void AOVAIBoss::JumpCheck()
 	}
 }
 
+void AOVAIBoss::SmashCheck()
+{
+	if (!DamageComponent->bIsDead)
+	{
+		FDamageInfo DamageInfo = {30, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, true};
+		AttackComponent->AttackAOESlash(1100, DamageInfo);
+	}
+}
+
 void AOVAIBoss::AttackCombo1()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
+	UE_LOG(LogTemp, Warning, TEXT("AttackCombo1"));
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
 	AnimInstance->Montage_Play(AttackCombo1Montage, 1.0f);
@@ -353,7 +375,7 @@ void AOVAIBoss::AttackCombo1()
 
 void AOVAIBoss::AttackCombo2()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO2"));
+	UE_LOG(LogTemp, Warning, TEXT("AttackCombo2"));
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
 	AnimInstance->Montage_Play(AttackCombo2Montage, 1.0f);
@@ -373,6 +395,30 @@ void AOVAIBoss::AttackJump()
 	FOnMontageEnded CompleteDelegate;
 	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
 	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackJumpMontage);
+}
+
+void AOVAIBoss::AttackQuick()
+{
+	UE_LOG(LogTemp, Warning, TEXT("AttackQuick"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(AttackQuickMontage, 1.0f);
+
+	FOnMontageEnded CompleteDelegate;
+	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
+	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackQuickMontage);
+}
+
+void AOVAIBoss::AttackGroundSmash()
+{
+	UE_LOG(LogTemp, Warning, TEXT("AttackGroundSmash"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(AttackGroundSmashMontage, 1.0f);
+
+	FOnMontageEnded CompleteDelegate;
+	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
+	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackGroundSmashMontage);
 }
 
 void AOVAIBoss::TestAttack()

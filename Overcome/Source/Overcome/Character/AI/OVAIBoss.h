@@ -109,6 +109,7 @@ public:
 	virtual void SetIsInterruptible(bool bIsInterruptibleValue) override;
 	virtual void BossTeleport(FVector Location) override;
 	virtual void SetAITeleportDelegate(const FAIEnemyTeleportFinished& InOnTeleportFinished) override;
+	virtual void SetIsInvincible(bool bIsInvincibleValue)override;
 
 	void BossTeleportEnd();
 	void Blocked(bool CanBeParried);
@@ -124,7 +125,7 @@ public:
 	void SlashCheck();
 	void AOESlashCheck();
 	void JumpCheck();
-	
+	void SmashCheck();
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Damage, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UOVDamageComponent> DamageComponent;
 	
@@ -140,6 +141,12 @@ public:
 	
 	UFUNCTION()
 	void AttackJump();
+
+	UFUNCTION()
+	void AttackQuick();
+
+	UFUNCTION()
+	void AttackGroundSmash();
 	
 	
 	UPROPERTY(EditAnywhere)
@@ -150,6 +157,12 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> AttackJumpMontage;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> AttackQuickMontage;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> AttackGroundSmashMontage;
 	
 	//TEST ATTACK
 	UFUNCTION()
