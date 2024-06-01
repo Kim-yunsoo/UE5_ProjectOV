@@ -14,8 +14,11 @@
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +85,8 @@
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackHitCheck.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackSmash.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackSmash.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackStrike.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackStrike.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Jump.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Slash.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Slash.h" root0="FORCE_HIGHLIGHTING" />
@@ -95,6 +100,7 @@
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Game/OVGameState.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVAnimationAttackInterface.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVAnimationAttackInterface.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVCharacterAIInterface.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -139,6 +145,11 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CidrLocalAttachDebugger.recentlyUsed">
+      <recent name="com.jetbrains.rider.cpp.debugger.RiderCppLLDBDriverConfiguration" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Overcome" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -244,6 +255,7 @@
       <workItem from="1717158345584" duration="10773000" />
       <workItem from="1717207508063" duration="24077000" />
       <workItem from="1717233964674" duration="10517000" />
+      <workItem from="1717248295506" duration="17656000" />
     </task>
     <servers />
   </component>
@@ -253,5 +265,16 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/Overcome/Gun/OVGun.cpp</url>
+          <line>62</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

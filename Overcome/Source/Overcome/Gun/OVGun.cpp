@@ -60,6 +60,7 @@ void AOVGun::PullTrigger()
 
 	if (bSuccess) //이득우 교수님 AI 플레이어
 	{
+		
 		FVector ShotDirection = -Rotation.Vector();
 		//DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
 		AOVCharacterNonPlayer* HitActor = Cast<AOVCharacterNonPlayer>(Hit.GetActor());

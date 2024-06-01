@@ -433,6 +433,7 @@ void AOVCharacterPlayer::Shoot()
 {
 	if (!bIsShooting)
 	{
+		
 		bIsShooting = true;
 		ServerRPCShoot();
 		

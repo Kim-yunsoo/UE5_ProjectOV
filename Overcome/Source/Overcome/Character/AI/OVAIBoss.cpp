@@ -4,6 +4,7 @@
 #include "Character/AI/OVAIBoss.h"
 
 #include "BrainComponent.h"
+#include "K2Node_SpawnActorFromClass.h"
 #include "NavigationSystem.h"
 #include "OVAIBossController.h"
 #include "AI/OVAI.h"
@@ -11,6 +12,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Game/OVGameState.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Gun/OVAOE_LightningStrike.h"
 #include "Kismet/GameplayStatics.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "Stat/OVAttackComponent.h"
@@ -99,9 +101,9 @@ void AOVAIBoss::BossAttack(E_BossAttack BossAttack)
 	{
 		AttackQuick();
 	}
-	else if(BossAttack == E_BossAttack::GroundSmash)
+	else if(BossAttack == E_BossAttack::AOEAttack)
 	{
-		AttackGroundSmash();
+		AttackAOE();
 	}
 }
 
@@ -361,6 +363,36 @@ void AOVAIBoss::SmashCheck()
 	}
 }
 
+void AOVAIBoss::StrikeCheck()
+{
+	if (!DamageComponent->bIsDead)
+	{
+		UE_LOG(LogTemp,Warning, TEXT("StrikeCheck"));
+
+		FDamageInfo DamageInfo = {30, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false};
+		//AttackComponent->AttackAOEStrike(DamageInfo);
+		AActor* AttackTarget = Cast<AActor>(BossController->GetBlackboardComponent()->GetValueAsObject(BBKEY_ATTACKTARGET));
+		FVector Location = AttackTarget->GetActorLocation();
+		Location.Z = 0;
+		FRotator Rotation {-90 , 0,0,};
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this; // 액터의 소유자 설정
+		AOVAOE_LightningStrike* LightningStrike = GetWorld()->SpawnActor<AOVAOE_LightningStrike>(AOVAOE_LightningStrike::StaticClass(), Location, Rotation, SpawnParams);
+		LightningStrike->OnOverlapActor.AddDynamic(this, &AOVAIBoss::AOEDelegate);
+	}
+}
+
+void AOVAIBoss::AOEDelegate(AActor* OverlappedActor)
+{
+	// Handle overlapped actor here
+	FDamageInfo DamageInfo = {30, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false};
+	IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(OverlappedActor);
+	if(DamagableInterface)
+	{
+		DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
+	}
+}
+
 void AOVAIBoss::AttackCombo1()
 {
 	UE_LOG(LogTemp, Warning, TEXT("AttackCombo1"));
@@ -419,6 +451,18 @@ void AOVAIBoss::AttackGroundSmash()
 	FOnMontageEnded CompleteDelegate;
 	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
 	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackGroundSmashMontage);
+}
+
+void AOVAIBoss::AttackAOE()
+{
+	UE_LOG(LogTemp, Warning, TEXT("AttackAOE"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(AttackAOEMontage, 1.0f);
+
+	FOnMontageEnded CompleteDelegate;
+	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
+	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackAOEMontage);
 }
 
 void AOVAIBoss::TestAttack()

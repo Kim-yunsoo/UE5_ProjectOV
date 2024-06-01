@@ -126,6 +126,12 @@ public:
 	void AOESlashCheck();
 	void JumpCheck();
 	void SmashCheck();
+	void StrikeCheck();
+
+	UFUNCTION()
+	void AOEDelegate(AActor* OverlappedActor);
+
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Damage, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UOVDamageComponent> DamageComponent;
 	
@@ -148,6 +154,8 @@ public:
 	UFUNCTION()
 	void AttackGroundSmash();
 	
+	UFUNCTION()
+	void AttackAOE();
 	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> AttackCombo1Montage;
@@ -163,6 +171,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> AttackGroundSmashMontage;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> AttackAOEMontage;
 	
 	//TEST ATTACK
 	UFUNCTION()

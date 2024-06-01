@@ -38,6 +38,9 @@ public:
 	void AttackAOESlash(float Radius, FDamageInfo DamageInfo);
 
 	UFUNCTION()
+	void AttackAOEStrike(FDamageInfo DamageInfo);
+
+	UFUNCTION()
 	void JumpTarget(AActor* AttackTarget);
 
 	UFUNCTION()

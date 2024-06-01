@@ -40,11 +40,9 @@ enum class E_BossAttack : uint8
 	Combo2 UMETA(DisplayName = "Combo2"),
 	JumpAttack UMETA(DisplayName = "JumpAttack"),
 	QuickAttack UMETA(DisplayName = "QuickAttack"),
-	GroundSmash UMETA(DisplayName = "GroundSmash")
-// Attacking UMETA(DisplayName = "Attacking"),
-	// Frozen UMETA(DisplayName = "Frozen"),
-	// Investigating UMETA(DisplayName = "Investigating"),
-	// Dead UMETA(DisplayName = "Dead")
+	GroundSmash UMETA(DisplayName = "GroundSmash"),
+	AOEAttack UMETA(DisplayName = "AOEAttack")
+
 };
 
 DECLARE_DELEGATE(FAIEnemyAttackFinished);
