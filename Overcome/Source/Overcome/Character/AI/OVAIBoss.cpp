@@ -4,7 +4,6 @@
 #include "Character/AI/OVAIBoss.h"
 
 #include "BrainComponent.h"
-#include "ISourceControlProvider.h"
 #include "NavigationSystem.h"
 #include "OVAIBossController.h"
 #include "AI/OVAI.h"
@@ -86,6 +85,11 @@ void AOVAIBoss::BossAttack(E_BossAttack BossAttack)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
 		AttackCombo1();
+	}
+	else if(BossAttack == E_BossAttack::Combo2)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
+		AttackCombo2();
 	}
 }
 
@@ -308,9 +312,18 @@ void AOVAIBoss::SlashCheck()
 	}
 }
 
+void AOVAIBoss::AOESlashCheck()
+{
+	if (!DamageComponent->bIsDead)
+	{
+		FDamageInfo DamageInfo = {20, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, true};
+		AttackComponent->AttackAOESlash(300, DamageInfo);
+	}
+}
+
 void AOVAIBoss::AttackCombo1()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
+	UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
 	AnimInstance->Montage_Play(AttackCombo1Montage, 1.0f);
@@ -318,6 +331,18 @@ void AOVAIBoss::AttackCombo1()
 	FOnMontageEnded CompleteDelegate;
 	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
 	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackCombo1Montage);
+}
+
+void AOVAIBoss::AttackCombo2()
+{
+	UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO2"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(AttackCombo2Montage, 1.0f);
+
+	FOnMontageEnded CompleteDelegate;
+	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
+	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackCombo2Montage);
 }
 
 void AOVAIBoss::TestAttack()

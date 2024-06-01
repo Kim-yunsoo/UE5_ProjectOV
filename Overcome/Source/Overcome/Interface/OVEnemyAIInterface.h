@@ -36,7 +36,8 @@ enum class E_AIState : uint8
 UENUM(BlueprintType)
 enum class E_BossAttack : uint8
 {
-	Combo1 UMETA(DisplayName = "Combo1")
+	Combo1 UMETA(DisplayName = "Combo1"),
+	Combo2 UMETA(DisplayName = "Combo2")
 	// Attacking UMETA(DisplayName = "Attacking"),
 	// Frozen UMETA(DisplayName = "Frozen"),
 	// Investigating UMETA(DisplayName = "Investigating"),

@@ -34,6 +34,10 @@ public:
 	UFUNCTION()
 	void AttackSlash(float Radius, float Length, FDamageInfo DamageInfo);
 
+	UFUNCTION()
+	void AttackAOESlash(float Radius, FDamageInfo DamageInfo);
+
+	
 	UPROPERTY()
 	TObjectPtr<UNiagaraSystem> EmitterHit;
 };
