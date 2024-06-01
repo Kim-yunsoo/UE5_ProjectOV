@@ -3,9 +3,13 @@
 
 #include "Stat/OVAttackComponent.h"
 
+#include "NavigationSystem.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Character/OVCharacterPlayer.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Interface/OVDamagableInterface.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Perception/AISense_Damage.h"
 
@@ -117,6 +121,50 @@ void UOVAttackComponent::AttackAOESlash(float Radius, FDamageInfo DamageInfo)
 				DamagableInterface->TakeDamage(DamageInfo);
 			}
 		}
+	}
+}
+
+void UOVAttackComponent::JumpTarget(AActor* AttackTarget)
+{
+	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
+	if(OwnerCharacter && AttackTarget)
+	{
+		FVector Location = CalculateFutureActorLocation(AttackTarget, 1.0f);
+		FVector OutLaunchVelocity;
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *Location.ToString())
+		double BossTargetDistance;
+		BossTargetDistance = AttackTarget->GetDistanceTo(GetOwner());
+		BossTargetDistance = UKismetMathLibrary::NormalizeToRange(BossTargetDistance, 400, 800);
+		BossTargetDistance = UKismetMathLibrary::FClamp(BossTargetDistance, 0.0, 1.0);
+		BossTargetDistance = UKismetMathLibrary::Lerp(0.5, 0.94, BossTargetDistance);
+		Location.Z += 50;
+		UE_LOG(LogTemp, Warning, TEXT("%f"), BossTargetDistance)
+		//UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), OutLaunchVelocity, GetOwner()->GetActorLocation(),AttackTarget->GetActorLocation(), 0.0, 0.5 );
+		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), OutLaunchVelocity, GetOwner()->GetActorLocation(),Location, 0.0, BossTargetDistance );
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *OutLaunchVelocity.ToString());
+
+		//FVector TestLocation {0,0,500};
+		OwnerCharacter->LaunchCharacter(OutLaunchVelocity, true, true);
+		//OwnerCharacter->GetCharacterMovement()->StopMovementImmediately();
+		OwnerCharacter->LandedDelegate.AddDynamic(this, &UOVAttackComponent::OnCharacterLanded);
+	}
+}
+
+FVector UOVAttackComponent::CalculateFutureActorLocation(AActor* AttackTarget, float Timer)
+{
+	FVector Result;
+	Result = (AttackTarget->GetVelocity() * FVector(1, 1, 0))  * Timer + AttackTarget->GetActorLocation();
+	return Result;
+}
+
+void UOVAttackComponent::OnCharacterLanded(const FHitResult& Hit)
+{
+	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
+	if(OwnerCharacter)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OnLanded"));
+		OwnerCharacter->GetCharacterMovement()->StopMovementImmediately();
+		OwnerCharacter->LandedDelegate.RemoveDynamic(this, &UOVAttackComponent::OnCharacterLanded);
 	}
 }
 

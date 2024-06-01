@@ -10,7 +10,9 @@
     <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_Boss.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" afterDir="false" />
@@ -80,6 +82,7 @@
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackAOESlash.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackHitCheck.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackHitCheck.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Jump.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Slash.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Slash.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/OVAIAnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -239,7 +242,8 @@
       <workItem from="1717052502956" duration="6348000" />
       <workItem from="1717140227988" duration="11029000" />
       <workItem from="1717158345584" duration="10773000" />
-      <workItem from="1717207508063" duration="13883000" />
+      <workItem from="1717207508063" duration="24077000" />
+      <workItem from="1717233964674" duration="3643000" />
     </task>
     <servers />
   </component>

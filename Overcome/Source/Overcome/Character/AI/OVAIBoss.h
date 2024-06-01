@@ -123,6 +123,7 @@ public:
 public:
 	void SlashCheck();
 	void AOESlashCheck();
+	void JumpCheck();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Damage, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UOVDamageComponent> DamageComponent;
@@ -137,11 +138,18 @@ public:
 	UFUNCTION()
 	void AttackCombo2();
 	
+	UFUNCTION()
+	void AttackJump();
+	
+	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> AttackCombo1Montage;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> AttackCombo2Montage;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> AttackJumpMontage;
 	
 	//TEST ATTACK
 	UFUNCTION()

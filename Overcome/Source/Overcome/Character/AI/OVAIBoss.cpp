@@ -91,6 +91,10 @@ void AOVAIBoss::BossAttack(E_BossAttack BossAttack)
 		//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
 		AttackCombo2();
 	}
+	else if(BossAttack == E_BossAttack::JumpAttack)
+	{
+		AttackJump();
+	}
 }
 
 void AOVAIBoss::EauipWeapon()
@@ -321,9 +325,23 @@ void AOVAIBoss::AOESlashCheck()
 	}
 }
 
+void AOVAIBoss::JumpCheck()
+{
+	if (!DamageComponent->bIsDead)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Location True"));
+		AActor* AttackTarget = Cast<AActor>(BossController->GetBlackboardComponent()->GetValueAsObject(BBKEY_ATTACKTARGET));
+		if (AttackTarget)
+		{
+			AttackComponent->JumpTarget(AttackTarget);
+		}
+	
+	}
+}
+
 void AOVAIBoss::AttackCombo1()
 {
-	UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
+	//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
 	AnimInstance->Montage_Play(AttackCombo1Montage, 1.0f);
@@ -335,7 +353,7 @@ void AOVAIBoss::AttackCombo1()
 
 void AOVAIBoss::AttackCombo2()
 {
-	UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO2"));
+	//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO2"));
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
 	AnimInstance->Montage_Play(AttackCombo2Montage, 1.0f);
@@ -343,6 +361,18 @@ void AOVAIBoss::AttackCombo2()
 	FOnMontageEnded CompleteDelegate;
 	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
 	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackCombo2Montage);
+}
+
+void AOVAIBoss::AttackJump()
+{
+	UE_LOG(LogTemp, Warning, TEXT("AttackJump"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(AttackJumpMontage, 1.0f);
+
+	FOnMontageEnded CompleteDelegate;
+	CompleteDelegate.BindUObject(this, &AOVAIBoss::OnDefaultAttackMontageEnded);
+	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, AttackJumpMontage);
 }
 
 void AOVAIBoss::TestAttack()

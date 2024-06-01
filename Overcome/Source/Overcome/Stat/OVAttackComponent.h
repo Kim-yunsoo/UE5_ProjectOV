@@ -37,6 +37,14 @@ public:
 	UFUNCTION()
 	void AttackAOESlash(float Radius, FDamageInfo DamageInfo);
 
+	UFUNCTION()
+	void JumpTarget(AActor* AttackTarget);
+
+	UFUNCTION()
+	FVector CalculateFutureActorLocation(AActor* AttackTarget, float Timer);
+
+	UFUNCTION()
+	void OnCharacterLanded(const FHitResult& Hit);
 	
 	UPROPERTY()
 	TObjectPtr<UNiagaraSystem> EmitterHit;
