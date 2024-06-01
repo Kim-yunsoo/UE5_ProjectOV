@@ -44,6 +44,8 @@ enum class E_BossAttack : uint8
 };
 
 DECLARE_DELEGATE(FAIEnemyAttackFinished);
+DECLARE_DELEGATE(FAIEnemyTeleportFinished);
+
 /**
  * 
  */
@@ -56,6 +58,7 @@ public:
 	virtual float GetIsWieldingWeapon() = 0;
 	
 	virtual void SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished) = 0;
+	virtual void SetAITeleportDelegate(const FAIEnemyTeleportFinished& InOnTeleportFinished) = 0;
 	virtual void DefaultAttack() = 0;
 	virtual void EauipWeapon() = 0;
 	virtual void UneauipWeapon() = 0;
@@ -64,5 +67,5 @@ public:
 	virtual void SetMovementSpeed(E_MovementSpeed SpeedValue) = 0;
 	virtual void BossAttack(E_BossAttack BossAttack) = 0;
 	virtual void SetIsInterruptible(bool bIsInterruptibleValue) = 0;
-
+	virtual void BossTeleport(FVector Location) = 0;
 };

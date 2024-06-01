@@ -95,7 +95,7 @@ float AOVCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 
 void AOVCharacterBase::SetDead()
 {
-	UE_LOG(LogTemp, Warning, TEXT("DEAD!!!"));
+	//UE_LOG(LogTemp, Warning, TEXT("DEAD!!!"));
 	SetActorEnableCollision(false);
 	//HpBar->SetHiddenInGame(true);
 	// Destroy(this);

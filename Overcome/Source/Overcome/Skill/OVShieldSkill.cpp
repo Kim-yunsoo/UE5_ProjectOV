@@ -12,14 +12,14 @@ UOVShieldSkill::UOVShieldSkill()
 
 void UOVShieldSkill::SkillAction()
 {
-	UE_LOG(LogSkillCharacter, Log, TEXT("StartShieldSkill"));
+	//UE_LOG(LogSkillCharacter, Log, TEXT("StartShieldSkill"));
 	Super::SkillAction();
 	
 	FTimerHandle Handle;
 	GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
 		{
 			Owner->bIsActiveShieldSkill = true;
-			UE_LOG(LogSkillCharacter, Log, TEXT("EndShieldSkill"));
+			//UE_LOG(LogSkillCharacter, Log, TEXT("EndShieldSkill"));
 		}
 	), ShieldCooltime, false, -1.0f);
 }

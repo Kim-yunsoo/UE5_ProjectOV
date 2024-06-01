@@ -21,7 +21,7 @@ void UOVAIAnimInstance::NativeInitializeAnimation()
 	{
 		Movement = Owner->GetCharacterMovement();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("AIFirst"));
+	//UE_LOG(LogTemp, Warning, TEXT("AIFirst"));
 }
 
 void UOVAIAnimInstance::NativeUpdateAnimation(float DeltaSeconds)

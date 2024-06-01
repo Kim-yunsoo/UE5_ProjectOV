@@ -31,7 +31,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	FAIEnemyAttackFinished OnDefaultAttackFinished;
-
+	FAIEnemyTeleportFinished OnTeleportFinished;
+	
 	UPROPERTY()
 	AOVAIBossController* BossController;
 
@@ -105,15 +106,19 @@ public:
 	virtual bool TakeDamage(FDamageInfo DamageInfo) override ;
 	virtual bool IsDead() override;
 	virtual bool IsAttacking() override;
-	virtual void SetIsInterruptible(bool bIsInterruptibleValue);
+	virtual void SetIsInterruptible(bool bIsInterruptibleValue) override;
+	virtual void BossTeleport(FVector Location) override;
+	virtual void SetAITeleportDelegate(const FAIEnemyTeleportFinished& InOnTeleportFinished) override;
 
-
+	void BossTeleportEnd();
 	void Blocked(bool CanBeParried);
 	void DamageResponse(E_DamageResponses DamageResponses);
 	virtual void SetDead() override;
-
 	UPROPERTY()
 	uint8 bIsAttacking : 1;
+
+	UPROPERTY()
+	uint8 bIsTeleporting : 1;
 	
 public:
 	void SlashCheck();

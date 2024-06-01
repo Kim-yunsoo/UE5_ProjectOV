@@ -4,12 +4,16 @@
 #include "Character/AI/OVAIBoss.h"
 
 #include "BrainComponent.h"
+#include "ISourceControlProvider.h"
+#include "NavigationSystem.h"
 #include "OVAIBossController.h"
 #include "AI/OVAI.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Game/OVGameState.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Navigation/PathFollowingComponent.h"
 #include "Stat/OVAttackComponent.h"
 #include "Stat/OVCharacterStatComponent.h"
 #include "Stat/OVDamageComponent.h"
@@ -29,6 +33,8 @@ AOVAIBoss::AOVAIBoss()
 	Stat->SetIsBoss(true);
 	Stat->SetMaxHp(500);
 	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
+	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
+
 	DamageComponent->SetMaxHealth(500);
 	
 	Sword = CreateDefaultSubobject<AOVSword>(TEXT("Sword"));
@@ -41,8 +47,7 @@ AOVAIBoss::AOVAIBoss()
 	bIsWieldingWeapon = false;
 	bIsFirst = true;
 	bIsAttacking = false;
-
-	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
+	bIsTeleporting = false;
 
 }
 
@@ -79,7 +84,7 @@ void AOVAIBoss::BossAttack(E_BossAttack BossAttack)
 {
 	if(BossAttack == E_BossAttack::Combo1)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
+		//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
 		AttackCombo1();
 	}
 }
@@ -92,7 +97,7 @@ void AOVAIBoss::EauipWeapon()
 		//Sword_l = GetWorld()->SpawnActor<AOVSword>(SwordClass);
 		if (!Sword)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Not Sword"));
+			//UE_LOG(LogTemp, Warning, TEXT("Not Sword"));
 		}
 		else
 		{
@@ -143,7 +148,7 @@ void AOVAIBoss::SetState(E_AIState AIStateValue)
 		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
 		{
 			GameState->BossState(true);
-			UE_LOG(LogTemp,Warning, TEXT("SetState BOSS"));
+			//UE_LOG(LogTemp,Warning, TEXT("SetState BOSS"));
 		}
 	}
 }
@@ -180,7 +185,7 @@ float AOVAIBoss::Heal(float Amount)
 
 bool AOVAIBoss::TakeDamage(FDamageInfo DamageInfo) //영향 받음
 {
-	UE_LOG(LogTemp, Warning, TEXT("TakeDamage"));
+	//UE_LOG(LogTemp, Warning, TEXT("TakeDamage"));
 	DamageComponent->TakeDamage(DamageInfo);
 	Stat->SetHp(DamageComponent->Health);
 	return true;
@@ -201,14 +206,71 @@ void AOVAIBoss::SetIsInterruptible(bool bIsInterruptibleValue)
 	DamageComponent->bIsInterruptible = bIsInterruptibleValue;
 }
 
+void AOVAIBoss::BossTeleport(FVector Location)
+{
+	if(!bIsTeleporting)
+	{
+		bIsTeleporting = true;
+		GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+		GetCharacterMovement()->MaxFlySpeed = 5000;
+		GetCharacterMovement()->MaxAcceleration = 99999;
+		GetMesh()->SetVisibility(false, true);
+		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
+		//UE_LOG(LogTemp, Warning, TEXT("Location %s"), *Location.ToString());
+		//if( BossController->MoveToLocation(Location, 150, false, true, true, false, nullptr , true) == EPathFollowingRequestResult::RequestSuccessful)
+		//SetActorLocation(Location);
+		FNavLocation RandomNavLocation;
+		UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
+		if (NavSystem && NavSystem->GetRandomPointInNavigableRadius(Location, 130, RandomNavLocation))
+		{
+			SetActorLocation(RandomNavLocation.Location);
+			BossTeleportEnd();
+		}
+	}
+	else 
+	{
+		//TelePort END 몇초 후
+		FLatentActionInfo LatentInfo;
+		LatentInfo.CallbackTarget = this;
+		LatentInfo.ExecutionFunction = FName("OnTeleportEnd");
+		LatentInfo.Linkage = 0;
+		LatentInfo.UUID = __LINE__;
+		
+		UKismetSystemLibrary::DelayUntilNextTick(this, LatentInfo);
+		//보스 행동트리 끝
+		OnTeleportFinished.ExecuteIfBound();
+	}
+}
+
+void AOVAIBoss::SetAITeleportDelegate(const FAIEnemyTeleportFinished& InOnTeleportFinished)
+{
+	OnTeleportFinished = InOnTeleportFinished;
+	//UE_LOG(LogTemp,Warning, TEXT("SetAITeleportDelegate"));
+}
+
+void AOVAIBoss::BossTeleportEnd()
+{
+	GetCharacterMovement()->StopMovementImmediately();
+	GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+	GetCharacterMovement()->MaxAcceleration = 1500;
+	GetMesh()->SetVisibility(true, true);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block);
+	OnTeleportFinished.ExecuteIfBound();
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+	{
+		bIsTeleporting = false;
+	}, 0.5f, false);
+}
+
 void AOVAIBoss::Blocked(bool CanBeParried)
 {
-	UE_LOG(LogTemp,Warning ,TEXT("Boss Blocked"));
+	//UE_LOG(LogTemp,Warning ,TEXT("Boss Blocked"));
 }
 
 void AOVAIBoss::DamageResponse(E_DamageResponses DamageResponses)
 {
-	UE_LOG(LogTemp,Warning ,TEXT("Boss DamageResponse"));
+	//UE_LOG(LogTemp,Warning ,TEXT("Boss DamageResponse"));
 	//if(GetState() != E_AIState::Frozen) //공격 받고 있지 않을때 공격 들어감!
 	{
 		GetCharacterMovement()->StopMovementImmediately();
@@ -233,9 +295,9 @@ void AOVAIBoss::SetDead()
 	BossController->GetBrainComponent()->StopLogic(TEXT("Dead"));
 	SetState(E_AIState::Dead);
 	BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
-
-	UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
+	//UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
 }
+
 
 void AOVAIBoss::SlashCheck()
 {
@@ -301,7 +363,7 @@ void AOVAIBoss::SetMovementSpeed(E_MovementSpeed SpeedValue)
 	}
 	else if(SpeedValue == E_MovementSpeed::Jogging)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Jogging"));
+	//UE_LOG(LogTemp, Warning, TEXT("Jogging"));
 		GetCharacterMovement()->MaxWalkSpeed = 200.f;
 	}
 	else if(SpeedValue == E_MovementSpeed::Sprinting)

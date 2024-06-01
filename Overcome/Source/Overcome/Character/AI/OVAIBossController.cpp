@@ -126,7 +126,7 @@ void AOVAIBossController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus)
 	if ((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating)) // && player ) //&& (Actor == CharacterPlayer))
 	{
 		Boss->SetState(E_AIState::Attacking);
-		UE_LOG(LogTemp, Warning, TEXT("Sight Attack"));
+		//UE_LOG(LogTemp, Warning, TEXT("Sight Attack"));
 		SetBlackBoardKey();
 	}
 }
@@ -137,7 +137,7 @@ void AOVAIBossController::HandleSoundSense(AActor* Actor, FAIStimulus Stimulus)
 	{
 		Boss->SetState(E_AIState::Investigating);
 		FVector Location = Stimulus.StimulusLocation;
-		UE_LOG(LogTemp, Warning, TEXT("Sound"));
+		//UE_LOG(LogTemp, Warning, TEXT("Sound"));
 		UBlackboardComponent* BlackboardPtr = Blackboard.Get();
 		if (UseBlackboard(BBAsset, BlackboardPtr))
 		{

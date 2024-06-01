@@ -497,7 +497,7 @@ void AOVCharacterPlayer::SetDead()
 	{
 		DisableInput(PlayerController);
 	}
-	UE_LOG(LogTemp,Warning ,TEXT("Character Dead"));
+	//UE_LOG(LogTemp,Warning ,TEXT("Character Dead"));
 }
 
 void AOVCharacterPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -562,7 +562,7 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
 		{
 			BossHpWidget->UpdateHpBar(GameState->GetBossHp());
-			UE_LOG(LogTemp, Warning, TEXT(" BOSS %f"), GameState->GetBossHp());
+			//UE_LOG(LogTemp, Warning, TEXT(" BOSS %f"), GameState->GetBossHp());
 			GameState->OnBossHpChanged.AddDynamic(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
 		}
 	}
@@ -647,7 +647,7 @@ bool AOVCharacterPlayer::IsAttacking()
 
 void AOVCharacterPlayer::Blocked(bool CanBeParried)
 {
-	UE_LOG(LogTemp,Warning ,TEXT("Character Blocked"));
+	//UE_LOG(LogTemp,Warning ,TEXT("Character Blocked"));
 }
 
 void AOVCharacterPlayer::DamageResponse(E_DamageResponses DamageResponses)

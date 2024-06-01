@@ -10,21 +10,21 @@
     <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/Decorators/BTD_HasPatrolRoute.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/Decorators/BTD_HasPatrolRoute.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/Task/BTT_MoveAlongPatrolRoute.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/Task/BTT_MoveAlongPatrolRoute.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_DefaultAttack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_DefaultAttack.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_WieldSword.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_WieldSword.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_FocusTarget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_FocusTarget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Animation/OVAIAnimInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Animation/OVAIAnimInstance.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Animation/OVAnimInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Animation/OVAnimInstance.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +75,8 @@
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_SheathSword.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_BossAttack.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_BossAttack.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_BossTeleport.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_BossTeleport.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_ClearFocus.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_ClearFocus.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_DefaultAttack.h" root0="FORCE_HIGHLIGHTING" />
@@ -243,6 +245,7 @@
       <workItem from="1717052502956" duration="6348000" />
       <workItem from="1717140227988" duration="11029000" />
       <workItem from="1717158345584" duration="10773000" />
+      <workItem from="1717207508063" duration="10347000" />
     </task>
     <servers />
   </component>

@@ -48,7 +48,7 @@ void UOVAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 void UOVAnimInstance::AnimNotify_PlayMontageNotify()
 {
-	UE_LOG(LogTemp, Log, TEXT("GrenadeCheck"))
+	//UE_LOG(LogTemp, Log, TEXT("GrenadeCheck"))
 }
 
 AOVCharacterPlayer* UOVAnimInstance::GetOwner()

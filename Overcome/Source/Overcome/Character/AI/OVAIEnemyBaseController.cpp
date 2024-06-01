@@ -154,7 +154,7 @@ void AOVAIEnemyBaseController::HandleDamageSense(AActor* Actor, FAIStimulus Stim
 
 void AOVAIEnemyBaseController::HandlePerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *Stimulus.Type.Name.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("%s"), *Stimulus.Type.Name.ToString());
 
 	if (Stimulus.Type.Name == "Default__AISense_Sight")
 	{
