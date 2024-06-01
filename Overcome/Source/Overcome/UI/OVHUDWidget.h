@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "OVHUDWidget.generated.h"
 
+struct FInteractableData;
 /**
  * 
  */
@@ -16,7 +17,7 @@ class OVERCOME_API UOVHUDWidget : public UUserWidget
 	
 public:
 	UOVHUDWidget(const FObjectInitializer& ObjectInitializer);
-	void UpdateTarget(bool bIsShowUI);
+	void UpdateTarget(bool bIsShowUI) const;
 
 	UFUNCTION()
 	void UpdateBossUI(bool bIsShowUI);
@@ -25,10 +26,31 @@ public:
 
 	UPROPERTY()
 	TObjectPtr<class UOVTargetWidget> TargetWidget;
+public:
+	UPROPERTY(EditDefaultsOnly,Category="Widgets")
+	TSubclassOf<class UOVMainMenu> MainMenuClass;
+
+	UPROPERTY(EditDefaultsOnly,Category="Widgets")
+	TSubclassOf<class UOVInteractionWidget> InteractionWidgetClass;
+	
 	
 	UPROPERTY()
 	TObjectPtr<class UOVStatWidget> StatWidget;
 
 	UPROPERTY()
 	TObjectPtr<class UOVBossHpWidget> BossHpWidget;
+	TObjectPtr<UOVMainMenu> MainMenuWidget;
+	
+	UPROPERTY()
+	TObjectPtr<UOVInteractionWidget> InteractionWidget ;
+
+	bool bIsMenuVisible;
+
+	void DisplayMenu();
+	void HideMenu();
+	void ToggleMenu();
+
+	void ShowInteractionWidget() const;
+	void HideInteractionWidget() const;
+	void UpdateInteractionWidget(const FInteractableData* InteractionData) const;
 };

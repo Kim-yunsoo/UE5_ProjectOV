@@ -17,6 +17,9 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Item/OVHpItemData.h"
 #include "Kismet/GameplayStatics.h"
+#include "Interface/OVInteractionInterface.h"
+#include "Net/UnrealNetwork.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Skill/OVShieldSkill.h"
 #include "Skill/OVTeleportSkill.h"
 #include "Stat/OVAttackComponent.h"
@@ -24,6 +27,10 @@
 #include "UI/OVBossHpWidget.h"
 #include "UI/OVHUDWidget.h"
 #include "UI/OVStatWidget.h"
+#include "DrawDebugHelpers.h"
+#include "Component/OVInventoryComponent.h"
+#include "Object/OVPickup.h"
+#include "Player/OVPlayerController.h"
 
 DEFINE_LOG_CATEGORY(LogOVCharacter);
 
@@ -41,66 +48,77 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	FollowCamera->bUsePawnControlRotation = false;
 
 	// Input
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionJumpRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Jump.IA_OV_Jump'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionJumpRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Jump.IA_OV_Jump'"));
 	if (nullptr != InputActionJumpRef.Object)
 	{
 		JumpAction = InputActionJumpRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputChangeActionControlRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ChangeControl.IA_OV_ChangeControl'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputChangeActionControlRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ChangeControl.IA_OV_ChangeControl'"));
 	if (nullptr != InputChangeActionControlRef.Object)
 	{
 		ChangeControlAction = InputChangeActionControlRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderMove.IA_OV_ShoulderMove'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderMoveRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderMove.IA_OV_ShoulderMove'"));
 	if (nullptr != InputActionShoulderMoveRef.Object)
 	{
 		ShoulderMoveAction = InputActionShoulderMoveRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderLookXRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderLookX.IA_OV_ShoulderLookX'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderLookXRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderLookX.IA_OV_ShoulderLookX'"));
 	if (nullptr != InputActionShoulderLookXRef.Object)
 	{
 		ShoulderLookActionX = InputActionShoulderLookXRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderLookYRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderLookY.IA_OV_ShoulderLookY'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderLookYRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ShoulderLookY.IA_OV_ShoulderLookY'"));
 	if (nullptr != InputActionShoulderLookYRef.Object)
 	{
 		ShoulderLookActionY = InputActionShoulderLookYRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionQuaterMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_QuaterMove.IA_OV_QuaterMove'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionQuaterMoveRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_QuaterMove.IA_OV_QuaterMove'"));
 	if (nullptr != InputActionQuaterMoveRef.Object)
 	{
 		QuaterMoveAction = InputActionQuaterMoveRef.Object;
 	}
-	static ConstructorHelpers::FObjectFinder<UInputAction> AimActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_MouseRight.IA_OV_MouseRight'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> AimActionRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_MouseRight.IA_OV_MouseRight'"));
 	if (nullptr != AimActionRef.Object)
 	{
 		AimAction = AimActionRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> ShootActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Shoot.IA_OV_Shoot'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> ShootActionRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Shoot.IA_OV_Shoot'"));
 	if (nullptr != ShootActionRef.Object)
 	{
 		ShootAction = ShootActionRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> WheelActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ChangeWeapon.IA_OV_ChangeWeapon'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> WheelActionRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ChangeWeapon.IA_OV_ChangeWeapon'"));
 	if (nullptr != WheelActionRef.Object)
 	{
 		WheelAction = WheelActionRef.Object;
 	}
-	
-	static ConstructorHelpers::FObjectFinder<UInputAction> TeleportActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Teleport.IA_OV_Teleport'"));
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> TeleportActionRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Teleport.IA_OV_Teleport'"));
 	if (nullptr != TeleportActionRef.Object)
 	{
 		TeleportAction = TeleportActionRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> ShieldActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Shield.IA_OV_Shield'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> ShieldActionRef(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Shield.IA_OV_Shield'"));
 	if (nullptr != ShieldActionRef.Object)
 	{
 		ShieldAction = ShieldActionRef.Object;
@@ -112,6 +130,20 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 		 HealAction = HealActionRef.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UInputAction> InteractionActionRef(
+	TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Interact.IA_OV_Interact'"));
+	if (nullptr != InteractionActionRef.Object)
+	{
+		InteractionAction = InteractionActionRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> ToggleMenuTabRef(
+TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ToggleMenu.IA_OV_ToggleMenu'"));
+	if (nullptr != ToggleMenuTabRef.Object)
+	{
+		ToggleMenuTab = ToggleMenuTabRef.Object;
+	}
+	
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
 
@@ -125,10 +157,14 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	bIsGun = true;
 
 	//Item Action
-	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
-	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkMp)));
-	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkAttack)));
-	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::Damage)));
+	TakeItemActions.Add(
+		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
+	TakeItemActions.Add(
+		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkMp)));
+	TakeItemActions.Add(
+		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkAttack)));
+	TakeItemActions.
+		Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::Damage)));
 
 	//Skill
 	TeleportSkillComponent = CreateDefaultSubobject<UOVTeleportSkill>(TEXT("TeleSkillComponent"));
@@ -144,6 +180,16 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 
 	Stat->SetMaxHp(100);
 	DamageComponent->SetMaxHealth(100);
+
+	InteractionCheckFrequency = 0.1f;
+	InteractionCheckDistance = 225.0f;
+	BaseEyeHeight = 74.0f;
+	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
+
+	PlayerInventory = CreateDefaultSubobject<UOVInventoryComponent>(TEXT("PlayerInventory"));
+	PlayerInventory->SetSlotsCapacity(20);
+
+
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -185,9 +231,14 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Shoot);
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopShoot);
 	EnhancedInputComponent->BindAction(WheelAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeWeapon);
-	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::TeleportSkill);
+	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this,
+	                                   &AOVCharacterPlayer::TeleportSkill);
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
 	EnhancedInputComponent->BindAction(HealAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::HealSkill);
+	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
+	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
+	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
+	//EndInteraction 안함
 }
 
 void AOVCharacterPlayer::SmoothInterpReturn(float Value)
@@ -218,17 +269,18 @@ void AOVCharacterPlayer::SetCharacterControl(ECharacterControlType NewCharacterC
 	{
 		return;
 	}
-	
-	UOVCharacterControlData* NewCharacterControl = CharacterControlManager[NewCharacterControlType]; //��Ʈ�� ������ ������ �´�
-	check(NewCharacterControl); //�ݵ�� �ִ��� Ȯ��
+
+	UOVCharacterControlData* NewCharacterControl = CharacterControlManager[NewCharacterControlType];
+	check(NewCharacterControl); 
 
 	SetCharacterControlData(NewCharacterControl);
 
-	APlayerController* PlayerController = CastChecked<APlayerController>(GetController()); //��Ʈ�ѷ� ������ ���� CastChecked�� Ȯ��
+	APlayerController* PlayerController = CastChecked<APlayerController>(GetController());
 
-	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+		PlayerController->GetLocalPlayer()))
 	{
-		Subsystem->ClearAllMappings(); //���� �ʱ�ȭ
+		Subsystem->ClearAllMappings(); 
 		UInputMappingContext* NewMappingContext = NewCharacterControl->InputMappingContext;
 		if (NewMappingContext)
 		{
@@ -236,6 +288,12 @@ void AOVCharacterPlayer::SetCharacterControl(ECharacterControlType NewCharacterC
 		}
 	}
 	CurrentCharacterControlType = NewCharacterControlType;
+
+	AOVPlayerController* OVController = Cast<AOVPlayerController>(GetController());
+	if(OVController)
+	{
+		HUDWidget = OVController->GetOVHUDWidget();
+	}
 }
 
 void AOVCharacterPlayer::SetCharacterControlData(const UOVCharacterControlData* CharacterControlData)
@@ -274,8 +332,8 @@ void AOVCharacterPlayer::ShoulderLookX(const FInputActionValue& Value)
 	float LookAxisVector = Value.Get<float>();
 	AddControllerYawInput(LookAxisVector);
 	//UE_LOG(LogTemp, Log, TEXT("LookX"));
-	 // if (bIsAiming && bIsGun)
-	 // 	TurnInPlace();
+	// if (bIsAiming && bIsGun)
+	// 	TurnInPlace();
 }
 
 void AOVCharacterPlayer::ShoulderLookY(const FInputActionValue& Value)
@@ -309,7 +367,7 @@ void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
 	if (bIsGun)
 	{
-		if(!bIsAiming)
+		if (!bIsAiming)
 		{
 			bIsAiming = true;
 			SmoothCurveTimeline->Play();
@@ -321,7 +379,6 @@ void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 		// {
 		// 	StopAiming(Value);
 		// }
-		
 	}
 }
 
@@ -346,8 +403,8 @@ void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 {
-	int GunSocket = Value.Get<float>();   ;
-	if(GunSocket > 0)
+	int GunSocket = Value.Get<float>();;
+	if (GunSocket > 0)
 	{
 		bIsGun = true;
 		ServerRPCIsGun(bIsGun);
@@ -362,25 +419,26 @@ void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 void AOVCharacterPlayer::AimOffset(float DeltaTime)
 {
 	//컨트롤러 회전 사용 중단
-	if(!bIsAiming) return ;
+	if (!bIsAiming) return;
 	FVector Velocity = GetVelocity();
 	Velocity.Z = 0.f;
 	float Speed = Velocity.Size();
 	bool bIsInAir = GetCharacterMovement()->IsFalling();
 
-	if(Speed == 0.f && !bIsInAir)		// 서있고 점프 안하는 상태
+	if (Speed == 0.f && !bIsInAir) // 서있고 점프 안하는 상태
 	{
 		FRotator CurrentAimRoTation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
-		FRotator DeltaAimRotaion = UKismetMathLibrary::NormalizedDeltaRotator(CurrentAimRoTation, StaringAimRotation); //회전값 가지고 오기
+		FRotator DeltaAimRotaion = UKismetMathLibrary::NormalizedDeltaRotator(CurrentAimRoTation, StaringAimRotation);
+		//회전값 가지고 오기
 		AO_Yaw = DeltaAimRotaion.Yaw;
-		if(TurningInPlace == ETurningPlaceType::ETIP_NotTurning)
+		if (TurningInPlace == ETurningPlaceType::ETIP_NotTurning)
 		{
 			InterpAO_Yaw = AO_Yaw;
 		}
 		bUseControllerRotationYaw = true;
 		TurnInPlace(DeltaTime);
 	}
-	if(Speed > 0.f || bIsInAir)    // 달리거나 점프할 때
+	if (Speed > 0.f || bIsInAir) // 달리거나 점프할 때
 	{
 		StaringAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
 		AO_Yaw = 0.f;
@@ -390,7 +448,7 @@ void AOVCharacterPlayer::AimOffset(float DeltaTime)
 
 	AO_Pitch = GetBaseAimRotation().Pitch;
 
-	if(AO_Pitch > 90.f && !IsLocallyControlled())
+	if (AO_Pitch > 90.f && !IsLocallyControlled())
 	{
 		//[270,360) -> [-90, 0]
 		FVector2D InRange(270.f, 360.f);
@@ -412,12 +470,12 @@ void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 		
 		TurningInPlace = ETurningPlaceType::ETIP_Left;
 	}
-	if(TurningInPlace != ETurningPlaceType::ETIP_NotTurning)
+	if (TurningInPlace != ETurningPlaceType::ETIP_NotTurning)
 	{
 		InterpAO_Yaw = FMath::FInterpTo(InterpAO_Yaw, 0.0f, DeltaTime, 4.f);
 		AO_Yaw = InterpAO_Yaw;
 
-		if (FMath::Abs(AO_Yaw) < 15.f) 
+		if (FMath::Abs(AO_Yaw) < 15.f)
 		{
 			TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
 			StaringAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
@@ -451,17 +509,16 @@ void AOVCharacterPlayer::ServerRPCStopAiming_Implementation()
 
 void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
 {
-	if(IsGun)
+	if (IsGun)
 	{
-		bIsGun=true;
+		bIsGun = true;
 		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Rifle_Socket"));
 	}
 	else
 	{
-		bIsGun=false;
-		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Back_Socket"));  
+		bIsGun = false;
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Back_Socket"));
 	}
-
 }
 
 
@@ -509,17 +566,12 @@ void AOVCharacterPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AOVCharacterPlayer, bIsShooting);
 }
 
-void AOVCharacterPlayer::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-	AimOffset(DeltaSeconds);
-}
 
 void AOVCharacterPlayer::TakeItem(UOVItemData* InItemData)
 {
-	if(InItemData)
+	if (InItemData)
 	{
-		TakeItemActions[(uint8)InItemData->Type].ItemDelegate.ExecuteIfBound(InItemData);
+		//		TakeItemActions[(uint8)InItemData->Type].ItemDelegate.ExecuteIfBound(InItemData);
 	}
 }
 
@@ -531,19 +583,19 @@ void AOVCharacterPlayer::DrinkHp(UOVItemData* InItemData)
 
 void AOVCharacterPlayer::DrinkMp(UOVItemData* InItemData)
 {
-	float MpIncreaseAmount = Stat->GetCurrentMp()  + 20;
+	float MpIncreaseAmount = Stat->GetCurrentMp() + 20;
 	Stat->SetMp(MpIncreaseAmount);
 }
 
 void AOVCharacterPlayer::DrinkAttack(UOVItemData* InItemData)
 {
-	float AttackIncreaseAmount = Stat->GetCurrentAttack()  + 10;
+	float AttackIncreaseAmount = Stat->GetCurrentAttack() + 10;
 	Stat->SetAttack(AttackIncreaseAmount);
 }
 
 void AOVCharacterPlayer::Damage(UOVItemData* InItemData)
 {
-	if(bIsActiveShieldSkill)
+	if (bIsActiveShieldSkill)
 	{
 		float HpIncreaseAmount = Stat->GetCurrentHp() - 30;
 		Stat->SetHp(HpIncreaseAmount);
@@ -576,22 +628,22 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 
 void AOVCharacterPlayer::TeleportSkill(const FInputActionValue& Value)
 {
-	if(bIsActiveTeleportSkill && Stat->GetCurrentMp())
+	if (bIsActiveTeleportSkill && Stat->GetCurrentMp())
 	{
 		bIsActiveTeleportSkill = false;
 		TeleportSkillComponent->SkillAction();
-		float MpIncreaseAmount = Stat->GetCurrentMp()  - 20;
+		float MpIncreaseAmount = Stat->GetCurrentMp() - 20;
 		Stat->SetMp(MpIncreaseAmount);
 	}
 }
 
 void AOVCharacterPlayer::ShieldSkill(const FInputActionValue& Value)
 {
-	if(bIsActiveShieldSkill && Stat->GetCurrentMp())
+	if (bIsActiveShieldSkill && Stat->GetCurrentMp())
 	{
 		bIsActiveShieldSkill = false;
 		ShieldSkillComponent->SkillAction();
-		float MpIncreaseAmount = Stat->GetCurrentMp()  - 30;
+		float MpIncreaseAmount = Stat->GetCurrentMp() - 30;
 		Stat->SetMp(MpIncreaseAmount);
 	}
 }
@@ -605,6 +657,144 @@ void AOVCharacterPlayer::PostInitializeComponents()
 	AttackComponent->OnAttackEnded.AddUObject(this, &AOVCharacterPlayer::AttackEnded);
 
 }
+
+
+void AOVCharacterPlayer::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	AimOffset(DeltaSeconds);
+
+	// if (GetWorld()->TimeSince(InteractionData.LastInteractionCheckTime) > InteractionCheckFrequency)
+	// {
+	// 	PerformInteractionCheck();
+	// }
+}
+
+void AOVCharacterPlayer::PerformInteractionCheck(AActor* MyActor)
+{
+	if (MyActor->GetClass()->ImplementsInterface(UOVInteractionInterface::StaticClass()))
+	{
+		FoundInteractable(MyActor);
+	}
+}
+
+void AOVCharacterPlayer::FoundInteractable(AActor* NewInteractable)
+{
+	if (IsInteracting()) //타이머가 활성화 상태라면? 
+	{
+		EndInteract();
+	}
+
+	if (InteractionData.CurrentInteractable) //상호작용하는 액터가 이미 있는 경우 
+	{
+		TargetInteractable = InteractionData.CurrentInteractable;
+		TargetInteractable->EndFocus();
+	}
+	InteractionData.CurrentInteractable = NewInteractable;
+	TargetInteractable = NewInteractable;
+
+	HUDWidget->UpdateInteractionWidget(&TargetInteractable->InteractableData);
+	TargetInteractable->BeginFocus();
+}
+
+void AOVCharacterPlayer::NoInteractableFound()
+{
+	if (IsInteracting()) //타이머가 실행중이면
+	{
+		GetWorldTimerManager().ClearTimer(TimerHandle_Interaction); // 타이머 초기화
+	}
+
+	if (InteractionData.CurrentInteractable) //상호작용 가능한 것이 있다면
+	{
+		if (IsValid(TargetInteractable.GetObject()))
+		{
+			TargetInteractable->EndFocus();
+		}
+	}
+	HUDWidget->HideInteractionWidget();
+	
+	InteractionData.CurrentInteractable = nullptr;
+	TargetInteractable = nullptr;
+}
+
+void AOVCharacterPlayer::BeginInteract()
+{
+	//PerformInteractionCheck(); //보고 있다는 것을 확인
+
+	if (InteractionData.CurrentInteractable)
+	{
+		if (IsValid(TargetInteractable.GetObject()))
+		{
+			TargetInteractable->BeginInteract();
+		}
+
+		if (FMath::IsNearlyZero(TargetInteractable->InteractableData.InteractionDuration, 0.1f))
+		{
+			Interact();
+		}
+		else
+		{
+			GetWorldTimerManager().SetTimer(TimerHandle_Interaction,
+			                                this,
+			                                &AOVCharacterPlayer::Interact,
+			                                TargetInteractable->InteractableData.InteractionDuration,
+			                                false);
+		}
+	}
+}
+
+void AOVCharacterPlayer::EndInteract()
+{
+	GetWorldTimerManager().ClearTimer(TimerHandle_Interaction); // 타이머 초기화
+
+	if(IsValid(TargetInteractable.GetObject()))
+	{
+		TargetInteractable->EndInteract();
+	}
+}
+
+void AOVCharacterPlayer::UpdateInteractionWidget() const
+{
+	if(IsValid(TargetInteractable.GetObject()))
+	{
+		HUDWidget->UpdateInteractionWidget(&TargetInteractable->InteractableData);
+	}
+}
+void AOVCharacterPlayer::ToggleMenu()
+{
+	HUDWidget->ToggleMenu();
+}
+
+void AOVCharacterPlayer::DropItem(UOVItemBase* ItemToDrop, const int32 QuantityToDrop)
+{
+	if(PlayerInventory->FindMatchingItem(ItemToDrop))
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner =this;
+		SpawnParams.bNoFail =true;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+		const FVector SpawnLocation{GetActorLocation() + (GetActorForwardVector() * 50.f)};
+		const FTransform SpawnTransform(GetActorRotation(), SpawnLocation);
+		const int32 RemovedQuantity = PlayerInventory->RemoveAmountOfItem(ItemToDrop,QuantityToDrop); //인벤토리에서 숫자 뺴기
+		AOVPickup* Pickup = GetWorld()->SpawnActor<AOVPickup>(AOVPickup::StaticClass() , SpawnTransform, SpawnParams );
+
+		Pickup->InitializeDrop(ItemToDrop, RemovedQuantity);
+	}
+}
+
+void AOVCharacterPlayer::Interact()
+{
+	GetWorldTimerManager().ClearTimer(TimerHandle_Interaction); // 타이머 초기화
+
+	if(IsValid(TargetInteractable.GetObject()))
+	{
+		TargetInteractable->Interact(this);
+	}
+}
+
+
+
 
 void AOVCharacterPlayer::ServerRPCAiming_Implementation()
 {
