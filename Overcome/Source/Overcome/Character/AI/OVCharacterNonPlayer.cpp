@@ -7,6 +7,8 @@
 #include "OVAIController.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Object/OVPickup.h"
 #include "Stat/OVAttackComponent.h"
 #include "Stat/OVCharacterStatComponent.h"
 #include "Stat/OVDamageComponent.h"
@@ -62,6 +64,11 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 	Stat->SetMaxHp(50);
 	DamageComponent->SetMaxHealth(50);
 	bIsAttacking = false;
+	RandomItemName = GetRandomItemName();
+	if(RandomItemName == "None")
+	{
+		UE_LOG(LogTemp,Warning, TEXT("NameNone"));
+	}
 }
 
 void AOVCharacterNonPlayer::SetDead()
@@ -72,6 +79,17 @@ void AOVCharacterNonPlayer::SetDead()
 	FTimerHandle DeadTimerHandle;
 	AOVAIController* AIController = Cast<AOVAIController>(GetController());
 	AIController->GetBrainComponent()->StopLogic(TEXT("Dead"));
+
+	FActorSpawnParameters SpawnParams;
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *RandomItemName);
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	SpawnParams.TransformScaleMethod = ESpawnActorScaleMethod::MultiplyWithRoot;
+	AOVPickup* PotionObject = GetWorld()->SpawnActor<AOVPickup>(AOVPickup::StaticClass(), GetActorLocation(),
+																GetActorRotation(), SpawnParams);
+	PotionObject->DesiredItemID = *RandomItemName;
+	PotionObject->InitialStart();
+
+	
 	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
 		[&]()
 		{
@@ -186,4 +204,29 @@ void AOVCharacterNonPlayer::NotifyActionEnd()
 {
 	Super::NotifyActionEnd();
 	OnAttackFinished.ExecuteIfBound();
+}
+
+FString AOVCharacterNonPlayer::GetRandomItemName()
+{
+	// 0에서 2 사이의 랜덤 값을 생성
+	int32 RandomIndex = UKismetMathLibrary::RandomIntegerInRange(0, 2);
+
+	// E_Item 열거형 값을 배열에 저장
+	E_Item Items[] = { E_Item::HPPotion, E_Item::MPPotion, E_Item::AttackPotion };
+
+	// 선택된 랜덤 값에 해당하는 E_Item 값을 반환
+	E_Item SelectedItem = Items[RandomIndex];
+	UE_LOG(LogTemp, Warning, TEXT(" RandomIndex %d"), RandomIndex);
+	// 선택된 E_Item 값을 문자열로 변환
+	switch (SelectedItem)
+	{
+	case E_Item::HPPotion:
+		return TEXT("HPPotion");
+	case E_Item::MPPotion:
+		return TEXT("MPPotion");
+	case E_Item::AttackPotion:
+		return TEXT("AttackPotion");
+	default:
+		return TEXT("None");
+	}
 }

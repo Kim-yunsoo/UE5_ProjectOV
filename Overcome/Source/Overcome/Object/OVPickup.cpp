@@ -20,6 +20,15 @@ AOVPickup::AOVPickup()
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
 	Trigger->SetupAttachment(PickupMesh);
     Trigger->SetMobility(EComponentMobility::Movable);
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> DataTableFinder(TEXT("/Script/Engine.DataTable'/Game/ItemData/DT_ItemData.DT_ItemData'"));
+	if (DataTableFinder.Succeeded())
+	{
+		ItemDataTable = DataTableFinder.Object;
+		ItemQuantity = 1;
+		PickupMesh->SetMassScale(NAME_None, 10);
+	}
+	
 }
 
 // Called when the game starts or when spawned
@@ -29,8 +38,6 @@ void AOVPickup::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AOVPickup::OnTriggerEnter);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AOVPickup::OnTriggerExit);
 
-	InitializePickup(UOVItemBase::StaticClass(),ItemQuantity);
-	
 }
 
 void AOVPickup::InitializePickup(const TSubclassOf<UOVItemBase> BaseClass, const int32 InQuantity)
@@ -50,8 +57,6 @@ void AOVPickup::InitializePickup(const TSubclassOf<UOVItemBase> BaseClass, const
 		PickupMesh->SetStaticMesh(ItemData->AssetData.Mesh);
 
 		UpdateInteractableData();
-
-
 	}
 		
 }
@@ -62,6 +67,11 @@ void AOVPickup::InitializeDrop(UOVItemBase* ItemDrop, const int32 InQuantity)
 	InQuantity <= 0 ? ItemReference->SetQuantity(1) : ItemReference->SetQuantity(InQuantity);
 	PickupMesh->SetStaticMesh(ItemDrop->AssetData.Mesh);
 	UpdateInteractableData();
+}
+
+void AOVPickup::InitialStart()
+{
+	InitializePickup(UOVItemBase::StaticClass(),ItemQuantity);
 }
 
 void AOVPickup::BeginFocus()

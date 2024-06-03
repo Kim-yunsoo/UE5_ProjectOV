@@ -25,20 +25,21 @@ public:
 
 	void InitializePickup(const TSubclassOf<UOVItemBase> BaseClass, const int32 InQuantity);
 	void InitializeDrop(UOVItemBase* ItemDrop, const int32 InQuantity);
-
+	void InitialStart();
 	FORCEINLINE UOVItemBase* GetItemData(){return ItemReference;}
 
 	virtual void BeginFocus() override;
 	virtual void EndFocus() override;
-
+	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")
+	FName DesiredItemID;
+		
 protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Pickup | Components")
 	TObjectPtr<UStaticMeshComponent> PickupMesh;
 	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")
 	TObjectPtr<UDataTable> ItemDataTable;
-	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")
-	FName DesiredItemID;
+
 	UPROPERTY(VisibleAnywhere, Category = "Pickup | Item Reference")
 	TObjectPtr<UOVItemBase> ItemReference;
 	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")

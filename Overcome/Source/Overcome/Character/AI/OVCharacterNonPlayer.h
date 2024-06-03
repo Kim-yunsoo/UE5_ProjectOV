@@ -8,6 +8,16 @@
 #include "Interface/OVDamagableInterface.h"
 #include "OVCharacterNonPlayer.generated.h"
 
+UENUM(BlueprintType)
+enum class E_Item : uint8
+{
+	//None UMETA(DisplayName = "None"),
+	HPPotion UMETA(DisplayName = "HPPotion"),
+	MPPotion UMETA(DisplayName = "MPPotion"),
+	AttackPotion UMETA(DisplayName = "AttackPotion")
+};
+
+
 /**
  * 
  */
@@ -20,6 +30,8 @@ public:
 	
 	// AI Section
 protected:
+	
+	
 	virtual float GetAIPatrolRadius() override;
 	virtual float GetAIDetectRange() override;
 	virtual float GetAIAttackRange() override;
@@ -31,6 +43,11 @@ protected:
 	FAICharacterAttackFinished OnAttackFinished;
 
 	virtual void NotifyActionEnd() override;
+
+	FString GetRandomItemName();
+
+	UPROPERTY()
+	FString RandomItemName;
 	
 	//Dead Section
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation)

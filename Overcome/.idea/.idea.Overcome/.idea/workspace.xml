@@ -8,20 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a651a408-b286-4f61-9895-716573581285" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/encodings.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Potion/BP_OVPickUpBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Potion/BP_OVPickUpBase.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MyOVAOE_LightningStrike.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_InventoryPanel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_InventoryPanel.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/YSMap.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Overcome.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Overcome.Build.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,6 +147,7 @@
       <updated>1717270063466</updated>
       <workItem from="1717270065712" duration="471000" />
       <workItem from="1717392683920" duration="6247000" />
+      <workItem from="1717399721811" duration="9917000" />
     </task>
     <servers />
   </component>
