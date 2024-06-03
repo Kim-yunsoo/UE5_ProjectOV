@@ -110,7 +110,7 @@ void UOVAttackComponent::AttackAOESlash(float Radius, FDamageInfo DamageInfo)
 	ActorsToNotTargeting.Add(GetOwner());
 	TArray<AActor*> HitResultActor;
 	bool bResult =  UKismetSystemLibrary::SphereOverlapActors(GetWorld(), GetOwner()->GetActorLocation(), Radius,ObjectArray,nullptr, ActorsToNotTargeting, HitResultActor);
-	//DrawDebugSphere(GetWorld(), GetOwner()->GetActorLocation(), Radius, 24, FColor::Green, false, 2.0f);
+	DrawDebugSphere(GetWorld(), GetOwner()->GetActorLocation(), Radius, 24, FColor::Green, false, 2.0f);
 	if(bResult)
 	{
 		for (AActor* Actor : HitResultActor)

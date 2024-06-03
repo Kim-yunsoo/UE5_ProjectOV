@@ -322,8 +322,6 @@ void AOVCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 
 	AddMovementInput(ForwardDirection, MovementVector.X);
 	AddMovementInput(RightDirection, MovementVector.Y);
-
-
 }
 
 

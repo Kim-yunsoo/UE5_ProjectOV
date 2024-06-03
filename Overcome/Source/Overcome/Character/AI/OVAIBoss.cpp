@@ -85,12 +85,10 @@ void AOVAIBoss::BossAttack(E_BossAttack BossAttack)
 {
 	if(BossAttack == E_BossAttack::Combo1)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
 		AttackCombo1();
 	}
 	else if(BossAttack == E_BossAttack::Combo2)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("ATTACKCOMO1"));
 		AttackCombo2();
 	}
 	else if(BossAttack == E_BossAttack::JumpAttack)
@@ -100,6 +98,10 @@ void AOVAIBoss::BossAttack(E_BossAttack BossAttack)
 	else if(BossAttack == E_BossAttack::QuickAttack)
 	{
 		AttackQuick();
+	}
+	else if(BossAttack == E_BossAttack::GroundSmash)
+	{
+		AttackGroundSmash();
 	}
 	else if(BossAttack == E_BossAttack::AOEAttack)
 	{

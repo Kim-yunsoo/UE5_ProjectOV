@@ -58,13 +58,13 @@ void UOVInventoryItemSlot::NativeConstruct()
 
 FReply UOVInventoryItemSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	//return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-	FReply Reply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-	if(InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
-	{
-		return Reply.Handled().DetectDrag(TakeWidget(),EKeys::LeftMouseButton);
-	}
-	return Reply.Unhandled();  // 다른 것을 누를 시 아무동작이 일어나지 않도록 반환한다. 
+	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	// FReply Reply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+	// if(InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
+	// {
+	// 	return Reply.Handled().DetectDrag(TakeWidget(),EKeys::LeftMouseButton);
+	// }
+	// return Reply.Unhandled();  // 다른 것을 누를 시 아무동작이 일어나지 않도록 반환한다. 
 }
 
 void UOVInventoryItemSlot::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)

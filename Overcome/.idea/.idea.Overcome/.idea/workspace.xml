@@ -7,18 +7,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="">
+    <list default="true" id="a651a408-b286-4f61-9895-716573581285" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/encodings.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MyOVAOE_LightningStrike.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_InventoryPanel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_InventoryPanel.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/YSMap.umap" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,87 +44,11 @@
     &quot;accountId&quot;: &quot;9c8f9718-d4dc-45e8-b91c-a772cc3bcf80&quot;
   }
 }</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graph.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices_Extensions.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphExtensions.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphExtensions.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphFunctionTable.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/listcoll.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/ThirdParty/Android/detex/AndroidETCHalfFloat.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTDecorator_AttackInRange.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTDecorator_AttackInRange.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTService_Detect.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTTasK_Attack.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTTask_FindPatrolPos.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTTask_FindPatrolPos.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTTask_TurnToTarget.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTTask_TurnToTarget.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Decorators/BTDecorator_Condition.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Service/BTService_StopAttacking.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Service/BTService_StopAttacking.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Service/BTService_UpdateDistanceToTarget.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Service/BTService_UpdateDistanceToTarget.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_FocusTarget.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_FocusTarget.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_SheathSword.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTT_SheathSword.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_BossAttack.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_BossAttack.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_BossTeleport.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_BossTeleport.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_ClearFocus.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_ClearFocus.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_DefaultAttack.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetIsInterruptible.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetIsInterruptible.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetIsInvincible.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetMovementSpeed.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_SetSTateAsPassive.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackAOESlash.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackAOESlash.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackHitCheck.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackHitCheck.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackSmash.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackSmash.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackStrike.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_AttackStrike.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Jump.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Slash.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/AnimNotify_Slash.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/OVAIAnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/OVAIAnimInstance.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/OVAIBossAnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Animation/OVAIBossAnimInstance.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIEnemyBaseController.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Character/AI/OVEnemy_Base.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Game/OVGameState.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVAnimationAttackInterface.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVAnimationAttackInterface.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVCharacterAIInterface.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVCharacterAIInterface.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVDamagableInterface.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVDamagableInterface.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Stat/OVAttackComponent.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Stat/OVDamageComponent.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Sword/OVSword.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/Sword/OVSword.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVBossHpWidget.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVBossHpWidget.h" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="2gbMgu0AVIYUi30wfAl0DGrfQHc" />
+  <component name="ProjectId" id="2hI87LUcw6CeZWm8MysMMp4upWs" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -145,11 +73,6 @@
     ]
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="CidrLocalAttachDebugger.recentlyUsed">
-      <recent name="com.jetbrains.rider.cpp.debugger.RiderCppLLDBDriverConfiguration" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration name="Overcome" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -222,40 +145,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="디폴트 작업">
-      <changelist id="3248b204-2b22-4bf2-9bb7-73e2797aa7ad" name="변경" comment="" />
-      <created>1715961939346</created>
+      <changelist id="a651a408-b286-4f61-9895-716573581285" name="변경" comment="" />
+      <created>1717270063466</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1715961939346</updated>
-      <workItem from="1715961940840" duration="1282000" />
-      <workItem from="1716102281037" duration="1920000" />
-      <workItem from="1716164750597" duration="794000" />
-      <workItem from="1716165583860" duration="219000" />
-      <workItem from="1716165879179" duration="1517000" />
-      <workItem from="1716167423202" duration="3243000" />
-      <workItem from="1716260250319" duration="25053000" />
-      <workItem from="1716343376616" duration="3345000" />
-      <workItem from="1716375969236" duration="4383000" />
-      <workItem from="1716429696330" duration="11723000" />
-      <workItem from="1716451442651" duration="355000" />
-      <workItem from="1716451826136" duration="9204000" />
-      <workItem from="1716461800512" duration="16181000" />
-      <workItem from="1716480887556" duration="4337000" />
-      <workItem from="1716528482931" duration="4633000" />
-      <workItem from="1716695280869" duration="23098000" />
-      <workItem from="1716775439148" duration="37890000" />
-      <workItem from="1716854637635" duration="8201000" />
-      <workItem from="1716869167276" duration="4137000" />
-      <workItem from="1716877526208" duration="9958000" />
-      <workItem from="1716917285850" duration="27665000" />
-      <workItem from="1716993722054" duration="6644000" />
-      <workItem from="1717030420492" duration="1296000" />
-      <workItem from="1717052502956" duration="6348000" />
-      <workItem from="1717140227988" duration="11029000" />
-      <workItem from="1717158345584" duration="10773000" />
-      <workItem from="1717207508063" duration="24077000" />
-      <workItem from="1717233964674" duration="10517000" />
-      <workItem from="1717248295506" duration="17656000" />
+      <updated>1717270063466</updated>
+      <workItem from="1717270065712" duration="471000" />
+      <workItem from="1717392683920" duration="6247000" />
     </task>
     <servers />
   </component>
@@ -265,16 +161,5 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Overcome/Gun/OVGun.cpp</url>
-          <line>62</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
