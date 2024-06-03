@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Stat/OVCharacterStatComponent.h"
+#include "Component/OVCharacterStatComponent.h"
 
 #include "Game/OVGameState.h"
 #include "Kismet/GameplayStatics.h"

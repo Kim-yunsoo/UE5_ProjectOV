@@ -9,9 +9,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Object/OVPickup.h"
-#include "Stat/OVAttackComponent.h"
-#include "Stat/OVCharacterStatComponent.h"
-#include "Stat/OVDamageComponent.h"
+#include "Component/OVAttackComponent.h"
+#include "Component/OVCharacterStatComponent.h"
+#include "Component/OVDamageComponent.h"
 #include "UI/OVWidgetComponent.h"
 
 AOVCharacterNonPlayer::AOVCharacterNonPlayer()
@@ -43,28 +43,47 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 	{
 		StaggerMontage = StaggerMontageRef.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HPPotionMaterialRef(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Asset/Outline/M_Outline_Hp.M_Outline_Hp'"));
+	if (HPPotionMaterialRef.Succeeded())
+	{
+		HPPotionMaterial = HPPotionMaterialRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MPPotionMaterialRef(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Asset/Outline/M_Outline_Mp.M_Outline_Mp'"));
+	if (MPPotionMaterialRef.Succeeded())
+	{
+		MPPotionMaterial = MPPotionMaterialRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> AttackPotionMaterialRef(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Asset/Outline/M_Outline_Attack.M_Outline_Attack'"));
+	if (AttackPotionMaterialRef.Succeeded())
+	{
+		AttackPotionMaterial = AttackPotionMaterialRef.Object;
+	}
 	
 	AIControllerClass = AOVAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
-	HpBar->SetupAttachment(GetMesh());
-	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
-	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
-	if (HpBarWidgetRef.Class)
-	{
-		HpBar->SetWidgetClass(HpBarWidgetRef.Class);
-		HpBar->SetWidgetSpace(EWidgetSpace::Screen);
-		HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
-		HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	}
+	// HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
+	// HpBar->SetupAttachment(GetMesh());
+	// HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
+	// static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
+	// if (HpBarWidgetRef.Class)
+	// {
+	// 	HpBar->SetWidgetClass(HpBarWidgetRef.Class);
+	// 	HpBar->SetWidgetSpace(EWidgetSpace::Screen);
+	// 	HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
+	// 	HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	// }
 
 	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
 	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
 	Stat->SetMaxHp(50);
 	DamageComponent->SetMaxHealth(50);
 	bIsAttacking = false;
-	RandomItemName = GetRandomItemName();
+	
+	//GetMesh()->SetOverlayMaterial(MPPotionMaterial);
 	if(RandomItemName == "None")
 	{
 		UE_LOG(LogTemp,Warning, TEXT("NameNone"));
@@ -108,6 +127,7 @@ void AOVCharacterNonPlayer::PlayDeadAnimation()
 void AOVCharacterNonPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+	RandomItemName = GetRandomItemName();
 }
 
 void AOVCharacterNonPlayer::PostInitializeComponents()
@@ -221,10 +241,16 @@ FString AOVCharacterNonPlayer::GetRandomItemName()
 	switch (SelectedItem)
 	{
 	case E_Item::HPPotion:
+		GetMesh()->SetOverlayMaterial(HPPotionMaterial);
+		UE_LOG(LogTemp, Warning, TEXT("HPPAY"));
 		return TEXT("HPPotion");
 	case E_Item::MPPotion:
+		GetMesh()->SetOverlayMaterial(MPPotionMaterial);
+		UE_LOG(LogTemp, Warning, TEXT("MPPotion"));
 		return TEXT("MPPotion");
 	case E_Item::AttackPotion:
+		GetMesh()->SetOverlayMaterial(AttackPotionMaterial);
+		UE_LOG(LogTemp, Warning, TEXT("AttackPotion"));
 		return TEXT("AttackPotion");
 	default:
 		return TEXT("None");

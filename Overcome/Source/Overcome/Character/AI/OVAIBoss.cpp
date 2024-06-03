@@ -15,9 +15,9 @@
 #include "Gun/OVAOE_LightningStrike.h"
 #include "Kismet/GameplayStatics.h"
 #include "Navigation/PathFollowingComponent.h"
-#include "Stat/OVAttackComponent.h"
-#include "Stat/OVCharacterStatComponent.h"
-#include "Stat/OVDamageComponent.h"
+#include "Component/OVAttackComponent.h"
+#include "Component/OVCharacterStatComponent.h"
+#include "Component/OVDamageComponent.h"
 
 AOVAIBoss::AOVAIBoss()
 {

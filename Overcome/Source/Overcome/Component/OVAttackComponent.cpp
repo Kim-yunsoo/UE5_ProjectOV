@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Stat/OVAttackComponent.h"
+#include "Component/OVAttackComponent.h"
 
 #include "NavigationSystem.h"
 #include "NiagaraFunctionLibrary.h"
@@ -53,7 +53,7 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 	// 		FLinearColor::Red, FLinearColor::Green, 1.f);
 
 	bool bResult = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_GameTraceChannel1);
-	if(bResult)
+	if(bResult && HitResult.GetActor() != GetOwner())
 	{
 		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
 		if(DamagableInterface)

@@ -86,4 +86,13 @@ protected:
 	uint8 bIsAttacking : 1;
 
 	void DamageResponse(E_DamageResponses DamageResponses);
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> HPPotionMaterial;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> MPPotionMaterial;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> AttackPotionMaterial;
 };

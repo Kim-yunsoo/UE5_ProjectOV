@@ -8,7 +8,7 @@
 #include "Components/TimelineComponent.h"
 #include "Interface/OVCharacterHUDInterface.h"
 #include "Interface/OVCharacterItemInterface.h"
-#include "Stat/OVCharacterStatComponent.h"
+#include "Component/OVCharacterStatComponent.h"
 #include "TurningInPlace.h"
 #include "Interface/OVDamagableInterface.h"
 #include "OVCharacterPlayer.generated.h"

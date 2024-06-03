@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Stat/OVDamageComponent.h"
+#include "Component/OVDamageComponent.h"
 
 #include "Interface/OVDamagableInterface.h"
 
