@@ -22,7 +22,7 @@ enum class E_Item : uint8
  * 
  */
 UCLASS()
-class OVERCOME_API AOVCharacterNonPlayer : public AOVCharacterBase, public IOVCharacterAIInterface, public IOVDamagableInterface
+class OVERCOME_API AOVCharacterNonPlayer : public AOVCharacterBase, public IOVCharacterAIInterface, public IOVDamagableInterface, public IOVAnimationAttackInterface
 {
 	GENERATED_BODY()
 public:
@@ -31,6 +31,7 @@ public:
 	// AI Section
 protected:
 	
+	virtual void AttackHitCheck() override;
 	
 	virtual float GetAIPatrolRadius() override;
 	virtual float GetAIDetectRange() override;

@@ -113,35 +113,6 @@ void AOVCharacterBase::SetupCharacterWidget(UOVUserWidget* InUserWidget)
 	}
 }
 
-void AOVCharacterBase::AttackHitCheck()
-{
-	FHitResult OutHitResult;
-	FCollisionQueryParams Params(SCENE_QUERY_STAT(Attack), false, this);
-
-	const float AttackRange = 40.f;
-	const float AttackRadius = 50.f;
-	const float AttackDamage = 30.f; //데미지
-	const FVector Start = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius();
-	const FVector End = Start + GetActorForwardVector() * AttackRange;
-
-	//구체 만들어서 투사
-	bool HitDetected = GetWorld()->SweepSingleByChannel(OutHitResult, Start, End, FQuat::Identity, CCHANNEL_OVACTION, FCollisionShape::MakeSphere(AttackRadius), Params);
-	if (HitDetected)
-	{
-		FDamageEvent DamageEvent;
-		OutHitResult.GetActor()->TakeDamage(AttackDamage, DamageEvent, GetController(), this);
-	}
-
-#if ENABLE_DRAW_DEBUG //디버그
-
-	FVector CapsuleOrigin = Start + (End - Start) * 0.5f;
-	float CapsuleHalfHeight = AttackRange * 0.5f;
-	FColor DrawColor = HitDetected ? FColor::Green : FColor::Red;
-
-	//DrawDebugCapsule(GetWorld(), CapsuleOrigin, CapsuleHalfHeight, AttackRadius, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(), DrawColor, false, 5.0f);
-
-#endif
-}
 
 void AOVCharacterBase::NotifyActionEnd()
 {

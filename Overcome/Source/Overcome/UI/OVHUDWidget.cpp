@@ -121,7 +121,7 @@ void UOVHUDWidget::UpdateInteractionWidget(const FInteractableData* InteractionD
 	{
 		if(InteractionWidget->GetVisibility()==ESlateVisibility::Collapsed)
 		{
-			InteractionWidget->SetVisibility(ESlateVisibility::Visible);
+			InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
 		}
 
 		InteractionWidget->UpdateWidget(InteractionData);

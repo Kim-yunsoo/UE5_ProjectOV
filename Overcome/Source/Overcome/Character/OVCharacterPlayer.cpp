@@ -221,7 +221,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Jumping);
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-	EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::TestAttack);
+	//EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::TestAttack);
 	EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderMove);
 	EnhancedInputComponent->BindAction(ShoulderLookActionX, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookX);
 	EnhancedInputComponent->BindAction(ShoulderLookActionY, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookY);
@@ -239,6 +239,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
 	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
 	//EndInteraction 안함
+	
 }
 
 void AOVCharacterPlayer::SmoothInterpReturn(float Value)
@@ -522,7 +523,7 @@ void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
 
 void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 {
-	if(Gun->GetBulletCount())
+	//if(Gun->GetBulletCount())
 	{
 		bIsAttacking = true;
 		bIsShooting = true;
@@ -530,7 +531,7 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 		FVector Start;
 		FRotator Rotation;
 		GetController()->GetPlayerViewPoint(Start, Rotation);
-		FVector End = Start + Rotation.Vector() * 1000;
+		FVector End = Start + Rotation.Vector() * 1500;
 		FDamageInfo DamageInfo = {30, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
 		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 0.5);
@@ -640,6 +641,7 @@ void AOVCharacterPlayer::ShieldSkill(const FInputActionValue& Value)
 	if (bIsActiveShieldSkill && Stat->GetCurrentMp())
 	{
 		bIsActiveShieldSkill = false;
+		DamageComponent->bIsShieldSkill = true;
 		ShieldSkillComponent->SkillAction();
 		float MpIncreaseAmount = Stat->GetCurrentMp() - 30;
 		Stat->SetMp(MpIncreaseAmount);

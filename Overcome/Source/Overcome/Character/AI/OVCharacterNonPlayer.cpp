@@ -5,14 +5,14 @@
 
 #include "BrainComponent.h"
 #include "OVAIController.h"
-#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Object/OVPickup.h"
 #include "Component/OVAttackComponent.h"
 #include "Component/OVCharacterStatComponent.h"
 #include "Component/OVDamageComponent.h"
-#include "UI/OVWidgetComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Physics/OVCollision.h"
 
 AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 {
@@ -90,10 +90,43 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 	}
 }
 
+void AOVCharacterNonPlayer::AttackHitCheck()
+{
+	FHitResult OutHitResult;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(Attack), false, this);
+
+	const float AttackRange = 40.f;
+	const float AttackRadius = 50.f;
+	const FVector Start = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius();
+	const FVector End = Start + GetActorForwardVector() * AttackRange;
+
+	//구체 만들어서 투사
+	bool HitDetected = GetWorld()->SweepSingleByChannel(OutHitResult, Start, End, FQuat::Identity, CCHANNEL_OVACTION, FCollisionShape::MakeSphere(AttackRadius), Params);
+	if (HitDetected)
+	{
+		FDamageInfo DamageInfo = {20, E_DamageType::Melee, E_DamageResponses::HitReaction, false, false, false, false };
+		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(OutHitResult.GetActor());
+		if (DamagableInterface)
+		{
+			DamagableInterface->TakeDamage(DamageInfo);
+		}
+	}
+
+#if ENABLE_DRAW_DEBUG //디버그
+
+	FVector CapsuleOrigin = Start + (End - Start) * 0.5f;
+	float CapsuleHalfHeight = AttackRange * 0.5f;
+	FColor DrawColor = HitDetected ? FColor::Green : FColor::Red;
+
+	//DrawDebugCapsule(GetWorld(), CapsuleOrigin, CapsuleHalfHeight, AttackRadius, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(), DrawColor, false, 5.0f);
+
+#endif
+}
+
 void AOVCharacterNonPlayer::SetDead()
 {
 	Super::SetDead();
-	HpBar->SetHiddenInGame(true);
+	//HpBar->SetHiddenInGame(true);
 	PlayDeadAnimation();
 	FTimerHandle DeadTimerHandle;
 	AOVAIController* AIController = Cast<AOVAIController>(GetController());
@@ -236,21 +269,17 @@ FString AOVCharacterNonPlayer::GetRandomItemName()
 
 	// 선택된 랜덤 값에 해당하는 E_Item 값을 반환
 	E_Item SelectedItem = Items[RandomIndex];
-	UE_LOG(LogTemp, Warning, TEXT(" RandomIndex %d"), RandomIndex);
 	// 선택된 E_Item 값을 문자열로 변환
 	switch (SelectedItem)
 	{
 	case E_Item::HPPotion:
 		GetMesh()->SetOverlayMaterial(HPPotionMaterial);
-		UE_LOG(LogTemp, Warning, TEXT("HPPAY"));
 		return TEXT("HPPotion");
 	case E_Item::MPPotion:
 		GetMesh()->SetOverlayMaterial(MPPotionMaterial);
-		UE_LOG(LogTemp, Warning, TEXT("MPPotion"));
 		return TEXT("MPPotion");
 	case E_Item::AttackPotion:
 		GetMesh()->SetOverlayMaterial(AttackPotionMaterial);
-		UE_LOG(LogTemp, Warning, TEXT("AttackPotion"));
 		return TEXT("AttackPotion");
 	default:
 		return TEXT("None");

@@ -2,8 +2,8 @@
 
 
 #include "Skill/OVShieldSkill.h"
-
 #include "Character/OVCharacterPlayer.h"
+#include "Component/OVDamageComponent.h"
 
 UOVShieldSkill::UOVShieldSkill()
 {
@@ -12,14 +12,15 @@ UOVShieldSkill::UOVShieldSkill()
 
 void UOVShieldSkill::SkillAction()
 {
-	//UE_LOG(LogSkillCharacter, Log, TEXT("StartShieldSkill"));
+	UE_LOG(LogSkillCharacter, Log, TEXT("StartShieldSkill"));
 	Super::SkillAction();
 	
 	FTimerHandle Handle;
 	GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
 		{
 			Owner->bIsActiveShieldSkill = true;
-			//UE_LOG(LogSkillCharacter, Log, TEXT("EndShieldSkill"));
+			Owner->DamageComponent->bIsShieldSkill = false;
+			UE_LOG(LogSkillCharacter, Log, TEXT("EndShieldSkill"));
 		}
 	), ShieldCooltime, false, -1.0f);
 }

@@ -21,7 +21,7 @@ void UOVTeleportSkill::TickComponent(float DeltaTime, ELevelTick TickType,
 
 void UOVTeleportSkill::SkillAction()
 {
-	UE_LOG(LogSkillCharacter, Log, TEXT("StartTeleportSkill"));
+	//UE_LOG(LogSkillCharacter, Log, TEXT("StartTeleportSkill"));
 	Super::SkillAction();
 	FVector TargetLocation = GetOwner()->GetActorLocation() + GetOwner()->GetActorForwardVector() * TeleportOffset;
 	GetOwner()->TeleportTo(TargetLocation, GetOwner()->GetActorRotation(), false, true);
@@ -30,7 +30,7 @@ void UOVTeleportSkill::SkillAction()
 	GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
 		{
 			Owner->bIsActiveTeleportSkill = true;
-			UE_LOG(LogSkillCharacter, Log, TEXT("EndTeleportSkill"));
+			//UE_LOG(LogSkillCharacter, Log, TEXT("EndTeleportSkill"));
 		}
 	), TeleportCooltime, false, -1.0f);
 }

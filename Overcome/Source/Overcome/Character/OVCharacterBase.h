@@ -19,7 +19,7 @@ enum class ECharacterControlType : uint8
 };
 
 UCLASS()
-class OVERCOME_API AOVCharacterBase : public ACharacter, public IOVCharateWidgetInterface, public IOVAnimationAttackInterface
+class OVERCOME_API AOVCharacterBase : public ACharacter, public IOVCharateWidgetInterface
 {
 	GENERATED_BODY()
 
@@ -64,7 +64,7 @@ protected:
 
 	//Attack Hit Section
 protected:
-	virtual void AttackHitCheck() override;
+	//virtual void AttackHitCheck() override;
 
 	virtual void NotifyActionEnd();
 };

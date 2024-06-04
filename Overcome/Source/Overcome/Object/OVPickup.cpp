@@ -16,7 +16,7 @@ AOVPickup::AOVPickup()
 	PickupMesh->SetMobility(EComponentMobility::Movable);
 	PickupMesh->SetSimulatePhysics(true);
 	SetRootComponent(PickupMesh);
-	
+	//PickupMesh->SetCollisionProfileName(TEXT("NoCollision"));
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
 	Trigger->SetupAttachment(PickupMesh);
     Trigger->SetMobility(EComponentMobility::Movable);
@@ -29,6 +29,23 @@ AOVPickup::AOVPickup()
 		PickupMesh->SetMassScale(NAME_None, 10);
 	}
 	
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HPPotionMaterialRef(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Asset/Outline/M_Outline_Hp.M_Outline_Hp'"));
+	if (HPPotionMaterialRef.Succeeded())
+	{
+		HPPotionMaterial = HPPotionMaterialRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MPPotionMaterialRef(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Asset/Outline/M_Outline_Mp.M_Outline_Mp'"));
+	if (MPPotionMaterialRef.Succeeded())
+	{
+		MPPotionMaterial = MPPotionMaterialRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> AttackPotionMaterialRef(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Asset/Outline/M_Outline_Attack.M_Outline_Attack'"));
+	if (AttackPotionMaterialRef.Succeeded())
+	{
+		AttackPotionMaterial = AttackPotionMaterialRef.Object;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -71,6 +88,12 @@ void AOVPickup::InitializeDrop(UOVItemBase* ItemDrop, const int32 InQuantity)
 
 void AOVPickup::InitialStart()
 {
+	if(DesiredItemID == "HPPotion")
+		PickupMesh->SetOverlayMaterial(HPPotionMaterial);
+	else if(DesiredItemID == "MPPotion")
+		PickupMesh->SetOverlayMaterial(MPPotionMaterial);
+	else if(DesiredItemID == "AttackPotion")
+		PickupMesh->SetOverlayMaterial(AttackPotionMaterial);
 	InitializePickup(UOVItemBase::StaticClass(),ItemQuantity);
 }
 

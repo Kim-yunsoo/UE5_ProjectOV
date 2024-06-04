@@ -9,7 +9,6 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "AI/OVAI.h"
 #include "Character/OVCharacterPlayer.h"
-#include "Interface/OVEnemyAIInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Damage.h"

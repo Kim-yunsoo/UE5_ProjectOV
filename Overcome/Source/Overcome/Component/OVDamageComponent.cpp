@@ -11,6 +11,7 @@ UOVDamageComponent::UOVDamageComponent()
 	bIsDead  = false;
 	bIsInterruptible  = true;
 	bIsBlocking  = false;
+	bIsShieldSkill = false;
 }
 
 void UOVDamageComponent::BeginPlay()
@@ -80,11 +81,15 @@ float UOVDamageComponent::CanbeDamage(bool ShouldDamageInvincible, bool CanbeBlo
 	//1 Do Damage
 	//2 No Damage
 
-	if(!bIsDead && (!bIsInvincible|| ShouldDamageInvincible))
+	if(!bIsDead && (!bIsInvincible|| ShouldDamageInvincible ))
 	{
 		if(bIsBlocking && CanbeBlocked)
 		{
 			return 0;
+		}
+		else if(bIsShieldSkill)
+		{
+			return 2;
 		}
 		else
 		{

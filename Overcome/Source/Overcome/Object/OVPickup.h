@@ -34,6 +34,15 @@ public:
 	FName DesiredItemID;
 		
 protected:
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> HPPotionMaterial;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> MPPotionMaterial;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> AttackPotionMaterial;
+	
 
 	UPROPERTY(VisibleAnywhere, Category = "Pickup | Components")
 	TObjectPtr<UStaticMeshComponent> PickupMesh;

@@ -22,7 +22,7 @@ void AOVNonPlayerSpawner::BeginPlay()
 	float MinX = GetActorLocation().X - Trigger->GetScaledBoxExtent().X;
 	float MinY = GetActorLocation().Y - Trigger->GetScaledBoxExtent().Y;
 
-	for (int32 Idx = 0; Idx < 10; Idx++)
+	for (int32 Idx = 0; Idx < 20; Idx++)
 	{
 		float X = FMath::RandRange(MinX, MaxX);
 		float Y = FMath::RandRange(MinY, MaxY);

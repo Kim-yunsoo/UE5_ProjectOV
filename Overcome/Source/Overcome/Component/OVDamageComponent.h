@@ -56,6 +56,9 @@ public:
 	UPROPERTY()
 	uint8 bIsBlocking : 1;
 
+	UPROPERTY()
+	uint8 bIsShieldSkill :1;
+
 	UFUNCTION()
 	bool TakeDamage(FDamageInfo DamageInfo);
 
