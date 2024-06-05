@@ -651,6 +651,8 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 			GameState->OnBossHpChanged.AddDynamic(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
 		}
 	}
+	TeleportSkillComponent->OnTeleportTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateTeleportTime);
+	ShieldSkillComponent->OnShieldTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateShieldTime);
 	if(StatWidget)
 	{
 		StatWidget->UpdateStatWidget(Stat->GetCurrentHp(), Stat->GetCurrentMp(), Stat->GetCurrentAttack());

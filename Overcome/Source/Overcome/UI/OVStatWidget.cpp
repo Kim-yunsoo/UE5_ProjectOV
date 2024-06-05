@@ -22,6 +22,21 @@ void UOVStatWidget::UpdateStatWidget(float NewCurrentHp, float NewCurrentMp, flo
 	}
 	CurrentAttack = NewCurrentAttack;
 	AttackStat->SetText(FText::FromString(GetAttackStatText()));
+
+	TeleportBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PBTeleport")));
+	ensure(TeleportBar);
+	ShieldBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PBShield")));
+	ensure(ShieldBar);
+
+	if (TeleportBar)
+	{
+		TeleportBar->SetPercent(0.0f);
+	}
+
+	if (ShieldBar)
+	{
+		ShieldBar->SetPercent(0.0f);
+	}
 }
 
 void UOVStatWidget::NativeConstruct()
@@ -35,4 +50,14 @@ void UOVStatWidget::NativeConstruct()
 FString UOVStatWidget::GetAttackStatText()
 {
 	return FString::Printf(TEXT("Attack : %0.f"), CurrentAttack);
+}
+
+void UOVStatWidget::UpdateTeleportBar(float NewCurrentPercent)
+{
+	TeleportBar->SetPercent(NewCurrentPercent);
+}
+
+void UOVStatWidget::UpdateShieldBar(float NewCurrentPercent)
+{
+	ShieldBar->SetPercent(NewCurrentPercent);
 }

@@ -18,6 +18,8 @@ public:
 	UOVStatWidget(const FObjectInitializer& ObjectInitializer);
 	void UpdateStatWidget(float NewCurrentHp, float NewCurrentMp, float NewCurrentAttack);
 	FString GetAttackStatText();
+	void UpdateTeleportBar(float NewCurrentPercent);
+	void UpdateShieldBar(float NewCurrentPercent);
 protected:
 	virtual  void NativeConstruct() override;
 	
@@ -31,6 +33,13 @@ protected:
 	UPROPERTY()
 	TObjectPtr<class UTextBlock> AttackStat;
 
+	UPROPERTY()
+	TObjectPtr<class UProgressBar> TeleportBar;
+
+	UPROPERTY()
+	
+	TObjectPtr<class UProgressBar> ShieldBar;
+	
 	UPROPERTY()
 	float CurrentAttack;
 };

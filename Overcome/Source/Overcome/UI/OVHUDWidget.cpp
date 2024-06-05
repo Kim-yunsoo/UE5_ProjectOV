@@ -23,6 +23,8 @@ void UOVHUDWidget::NativeConstruct()
 	TargetWidget = Cast<UOVTargetWidget>(GetWidgetFromName(TEXT("WBP_TargetWidget")));
 	StatWidget = Cast<UOVStatWidget>(GetWidgetFromName(TEXT("WBP_Stat")));
 	BossHpWidget = Cast<UOVBossHpWidget>(GetWidgetFromName(TEXT("WBP_BossHpBar")));
+	TeleportSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
+	ShieldSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
 	//OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
 	// InteractionWidget = Cast<UOVInteractionWidget>(GetWidgetFromName(TEXT("WBP_InteractionWidget")));
 	// if(InteractionWidget)
@@ -136,4 +138,14 @@ void UOVHUDWidget::UpdateTarget(bool bIsShowUI) const
 void UOVHUDWidget::UpdateBossUI(bool bIsShowUI)
 {
 	BossHpWidget->UpdateBossUI(bIsShowUI);
+}
+
+void UOVHUDWidget::UpdateTeleportTime(float NewCurrentTime)
+{
+	TeleportSkillWidget->UpdateTeleportBar(NewCurrentTime);
+}
+
+void UOVHUDWidget::UpdateShieldTime(float NewCurrentTime)
+{
+	ShieldSkillWidget->UpdateShieldBar(NewCurrentTime);
 }

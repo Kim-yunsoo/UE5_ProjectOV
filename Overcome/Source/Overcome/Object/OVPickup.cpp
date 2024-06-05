@@ -27,7 +27,9 @@ AOVPickup::AOVPickup()
 		ItemDataTable = DataTableFinder.Object;
 		ItemQuantity = 1;
 		//PickupMesh->SetMassScale(NAME_None, 10);
-		PickupMesh->GetBodyInstance()->SetMassOverride(10.0f, true);
+		//PickupMesh->GetBodyInstance()->SetMassOverride(10.0f, true);
+		PickupMesh->BodyInstance.bOverrideMass = true;
+		PickupMesh->BodyInstance.SetMassOverride(200);
 	}
 	
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HPPotionMaterialRef(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Asset/Outline/M_Outline_Hp.M_Outline_Hp'"));

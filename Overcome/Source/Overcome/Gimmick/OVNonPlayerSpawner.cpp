@@ -10,6 +10,7 @@ AOVNonPlayerSpawner::AOVNonPlayerSpawner()
 	Trigger->SetCollisionProfileName(TEXT("NoCollision"));
 
 	RootComponent = Trigger;
+	NonPlayerCount = 10;
 }
 
 void AOVNonPlayerSpawner::BeginPlay()
@@ -22,7 +23,7 @@ void AOVNonPlayerSpawner::BeginPlay()
 	float MinX = GetActorLocation().X - Trigger->GetScaledBoxExtent().X;
 	float MinY = GetActorLocation().Y - Trigger->GetScaledBoxExtent().Y;
 
-	for (int32 Idx = 0; Idx < 15; Idx++)
+	for (int32 Idx = 0; Idx < NonPlayerCount; Idx++)
 	{
 		float X = FMath::RandRange(MinX, MaxX);
 		float Y = FMath::RandRange(MinY, MaxY);

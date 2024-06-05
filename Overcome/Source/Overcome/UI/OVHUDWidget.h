@@ -33,6 +33,11 @@ public:
 	UPROPERTY(EditDefaultsOnly,Category="Widgets")
 	TSubclassOf<class UOVInteractionWidget> InteractionWidgetClass;
 	
+	UPROPERTY()
+	TObjectPtr<class UOVStatWidget> TeleportSkillWidget;
+
+	UPROPERTY()
+	TObjectPtr<class UOVStatWidget> ShieldSkillWidget;
 	
 	UPROPERTY()
 	TObjectPtr<class UOVStatWidget> StatWidget;
@@ -53,4 +58,6 @@ public:
 	void ShowInteractionWidget() const;
 	void HideInteractionWidget() const;
 	void UpdateInteractionWidget(const FInteractableData* InteractionData) const;
+	void UpdateTeleportTime(float NewCurrentTime);
+	void UpdateShieldTime(float NewCurrentTime);
 };
