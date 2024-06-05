@@ -73,7 +73,7 @@ protected:
 	UFUNCTION()
 	void OnTriggerExit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-#if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
-#endif
+// #if WITH_EDITOR
+// 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+// #endif
 };

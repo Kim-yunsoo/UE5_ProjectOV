@@ -23,7 +23,7 @@ public:
 	TObjectPtr<UOVInventoryComponent> OwningInventory;
 
 	UPROPERTY(VisibleAnywhere,Category = "Item")
-	int32 Quantity; //¾ÆÀÌÅÛ ¼ö·®
+	int32 Quantity; //ì•„ì´í…œ ìˆ˜ëŸ‰
 	
 	UPROPERTY(VisibleAnywhere,Category="Item")
 	FName ID;
@@ -53,14 +53,14 @@ public:
 	
 	UOVItemBase* CreateItemCopy() const;
 
-	//FORCEINLINE float GetItemStackWeight() const{return Quantity* ItemNumericData.Weight};  ¹«°Ô ÄÚµå
+	//FORCEINLINE float GetItemStackWeight() const{return Quantity* ItemNumericData.Weight};  ë¬´ê²Œ ì½”ë“œ
 	UFUNCTION(Category = "Item")
-	FORCEINLINE bool IsFullItemStack() const { return Quantity == ItemNumericData.MaxStackSize;}; // ¼ö·®ÀÌ ÃÖ´ë ½ºÅÃÅ©±â¿Í °°ÀºÁö?
+	FORCEINLINE bool IsFullItemStack() const { return Quantity == ItemNumericData.MaxStackSize;}; // ìˆ˜ëŸ‰ì´ ìµœëŒ€ ìŠ¤íƒí¬ê¸°ì™€ ê°™ì€ì§€?
 
 	UFUNCTION(Category = "Item")
 	void SetQuantity(const int32 NewQuantity);
 	
-	UFUNCTION(Category = "Item") //Ä³¸®ÅÍ¸¦ °¡Á®¿Â´Ù. 
+	UFUNCTION(Category = "Item") //ìºë¦¬í„°ë¥¼ ê°€ì ¸ì˜¨ë‹¤. 
 	virtual void Use(AOVCharacterPlayer* Character);
 
 protected:

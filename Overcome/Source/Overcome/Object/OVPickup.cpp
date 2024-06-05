@@ -26,7 +26,8 @@ AOVPickup::AOVPickup()
 	{
 		ItemDataTable = DataTableFinder.Object;
 		ItemQuantity = 1;
-		PickupMesh->SetMassScale(NAME_None, 10);
+		//PickupMesh->SetMassScale(NAME_None, 10);
+		PickupMesh->GetBodyInstance()->SetMassOverride(10.0f, true);
 	}
 	
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HPPotionMaterialRef(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/Asset/Outline/M_Outline_Hp.M_Outline_Hp'"));
@@ -188,21 +189,21 @@ void AOVPickup::OnTriggerExit(UPrimitiveComponent* OverlappedComp, AActor* Other
 
 
 
-void AOVPickup::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) //에디터에서 메쉬를 바꿀 때 바로 로드되도록 해줌
-{
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-
-	const FName ChangePropertyName = PropertyChangedEvent.Property? PropertyChangedEvent.Property->GetFName():NAME_None;
-
-	if(ChangePropertyName == GET_MEMBER_NAME_CHECKED(AOVPickup,DesiredItemID))
-	{
-		if(ItemDataTable)
-		{
-			if(const FItemData* ItemData = ItemDataTable->FindRow<FItemData>(DesiredItemID,DesiredItemID.ToString()))
-			{
-				PickupMesh->SetStaticMesh(ItemData->AssetData.Mesh);
-			}
-			
-		}
-	}
-}
+// void AOVPickup::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) //에디터에서 메쉬를 바꿀 때 바로 로드되도록 해줌
+// {
+// 	Super::PostEditChangeProperty(PropertyChangedEvent);
+//
+// 	const FName ChangePropertyName = PropertyChangedEvent.Property? PropertyChangedEvent.Property->GetFName():NAME_None;
+//
+// 	if(ChangePropertyName == GET_MEMBER_NAME_CHECKED(AOVPickup,DesiredItemID))
+// 	{
+// 		if(ItemDataTable)
+// 		{
+// 			if(const FItemData* ItemData = ItemDataTable->FindRow<FItemData>(DesiredItemID,DesiredItemID.ToString()))
+// 			{
+// 				PickupMesh->SetStaticMesh(ItemData->AssetData.Mesh);
+// 			}
+// 			
+// 		}
+// 	}
+// }

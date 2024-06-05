@@ -2,8 +2,6 @@
 
 
 #include "Component/OVInventoryComponent.h"
-
-#include "IDetailTreeNode.h"
 #include "Item/OVItemBase.h"
 
 // Sets default values for this component's properties

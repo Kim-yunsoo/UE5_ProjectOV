@@ -2,9 +2,7 @@
 
 
 #include "Character/AI/OVAIBoss.h"
-
 #include "BrainComponent.h"
-#include "K2Node_SpawnActorFromClass.h"
 #include "NavigationSystem.h"
 #include "OVAIBossController.h"
 #include "AI/OVAI.h"

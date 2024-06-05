@@ -22,14 +22,14 @@ void AOVNonPlayerSpawner::BeginPlay()
 	float MinX = GetActorLocation().X - Trigger->GetScaledBoxExtent().X;
 	float MinY = GetActorLocation().Y - Trigger->GetScaledBoxExtent().Y;
 
-	for (int32 Idx = 0; Idx < 20; Idx++)
+	for (int32 Idx = 0; Idx < 15; Idx++)
 	{
 		float X = FMath::RandRange(MinX, MaxX);
 		float Y = FMath::RandRange(MinY, MaxY);
 		FVector Location(X, Y, 100.0f);
 		FActorSpawnParameters Params;
 		Params.Owner = this;
-		UE_LOG(LogTemp, Warning, TEXT("Spawn AI"));
+		//UE_LOG(LogTemp, Warning, TEXT("Spawn AI"));
 		AOVCharacterNonPlayer* Item = GetWorld()->SpawnActor<AOVCharacterNonPlayer>(
 			NonPlayer, Location, FRotator::ZeroRotator, Params);
 	}

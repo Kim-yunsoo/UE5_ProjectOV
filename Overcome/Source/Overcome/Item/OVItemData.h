@@ -9,7 +9,7 @@
 
 
 // UENUM()
-// enum class EItemQuality :uint8 //¾ÆÀÌÅÛÀÌ ¾î¶² »óÅÂÀÎÁö ¿­°ÅÇü 
+// enum class EItemQuality :uint8 //ì•„ì´í…œì´ ì–´ë–¤ ìƒíƒœì¸ì§€ ì—´ê±°í˜• 
 // {
 // 	Shoddy UMETA(DisplayName = "Shoddy"),
 // 	Common UMETA(DisplayName = "Common"),
@@ -19,7 +19,7 @@
 // };
 
 UENUM()
-enum class EItemType : uint8 //¹«±â Á¾·ù
+enum class EItemType : uint8 //ë¬´ê¸° ì¢…ë¥˜
 {
 	HPPotion UMETA(DisplayName = "HPPotion"),
 	MPPotion UMETA(DisplayName = "MPPotion"),
@@ -29,7 +29,7 @@ enum class EItemType : uint8 //¹«±â Á¾·ù
 };
 
 USTRUCT()
-struct FItemStatistics // ¾ÆÀÌÅÛ È¿°ú 
+struct FItemStatistics // ì•„ì´í…œ íš¨ê³¼ 
 {
 	GENERATED_USTRUCT_BODY()
 	

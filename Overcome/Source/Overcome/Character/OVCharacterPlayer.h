@@ -79,7 +79,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Timeline")
 	UCurveFloat* SmoothCurveFloat; // (6)
 
-	
+	void ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse);
+
 
 
 	// Character Control Section
@@ -134,6 +135,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> ToggleMenuTab;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> ItemUseAction;
 	
 	void ShoulderMove(const FInputActionValue& Value);
 	void ShoulderLookX(const FInputActionValue& Value);
@@ -146,7 +149,7 @@ protected:
 
 	void Jumping(const FInputActionValue& Value);
 	void ChangeWeapon(const FInputActionValue& Value);
-
+	
 	//AimOffset
 	void AimOffset(float DeltaTime);
 
@@ -229,9 +232,9 @@ protected:
 	TArray<FTakeItemDelegateWrapper> TakeItemActions;
 	
 	virtual void TakeItem(UOVItemData* InItemData) override;
-	void DrinkHp(class UOVItemData* InItemData);
-	void DrinkMp(class UOVItemData* InItemData);
-	void DrinkAttack(class UOVItemData* InItemData);
+	void DrinkHp();
+	void DrinkMp();
+	void DrinkAttack();
 	void Damage(class UOVItemData* InItemData);
 
 	//UI
@@ -289,7 +292,6 @@ public:
 	//TEST ATTACK
 	UFUNCTION()
 	void TestAttack();
-	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> HealAction;

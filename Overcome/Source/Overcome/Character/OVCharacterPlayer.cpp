@@ -15,11 +15,8 @@
 #include "Game/OVGameState.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Item/OVHpItemData.h"
 #include "Kismet/GameplayStatics.h"
 #include "Interface/OVInteractionInterface.h"
-#include "Net/UnrealNetwork.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "Skill/OVShieldSkill.h"
 #include "Skill/OVTeleportSkill.h"
 #include "Component/OVAttackComponent.h"
@@ -29,6 +26,7 @@
 #include "UI/OVStatWidget.h"
 #include "DrawDebugHelpers.h"
 #include "Component/OVInventoryComponent.h"
+#include "Item/OVItemBase.h"
 #include "Object/OVPickup.h"
 #include "Player/OVPlayerController.h"
 
@@ -143,6 +141,13 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ToggleMenu.IA_
 	{
 		ToggleMenuTab = ToggleMenuTabRef.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> ItemUseRef(
+TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ItemUse.IA_OV_ItemUse'"));
+	if (nullptr != ItemUseRef.Object)
+	{
+		ItemUseAction = ItemUseRef.Object;
+	}
 	
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
@@ -157,14 +162,14 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ToggleMenu.IA_
 	bIsGun = true;
 
 	//Item Action
-	TakeItemActions.Add(
-		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
-	TakeItemActions.Add(
-		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkMp)));
-	TakeItemActions.Add(
-		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkAttack)));
-	TakeItemActions.
-		Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::Damage)));
+	// TakeItemActions.Add(
+	// 	FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
+	// TakeItemActions.Add(
+	// 	FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkMp)));
+	// TakeItemActions.Add(
+	// 	FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkAttack)));
+	// TakeItemActions.
+	// 	Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::Damage)));
 
 	//Skill
 	TeleportSkillComponent = CreateDefaultSubobject<UOVTeleportSkill>(TEXT("TeleSkillComponent"));
@@ -239,6 +244,8 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
 	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
 	//EndInteraction 안함
+	//EnhancedInputComponent->BindAction(ItemUseAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ItemUse);
+
 	
 }
 
@@ -415,6 +422,32 @@ void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 	}
 }
 
+// void AOVCharacterPlayer::ItemUse(const FInputActionValue& Value)
+// {
+// 	UE_LOG(LogTemp, Warning, TEXT("ItemUse"));
+// 	//PlayerInventory->FindMatchingItem()
+// }
+
+void AOVCharacterPlayer::ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse)
+{
+	if(PlayerInventory->FindMatchingItem(ItemToUse))
+	{
+		if(ItemToUse->ItemType == EItemType::HPPotion)
+		{
+			DrinkHp();
+		}
+		else if(ItemToUse->ItemType == EItemType::MPPotion)
+		{
+			DrinkMp();
+		}
+		else if(ItemToUse->ItemType == EItemType::AttackPotion)
+		{
+			DrinkAttack();
+		}
+		const int32 RemovedQuantity = PlayerInventory->RemoveAmountOfItem(ItemToUse,QuantityToUse); //인벤토리에서 숫자 뺴기
+	}
+}
+
 void AOVCharacterPlayer::AimOffset(float DeltaTime)
 {
 	//컨트롤러 회전 사용 중단
@@ -490,7 +523,6 @@ void AOVCharacterPlayer::Shoot()
 {
 	if (!bIsShooting)
 	{
-		
 		bIsShooting = true;
 		ServerRPCShoot();
 		
@@ -532,7 +564,7 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 		FRotator Rotation;
 		GetController()->GetPlayerViewPoint(Start, Rotation);
 		FVector End = Start + Rotation.Vector() * 1500;
-		FDamageInfo DamageInfo = {30, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
+		FDamageInfo DamageInfo = {Stat->GetCurrentAttack(), E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
 		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 0.5);
 		FTimerHandle TimerHandle;
@@ -574,19 +606,20 @@ void AOVCharacterPlayer::TakeItem(UOVItemData* InItemData)
 	}
 }
 
-void AOVCharacterPlayer::DrinkHp(UOVItemData* InItemData)
+void AOVCharacterPlayer::DrinkHp()
 {
 	float HpIncreaseAmount = Stat->GetCurrentHp() + 30;
-	Stat->SetHp(HpIncreaseAmount);
+	DamageComponent->Heal(HpIncreaseAmount);
+	Stat->SetHp(DamageComponent->Health);
 }
 
-void AOVCharacterPlayer::DrinkMp(UOVItemData* InItemData)
+void AOVCharacterPlayer::DrinkMp()
 {
 	float MpIncreaseAmount = Stat->GetCurrentMp() + 20;
 	Stat->SetMp(MpIncreaseAmount);
 }
 
-void AOVCharacterPlayer::DrinkAttack(UOVItemData* InItemData)
+void AOVCharacterPlayer::DrinkAttack()
 {
 	float AttackIncreaseAmount = Stat->GetCurrentAttack() + 10;
 	Stat->SetAttack(AttackIncreaseAmount);
@@ -663,11 +696,6 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	AimOffset(DeltaSeconds);
-
-	// if (GetWorld()->TimeSince(InteractionData.LastInteractionCheckTime) > InteractionCheckFrequency)
-	// {
-	// 	PerformInteractionCheck();
-	// }
 }
 
 void AOVCharacterPlayer::PerformInteractionCheck(AActor* MyActor)

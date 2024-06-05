@@ -46,7 +46,7 @@ public:
 	
 protected:	
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
-	float MaxHp; // ¿œ¥‹ 100¿∏∑Œ
+	float MaxHp; // ÏùºÎã® 100ÏúºÎ°ú
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentHp;
