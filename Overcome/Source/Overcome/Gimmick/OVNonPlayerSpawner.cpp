@@ -11,12 +11,15 @@ AOVNonPlayerSpawner::AOVNonPlayerSpawner()
 
 	RootComponent = Trigger;
 	NonPlayerCount = 10;
+	bIsTrue = false;
 }
 
 void AOVNonPlayerSpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if(!bIsTrue)
+		return;
 	float MaxX = GetActorLocation().X + Trigger->GetScaledBoxExtent().X;
 	float MaxY = GetActorLocation().Y + Trigger->GetScaledBoxExtent().Y;
 

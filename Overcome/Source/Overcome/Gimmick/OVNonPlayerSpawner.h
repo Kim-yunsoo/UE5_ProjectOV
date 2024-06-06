@@ -24,6 +24,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = NonPlayer)
 	TSubclassOf<class AOVCharacterNonPlayer> NonPlayer;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = SpawnSetting)
 	int32 NonPlayerCount;
+
+	UPROPERTY(EditAnywhere,  Category = SpawnSetting)
+	uint8 bIsTrue : 1;
 };

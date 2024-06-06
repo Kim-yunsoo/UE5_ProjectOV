@@ -9,29 +9,12 @@
   <component name="ChangeListManager">
     <list default="true" id="a651a408-b286-4f61-9895-716573581285" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_OVCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_OVCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/Map_1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/Map_1.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Map/StartMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/StartMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/Start/WBP_Start.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Start/WBP_Start.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_Stat.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_Stat.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_TargetWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_TargetWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHUDWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVStatWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVStatWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVStatWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVStatWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/UOVStartUI.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/UOVStartUI.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,6 +155,7 @@
       <workItem from="1717462107169" duration="2688000" />
       <workItem from="1717464888999" duration="14527000" />
       <workItem from="1717492904949" duration="23917000" />
+      <workItem from="1717641791964" duration="7999000" />
     </task>
     <servers />
   </component>

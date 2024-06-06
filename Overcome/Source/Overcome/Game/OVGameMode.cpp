@@ -18,4 +18,6 @@ AOVGameMode::AOVGameMode()
 	if (PlayerControllerClassRef.Class) {
 		PlayerControllerClass = PlayerControllerClassRef.Class;
 	}
+
+	//bUseSeamlessTravel = true;
 }
