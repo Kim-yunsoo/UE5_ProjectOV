@@ -9,12 +9,13 @@
   <component name="ChangeListManager">
     <list default="true" id="a651a408-b286-4f61-9895-716573581285" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/Map_1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/Map_1.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/YSMap.umap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +39,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/UOVStartUI.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/UOVStartUI.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Gimmick/OVOpenBossMap.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -155,7 +155,7 @@
       <workItem from="1717462107169" duration="2688000" />
       <workItem from="1717464888999" duration="14527000" />
       <workItem from="1717492904949" duration="23917000" />
-      <workItem from="1717641791964" duration="7999000" />
+      <workItem from="1717641791964" duration="26152000" />
     </task>
     <servers />
   </component>

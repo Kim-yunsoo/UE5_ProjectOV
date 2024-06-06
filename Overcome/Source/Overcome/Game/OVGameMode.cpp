@@ -2,8 +2,9 @@
 
 
 #include "Game/OVGameMode.h"
-
 #include "OVGameState.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/LevelStreaming.h"
 
 AOVGameMode::AOVGameMode()
 {
@@ -19,5 +20,6 @@ AOVGameMode::AOVGameMode()
 		PlayerControllerClass = PlayerControllerClassRef.Class;
 	}
 
-	//bUseSeamlessTravel = true;
+	FLatentActionInfo LatentInfo;
+	UGameplayStatics::LoadStreamLevel(this, "Map_1", true, true, LatentInfo) ;
 }
