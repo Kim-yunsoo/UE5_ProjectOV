@@ -40,11 +40,12 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	CameraBoom->TargetArmLength = 300.0f;
 	CameraBoom->bUsePawnControlRotation = true;
 	CameraBoom->SocketOffset = FVector(0.0, 60.0, 60.0);
+	CameraBoom->bEnableCameraLag = false;
 	
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
-
+	
 	// Input
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionJumpRef(
 		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Jump.IA_OV_Jump'"));
