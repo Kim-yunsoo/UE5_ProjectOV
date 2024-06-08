@@ -9,17 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="ac71850a-b594-49bc-bcb0-624641d29f19" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_Boss.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_Character.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Animation/ABP_OV_Character.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/RTG_OVCharater.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Asset/Animation/RTG_OVCharater.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CharacterControl/ABC_Quater.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CharacterControl/ABC_Shouler.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Map/MainMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/MainMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Animation/OVAnimInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Animation/OVAnimInstance.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Animation/OVAnimInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Animation/OVAnimInstance.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +146,7 @@
       <option name="presentableId" value="Default" />
       <updated>1717819993577</updated>
       <workItem from="1717819995048" duration="1640000" />
-      <workItem from="1717824993500" duration="14517000" />
+      <workItem from="1717824993500" duration="17301000" />
     </task>
     <servers />
   </component>

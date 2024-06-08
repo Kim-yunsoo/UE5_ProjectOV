@@ -156,6 +156,13 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ItemUse.IA_OV_
 	{
 		ItemUseAction = ItemUseRef.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> RollActionRef(
+TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Roll.IA_OV_Roll'"));
+	if (nullptr != RollActionRef.Object)
+	{
+		RollAction = RollActionRef.Object;
+	}
 	
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
@@ -251,6 +258,8 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
 	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
 	EnhancedInputComponent->BindAction(GunRepeatAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::GunRepeat);
+	EnhancedInputComponent->BindAction(RollAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Roll);
+
 	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
 	//EndInteraction 안함
 	//EnhancedInputComponent->BindAction(ItemUseAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ItemUse);
@@ -430,6 +439,18 @@ void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 		bIsGun = false;
 		ServerRPCIsGun(bIsGun);
 	}
+}
+
+void AOVCharacterPlayer::Roll(const FInputActionValue& Value)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Roll"));
+	if(bIsAiming)
+	{
+		return;
+	}
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(RollMontage, 1.0f);
 }
 
 void AOVCharacterPlayer::ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse)

@@ -137,6 +137,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> ItemUseAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> RollAction;
 	
 	void ShoulderMove(const FInputActionValue& Value);
 	void ShoulderLookX(const FInputActionValue& Value);
@@ -149,6 +152,7 @@ protected:
 
 	void Jumping(const FInputActionValue& Value);
 	void ChangeWeapon(const FInputActionValue& Value);
+	void Roll(const FInputActionValue& Value);
 	
 	//AimOffset
 	void AimOffset(float DeltaTime);
@@ -329,6 +333,9 @@ protected:
 
 	UPROPERTY()
 	uint8 bIsGunRepeat :1;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage>	RollMontage;
 	
 public:
 	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출
