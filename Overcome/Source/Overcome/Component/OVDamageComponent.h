@@ -39,10 +39,10 @@ public:
 
 public:
 	UPROPERTY()
-	float Health; //고민중
+	float Health; 
 
 	UPROPERTY()
-	float MaxHealth; //고민중
+	float MaxHealth; 
 
 	UPROPERTY()
 	uint8 bIsInvincible :1;

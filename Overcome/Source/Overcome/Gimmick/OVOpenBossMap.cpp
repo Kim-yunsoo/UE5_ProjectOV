@@ -50,7 +50,7 @@ void AOVOpenBossMap::OnTriggerExit(UPrimitiveComponent* OverlappedComp, AActor* 
 	if(MyCharacter)
 	{
 	FLatentActionInfo LatentInfo;
-	UGameplayStatics::UnloadStreamLevel(this, "Map_1", LatentInfo, true);
+	UGameplayStatics::UnloadStreamLevel(this, "MainMap", LatentInfo, true);
 	}
 }
 

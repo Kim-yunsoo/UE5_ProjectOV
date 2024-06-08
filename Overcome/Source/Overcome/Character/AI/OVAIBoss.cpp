@@ -234,12 +234,13 @@ void AOVAIBoss::BossTeleport(FVector Location)
 		GetCharacterMovement()->MaxAcceleration = 99999;
 		GetMesh()->SetVisibility(false, true);
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
-		//UE_LOG(LogTemp, Warning, TEXT("Location %s"), *Location.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("Location %s"), *Location.ToString());
 		//if( BossController->MoveToLocation(Location, 150, false, true, true, false, nullptr , true) == EPathFollowingRequestResult::RequestSuccessful)
 		//SetActorLocation(Location);
 		FNavLocation RandomNavLocation;
 		UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
-		if (NavSystem && NavSystem->GetRandomPointInNavigableRadius(Location, 130, RandomNavLocation))
+		NavSystem->GetRandomPointInNavigableRadius(Location, 130, RandomNavLocation);
+		if (NavSystem)
 		{
 			SetActorLocation(RandomNavLocation.Location);
 			BossTeleportEnd();
@@ -273,6 +274,7 @@ void AOVAIBoss::SetIsInvincible(bool bIsInvincibleValue)
 
 void AOVAIBoss::BossTeleportEnd()
 {
+	UE_LOG(LogTemp, Warning, TEXT("[AOVAIBoss::BossTeleportEnd] : called"));
 	GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 	GetCharacterMovement()->MaxAcceleration = 1500;

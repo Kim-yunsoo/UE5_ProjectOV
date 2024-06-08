@@ -21,5 +21,5 @@ AOVGameMode::AOVGameMode()
 	}
 
 	FLatentActionInfo LatentInfo;
-	UGameplayStatics::LoadStreamLevel(this, "Map_1", true, true, LatentInfo) ;
+	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, true, LatentInfo) ;
 }

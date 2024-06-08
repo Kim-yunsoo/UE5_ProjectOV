@@ -296,6 +296,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> HealAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> GunRepeatAction;
+	
 	void HealSkill(const FInputActionValue& Value);
 	FORCEINLINE UOVInventoryComponent* GetInventory() const {return PlayerInventory;};
 	FORCEINLINE bool IsInteracting() const {return GetWorldTimerManager().IsTimerActive(TimerHandle_Interaction); };
@@ -322,7 +325,11 @@ protected:
 	void Interact();
 
 	void ToggleMenu();
+	void GunRepeat();
 
+	UPROPERTY()
+	uint8 bIsGunRepeat :1;
+	
 public:
 	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출
 	void PerformInteractionCheck(AActor* MyActor); // 매틱마다 호출하며 라인트레이스

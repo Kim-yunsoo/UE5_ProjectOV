@@ -41,6 +41,7 @@ EBTNodeResult::Type UBTTask_BossTeleport::ExecuteTask(UBehaviorTreeComponent& Ow
 	AActor* AttackTarget = Cast<AActor>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(BBKEY_ATTACKTARGET));
 	if (AttackTarget)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Location True"));
 		Location = AttackTarget->GetActorLocation();
 	}
 	AIPawn->SetAITeleportDelegate(OnTeleportFinished);

@@ -37,8 +37,8 @@ void UOVShieldSkill::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		}
 		// 위젯 업데이트
 		CooldownPercent = CooldownRemaining / ShieldCooltime;
-		UE_LOG(LogTemp,	Warning, TEXT("Cooldown %f"), CooldownPercent);
-		UE_LOG(LogTemp,	Warning, TEXT("CooldownRemaining %f"), CooldownRemaining);
+		//UE_LOG(LogTemp,	Warning, TEXT("Cooldown %f"), CooldownPercent);
+		//UE_LOG(LogTemp,	Warning, TEXT("CooldownRemaining %f"), CooldownRemaining);
 		OnShieldTime.Broadcast(CooldownPercent);
 		//UpdateCooldownBar();
 	}

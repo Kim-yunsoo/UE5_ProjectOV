@@ -128,6 +128,13 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 		 HealAction = HealActionRef.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UInputAction> GunRepeatRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_GunRepeat.IA_OV_GunRepeat'"));
+	if (nullptr != GunRepeatRef.Object)
+	{
+		GunRepeatAction = GunRepeatRef.Object;
+	}
+	
+
 	static ConstructorHelpers::FObjectFinder<UInputAction> InteractionActionRef(
 	TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Interact.IA_OV_Interact'"));
 	if (nullptr != InteractionActionRef.Object)
@@ -160,7 +167,7 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ItemUse.IA_OV_
 	//Gun
 	Gun = CreateDefaultSubobject<AOVGun>(TEXT("Gun"));
 	bIsGun = true;
-
+	bIsGunRepeat = false;
 	//Item Action
 	// TakeItemActions.Add(
 	// 	FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
@@ -242,6 +249,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(HealAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::HealSkill);
 	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
 	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
+	EnhancedInputComponent->BindAction(GunRepeatAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::GunRepeat);
 	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
 	//EndInteraction 안함
 	//EnhancedInputComponent->BindAction(ItemUseAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ItemUse);
@@ -381,10 +389,7 @@ void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 			OnAimChanged.Broadcast(bIsAiming);
 			ServerRPCAiming();
 		}
-		// else
-		// {
-		// 	StopAiming(Value);
-		// }
+		
 	}
 }
 
@@ -421,12 +426,6 @@ void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 		ServerRPCIsGun(bIsGun);
 	}
 }
-
-// void AOVCharacterPlayer::ItemUse(const FInputActionValue& Value)
-// {
-// 	UE_LOG(LogTemp, Warning, TEXT("ItemUse"));
-// 	//PlayerInventory->FindMatchingItem()
-// }
 
 void AOVCharacterPlayer::ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse)
 {
@@ -492,7 +491,6 @@ void AOVCharacterPlayer::AimOffset(float DeltaTime)
 
 void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 {
-	//UE_LOG(LogTemp,	Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
 	if(AO_Yaw > 90.f)
 	{
 		TurningInPlace = ETurningPlaceType::ETIP_Right;
@@ -531,6 +529,7 @@ void AOVCharacterPlayer::Shoot()
 
 void AOVCharacterPlayer::StopShoot()
 {
+	bIsShooting = false;
 }
 
 void AOVCharacterPlayer::ServerRPCStopAiming_Implementation()
@@ -555,24 +554,28 @@ void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
 
 void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 {
-	//if(Gun->GetBulletCount())
+	if (bIsShooting)
 	{
 		bIsAttacking = true;
-		bIsShooting = true;
+		//bIsShooting = true;
 		//Gun->PullTrigger();
 		FVector Start;
 		FRotator Rotation;
 		GetController()->GetPlayerViewPoint(Start, Rotation);
 		FVector End = Start + Rotation.Vector() * 1500;
 		FDamageInfo DamageInfo = {Stat->GetCurrentAttack(), E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
+
 		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 0.5);
-		FTimerHandle TimerHandle;
-		// Set up the timer to call the ResetTurning function after 0.2 seconds
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-			{
-				bIsShooting = false;
-			}, 0.5, false);
+		if(!bIsGunRepeat)
+		{
+			FTimerHandle TimerHandle;
+			// Set up the timer to call the ResetTurning function after 0.2 seconds
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+				{
+					bIsShooting = false;
+				}, 0.5, false);
+		}
 	}
 }
 
@@ -698,6 +701,11 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	AimOffset(DeltaSeconds);
+	if (bIsGunRepeat)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Shoot"));
+		ServerRPCShoot();
+	}
 }
 
 void AOVCharacterPlayer::PerformInteractionCheck(AActor* MyActor)
@@ -793,6 +801,19 @@ void AOVCharacterPlayer::UpdateInteractionWidget() const
 void AOVCharacterPlayer::ToggleMenu()
 {
 	HUDWidget->ToggleMenu();
+}
+
+void AOVCharacterPlayer::GunRepeat()
+{
+	if(bIsGunRepeat)
+	{
+		bIsGunRepeat = false;
+	}
+	else
+	{
+		bIsGunRepeat = true;
+	}
+	
 }
 
 void AOVCharacterPlayer::DropItem(UOVItemBase* ItemToDrop, const int32 QuantityToDrop)

@@ -26,8 +26,6 @@ AOVPickup::AOVPickup()
 	{
 		ItemDataTable = DataTableFinder.Object;
 		ItemQuantity = 1;
-		//PickupMesh->SetMassScale(NAME_None, 10);
-		//PickupMesh->GetBodyInstance()->SetMassOverride(10.0f, true);
 		PickupMesh->BodyInstance.bOverrideMass = true;
 		PickupMesh->BodyInstance.SetMassOverride(200);
 	}

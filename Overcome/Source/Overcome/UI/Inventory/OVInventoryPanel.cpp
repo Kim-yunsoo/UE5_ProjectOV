@@ -23,8 +23,7 @@ void UOVInventoryPanel::NativeOnInitialized()
 		{
 			InventoryReference->OnInventoryUpdated.AddUObject(this, &UOVInventoryPanel::RefreshInventory);
 			//인벤토리 컴포넌트 델리게이트와 연결
-			//SetInfoText();
-			
+			SetInfoText();
 		}
 	}
 	
@@ -48,7 +47,7 @@ void UOVInventoryPanel::RefreshInventory()
 			ItemSlot->SetItemReference(InventoryItem);
 			InventoryPanel->AddChildToWrapBox(ItemSlot);
 		}
-		//SetInfoText();
+		SetInfoText();
 	}
 }
 
