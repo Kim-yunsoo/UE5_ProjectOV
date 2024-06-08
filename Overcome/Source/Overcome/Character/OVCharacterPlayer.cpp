@@ -415,6 +415,10 @@ void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
 void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 {
 	int GunSocket = Value.Get<float>();;
+	if(bIsAiming)
+	{
+		return;
+	}
 	if (GunSocket > 0)
 	{
 		bIsGun = true;
@@ -523,7 +527,6 @@ void AOVCharacterPlayer::Shoot()
 	{
 		bIsShooting = true;
 		ServerRPCShoot();
-		
 	}
 }
 
@@ -554,7 +557,7 @@ void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
 
 void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 {
-	if (bIsShooting)
+	if (bIsShooting && bIsGun)
 	{
 		bIsAttacking = true;
 		//bIsShooting = true;
