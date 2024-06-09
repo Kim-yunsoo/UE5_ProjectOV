@@ -209,7 +209,8 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Roll.IA_OV_Rol
 	PlayerInventory = CreateDefaultSubobject<UOVInventoryComponent>(TEXT("PlayerInventory"));
 	PlayerInventory->SetSlotsCapacity(20);
 
-
+	bIsGun = false;
+	bIsRoll = false;
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -389,7 +390,7 @@ void AOVCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
-	if (bIsGun)
+	if (bIsGun && !bIsRoll)
 	{
 		if (!bIsAiming)
 		{
@@ -448,9 +449,19 @@ void AOVCharacterPlayer::Roll(const FInputActionValue& Value)
 	{
 		return;
 	}
+	bIsRoll = true;
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
-	AnimInstance->Montage_Play(RollMontage, 1.0f);
+	//AnimInstance->Montage_Play(RollMontage, 1.0f);
+	if (AnimInstance->Montage_Play(RollMontage, 1.0f) > 0.0f)
+	{
+		FOnMontageEnded EndDelegate;
+		EndDelegate.BindLambda([this](UAnimMontage* Montage, bool bInterrupted)
+		{
+			bIsRoll = false;
+		});
+		AnimInstance->Montage_SetEndDelegate(EndDelegate, RollMontage);
+	}
 }
 
 void AOVCharacterPlayer::ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse)
@@ -726,6 +737,7 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	AimOffset(DeltaSeconds);
+	UE_LOG(LogTemp, Warning ,TEXT("%d"), bIsRoll);
 	if (bIsGunRepeat)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Shoot"));

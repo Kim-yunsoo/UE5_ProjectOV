@@ -173,6 +173,8 @@ protected:
 	UPROPERTY(Replicated,EditAnywhere, BlueprintReadWrite, Category = "Character")
 	uint8 bIsGun : 1;
 
+	UPROPERTY(Replicated, BlueprintReadWrite, Category = "Character")
+	uint8 bIsRoll : 1;
 public:
 	const uint8 GetIsAiming() { return bIsAiming; };
 	ECharacterControlType CurrentCharacterControlType;
