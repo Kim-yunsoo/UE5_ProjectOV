@@ -31,7 +31,6 @@ void UOVAttackComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
 }
 
 
@@ -72,12 +71,14 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 			OnAttackEnded.Broadcast();
 		}
 		//DrawDebugPoint(GetWorld(), HitResult.Location, 20, FColor::Red, true);
+		if(GetOwner()->IsA<AOVCharacterPlayer>())
+		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, HitResult.Location, FRotator::ZeroRotator);
+			//UE_LOG(LogTemp, Warning, TEXT("Character"));
+		}
 	}
-	if(GetOwner()->IsA<AOVCharacterPlayer>())
-	{
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, HitResult.Location, FRotator::ZeroRotator);
-		//UE_LOG(LogTemp, Warning, TEXT("Character"));
-	}
+	
+	
 }
 
 void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo DamageInfo)

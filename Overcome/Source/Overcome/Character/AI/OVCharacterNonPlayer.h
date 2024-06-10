@@ -96,4 +96,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UMaterialInterface> AttackPotionMaterial;
+
+	virtual void Tick(float DeltaTime) override;
 };

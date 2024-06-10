@@ -737,10 +737,10 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	AimOffset(DeltaSeconds);
-	UE_LOG(LogTemp, Warning ,TEXT("%d"), bIsRoll);
+	//UE_LOG(LogTemp, Warning ,TEXT("%d"), bIsRoll);
 	if (bIsGunRepeat)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Shoot"));
+		//UE_LOG(LogTemp, Warning, TEXT("Shoot"));
 		ServerRPCShoot();
 	}
 }

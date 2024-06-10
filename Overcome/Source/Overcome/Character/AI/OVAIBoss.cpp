@@ -237,6 +237,7 @@ void AOVAIBoss::BossTeleport(FVector Location)
 		UE_LOG(LogTemp, Warning, TEXT("Location %s"), *Location.ToString());
 		//if( BossController->MoveToLocation(Location, 150, false, true, true, false, nullptr , true) == EPathFollowingRequestResult::RequestSuccessful)
 		//SetActorLocation(Location);
+		StopAnimMontage();
 		FNavLocation RandomNavLocation;
 		UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
 		NavSystem->GetRandomPointInNavigableRadius(Location, 130, RandomNavLocation);

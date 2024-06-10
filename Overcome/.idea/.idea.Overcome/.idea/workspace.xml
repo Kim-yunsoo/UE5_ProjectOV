@@ -10,10 +10,20 @@
     <list default="true" id="18d6e7f6-fd27-49b4-b72a-a28b2aed8a6d" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Input/Actions/IA_OV_MouseRight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/Actions/IA_OV_MouseRight.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterNonPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterNonPlayer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVCharacterPlayer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/AITest.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AITest.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/MainMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/MainMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Start/NewFolder1/MakeStartUI.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Start/NewFolder1/MakeStartUI.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +45,9 @@
     &quot;accountId&quot;: &quot;9c8f9718-d4dc-45e8-b91c-a772cc3bcf80&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.cpp" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -44,26 +57,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ 프로젝트.Overcome.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "IngyeongSeok",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ 프로젝트.Overcome.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;IngyeongSeok&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\ingyeong\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\ingyeong\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Overcome" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -144,7 +157,11 @@
       <workItem from="1717851776517" duration="1056000" />
       <workItem from="1717874640715" duration="3515000" />
       <workItem from="1717910447179" duration="2208000" />
-      <workItem from="1717921354446" duration="7766000" />
+      <workItem from="1717921354446" duration="11509000" />
+      <workItem from="1717945482471" duration="2378000" />
+      <workItem from="1717953766965" duration="10995000" />
+      <workItem from="1717968177817" duration="1382000" />
+      <workItem from="1717999765189" duration="1374000" />
     </task>
     <servers />
   </component>

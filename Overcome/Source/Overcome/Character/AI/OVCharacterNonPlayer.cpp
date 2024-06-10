@@ -12,13 +12,16 @@
 #include "Component/OVCharacterStatComponent.h"
 #include "Component/OVDamageComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Physics/OVCollision.h"
+#include "UI/OVWidgetComponent.h"
 
 AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 {
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -100.f), FRotator(0.0f, -90.0f, 0.0f));
 	// //GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	GetMesh()->SetCollisionProfileName(TEXT("CharacterMesh"));
+	GetMesh()->SetCollisionProfileName(TEXT("CPROFILE_OVCAPSULE"));
 	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharaterMeshRef(TEXT("/Script/Engine.SkeletalMesh'/Game/DarkMetalPack/ZombotMike/Mesh/SM_Zombot_Mikey.SM_Zombot_Mikey'"));
 	if (CharaterMeshRef.Object)
@@ -65,17 +68,17 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 	AIControllerClass = AOVAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	// HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
-	// HpBar->SetupAttachment(GetMesh());
-	// HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
-	// static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
-	// if (HpBarWidgetRef.Class)
-	// {
-	// 	HpBar->SetWidgetClass(HpBarWidgetRef.Class);
-	// 	HpBar->SetWidgetSpace(EWidgetSpace::Screen);
-	// 	HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
-	// 	HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	// }
+	HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
+	HpBar->SetupAttachment(GetMesh());
+	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
+	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
+	if (HpBarWidgetRef.Class)
+	{
+		HpBar->SetWidgetClass(HpBarWidgetRef.Class);
+		HpBar->SetWidgetSpace(EWidgetSpace::World);
+		HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
+		HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 
 	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
 	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
@@ -209,6 +212,30 @@ void AOVCharacterNonPlayer::DamageResponse(E_DamageResponses DamageResponses)
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
 	AnimInstance->Montage_Play(StaggerMontage, 1.0f);
+}
+
+void AOVCharacterNonPlayer::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController && HpBar)
+	{
+		APlayerCameraManager* CameraManager = PlayerController->PlayerCameraManager;
+		if (CameraManager)
+		{
+			FVector CameraLocation = CameraManager->GetCameraLocation();
+            
+			// Get the location of the HpBar
+			FVector HpBarLocation = HpBar->GetComponentLocation();
+            
+			// Calculate the direction from the HpBar to the camera
+			FVector Direction = CameraLocation - HpBarLocation;
+			FRotator LookAtRotation = Direction.Rotation();
+            
+			// Set the relative rotation of the HpBar to face the camera
+			HpBar->SetWorldRotation(LookAtRotation);
+		}
+	}
 }
 
 float AOVCharacterNonPlayer::GetAIPatrolRadius()
