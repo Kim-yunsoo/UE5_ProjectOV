@@ -3,6 +3,7 @@
 
 #include "UI/OVHUDWidget.h"
 
+#include "OVBatteryWidget.h"
 #include "OVBossHpWidget.h"
 #include "UI/OVMainMenu.h"
 #include "UI/Interaction/OVInteractionWidget.h"
@@ -12,6 +13,7 @@
 #include "Game/OVGameState.h"
 #include "Interface/OVCharacterHUDInterface.h"
 #include "Kismet/GameplayStatics.h"
+#include "WorldPartition/ContentBundle/ContentBundleLog.h"
 
 UOVHUDWidget::UOVHUDWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {       
@@ -25,6 +27,7 @@ void UOVHUDWidget::NativeConstruct()
 	BossHpWidget = Cast<UOVBossHpWidget>(GetWidgetFromName(TEXT("WBP_BossHpBar")));
 	TeleportSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
 	ShieldSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
+	BatteryWidget = Cast<UOVBatteryWidget>(GetWidgetFromName("WBP_Battery"));
 	//OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
 	// InteractionWidget = Cast<UOVInteractionWidget>(GetWidgetFromName(TEXT("WBP_InteractionWidget")));
 	// if(InteractionWidget)
@@ -57,9 +60,7 @@ void UOVHUDWidget::NativeConstruct()
 	{
 		GameState->OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
 	}
-
-
-
+	Battery = 5;
 }
 
 void UOVHUDWidget::DisplayMenu()
@@ -71,29 +72,19 @@ void UOVHUDWidget::DisplayMenu()
 	}
 }
 
-void UOVHUDWidget::HideMenu()
-{
-	if(MainMenuWidget)
-	{
-		bIsMenuVisible=false;
-		MainMenuWidget->SetVisibility(ESlateVisibility::Collapsed);
-	}
-}
+// void UOVHUDWidget::HideMenu()
+// {
+// 	if(MainMenuWidget)
+// 	{
+// 		bIsMenuVisible=false;
+// 	}
+// }
 
 void UOVHUDWidget::ToggleMenu()
 {
-	if(bIsMenuVisible)
-	{
-		HideMenu();
-
-		const FInputModeGameOnly InputMode;
-		GetOwningPlayer()->SetInputMode(InputMode);
-		GetOwningPlayer()->SetShowMouseCursor(false);
-	}
-	else
 	{
 		DisplayMenu();
-		const FInputModeGameAndUI InputMode;
+		const FInputModeUIOnly InputMode;
 		GetOwningPlayer()->SetInputMode(InputMode);
 		GetOwningPlayer()->SetShowMouseCursor(true);
 	}
@@ -149,3 +140,10 @@ void UOVHUDWidget::UpdateShieldTime(float NewCurrentTime)
 {
 	ShieldSkillWidget->UpdateShieldBar(NewCurrentTime);
 }
+
+void UOVHUDWidget::UpdateBatteryCount(int NewCount)
+{
+	BatteryWidget->UpdateBatteryCount(NewCount);
+}
+
+

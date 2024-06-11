@@ -4,11 +4,11 @@
 #include "Game/OVGameMode.h"
 #include "OVGameState.h"
 #include "Kismet/GameplayStatics.h"
-#include "Engine/LevelStreaming.h"
 
 AOVGameMode::AOVGameMode()
 {
 	GameStateClass = AOVGameState::StaticClass();
+	
 	static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(TEXT("/Game/Blueprint/Character/BP_OVCharacterPlayer.BP_OVCharacterPlayer_C"));
 	if (DefaultPawnClassRef.Class)
 	{
@@ -22,4 +22,32 @@ AOVGameMode::AOVGameMode()
 
 	FLatentActionInfo LatentInfo;
 	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, true, LatentInfo) ;
+
+	Battery = 5;
+
+}
+
+
+void AOVGameMode::SetBatteryCount(int NewBattery)
+{
+	Battery = NewBattery;
+	OnBatteryCount.Broadcast(Battery);
+	// if(Battery == 4)
+	// 	ChangeLevel();
+}
+
+void AOVGameMode::ChangeLevel()
+{
+	FLatentActionInfo LoadLatentInfo;		
+	UGameplayStatics::LoadStreamLevel(this, "AI", true, true, LoadLatentInfo);
+	UnloadOldLevel();
+
+}
+
+void AOVGameMode::UnloadOldLevel()
+{
+	
+	FLatentActionInfo LatentActionInfo;
+	UGameplayStatics::UnloadStreamLevel(GetWorld(), "MainMap", LatentActionInfo, false);
+
 }

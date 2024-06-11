@@ -36,4 +36,6 @@ private:
 	float BossHp;
 
 	bool BossStart;
+	
+
 };

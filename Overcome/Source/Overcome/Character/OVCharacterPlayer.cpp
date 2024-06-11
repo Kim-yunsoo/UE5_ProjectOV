@@ -26,6 +26,7 @@
 #include "UI/OVStatWidget.h"
 #include "DrawDebugHelpers.h"
 #include "Component/OVInventoryComponent.h"
+#include "Game/OVGameMode.h"
 #include "Item/OVItemBase.h"
 #include "Object/OVPickup.h"
 #include "Player/OVPlayerController.h"
@@ -257,7 +258,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
 	EnhancedInputComponent->BindAction(HealAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::HealSkill);
 	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
-	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
+	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Completed, this, &AOVCharacterPlayer::ToggleMenu);
 	EnhancedInputComponent->BindAction(GunRepeatAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::GunRepeat);
 	EnhancedInputComponent->BindAction(RollAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Roll);
 
@@ -690,6 +691,8 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 			GameState->OnBossHpChanged.AddDynamic(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
 		}
 	}
+	AOVGameMode* GameMode = Cast<AOVGameMode>(GetWorld()->GetAuthGameMode());
+	GameMode->OnBatteryCount.AddUObject(InUserWidget, &UOVHUDWidget::UpdateBatteryCount);
 	TeleportSkillComponent->OnTeleportTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateTeleportTime);
 	ShieldSkillComponent->OnShieldTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateShieldTime);
 	if(StatWidget)
@@ -837,6 +840,8 @@ void AOVCharacterPlayer::UpdateInteractionWidget() const
 }
 void AOVCharacterPlayer::ToggleMenu()
 {
+	UE_LOG(LogTemp, Warning, TEXT("ToggleMenu111"));
+
 	HUDWidget->ToggleMenu();
 }
 

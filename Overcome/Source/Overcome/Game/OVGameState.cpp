@@ -15,6 +15,8 @@ void AOVGameState::SetBossHp(float NewHp)
 	OnBossHpChanged.Broadcast(BossHp);
 }
 
+
+
 float AOVGameState::GetBossHp() const
 {
 	return BossHp;

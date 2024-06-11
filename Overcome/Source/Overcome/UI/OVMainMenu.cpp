@@ -15,6 +15,8 @@ void UOVMainMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
 	PlayerCharacter = Cast<AOVCharacterPlayer>(GetOwningPlayerPawn());
+	SetKeyboardFocus(); //키보드
+	SetIsFocusable(true);
 }
 
 bool UOVMainMenu::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
@@ -30,4 +32,12 @@ bool UOVMainMenu::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent
 		return true;
 	}
 	return false;
+}
+
+void UOVMainMenu::CloseMainMenu()
+{
+	SetVisibility(ESlateVisibility::Collapsed);
+	const FInputModeGameOnly InputMode;
+	GetOwningPlayer()->SetInputMode(InputMode);
+	GetOwningPlayer()->SetShowMouseCursor(false);
 }

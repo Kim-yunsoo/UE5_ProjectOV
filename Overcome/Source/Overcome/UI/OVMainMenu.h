@@ -26,4 +26,6 @@ protected:
 	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
 		UDragDropOperation* InOperation) override;
 
+	UFUNCTION(BlueprintCallable)
+	void CloseMainMenu();
 };

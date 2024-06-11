@@ -38,6 +38,9 @@ public:
 
 	UPROPERTY()
 	TObjectPtr<class UOVStatWidget> ShieldSkillWidget;
+
+	UPROPERTY()
+	TObjectPtr<class UOVBatteryWidget> BatteryWidget;
 	
 	UPROPERTY()
 	TObjectPtr<class UOVStatWidget> StatWidget;
@@ -49,10 +52,11 @@ public:
 	UPROPERTY()
 	TObjectPtr<UOVInteractionWidget> InteractionWidget ;
 
+	UPROPERTY(EditAnywhere)
 	bool bIsMenuVisible;
 
 	void DisplayMenu();
-	void HideMenu();
+	//void HideMenu();
 	void ToggleMenu();
 
 	void ShowInteractionWidget() const;
@@ -60,4 +64,8 @@ public:
 	void UpdateInteractionWidget(const FInteractableData* InteractionData) const;
 	void UpdateTeleportTime(float NewCurrentTime);
 	void UpdateShieldTime(float NewCurrentTime);
+	void UpdateBatteryCount(int NewCount);
+
+	UPROPERTY()
+	int32 Battery;
 };

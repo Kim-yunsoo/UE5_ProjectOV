@@ -25,6 +25,7 @@ enum class EItemType : uint8 //무기 종류
 	MPPotion UMETA(DisplayName = "MPPotion"),
 	AttackPotion UMETA(DisplayName = "AttackPotion"),
 	Bullet UMETA(DisplayName = "Bullet"),
+	Battery UMETA(DisplayName = "Battery")
 	//Bullet UMETA(DisplayName = "Bullet"),
 };
 

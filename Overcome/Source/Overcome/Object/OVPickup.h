@@ -20,7 +20,6 @@ class OVERCOME_API AOVPickup : public AActor ,public IOVInteractionInterface
 public:	
 	// Sets default values for this actor's properties
 
-	
 	AOVPickup();
 
 	void InitializePickup(const TSubclassOf<UOVItemBase> BaseClass, const int32 InQuantity);
@@ -32,7 +31,8 @@ public:
 	virtual void EndFocus() override;
 	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")
 	FName DesiredItemID;
-		
+	UPrimitiveComponent* GetMeshComponent() const { return PickupMesh; }
+
 protected:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UMaterialInterface> HPPotionMaterial;

@@ -19,8 +19,8 @@ AOVPickup::AOVPickup()
 	//PickupMesh->SetCollisionProfileName(TEXT("NoCollision"));
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
 	Trigger->SetupAttachment(PickupMesh);
+	Trigger->SetBoxExtent(FVector(45.f, 45.f, 45.f));
     Trigger->SetMobility(EComponentMobility::Movable);
-
 	static ConstructorHelpers::FObjectFinder<UDataTable> DataTableFinder(TEXT("/Script/Engine.DataTable'/Game/ItemData/DT_ItemData.DT_ItemData'"));
 	if (DataTableFinder.Succeeded())
 	{
@@ -55,7 +55,7 @@ void AOVPickup::BeginPlay()
 	Super::BeginPlay();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AOVPickup::OnTriggerEnter);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AOVPickup::OnTriggerExit);
-
+	InitializePickup(UOVItemBase::StaticClass(),ItemQuantity);
 }
 
 void AOVPickup::InitializePickup(const TSubclassOf<UOVItemBase> BaseClass, const int32 InQuantity)

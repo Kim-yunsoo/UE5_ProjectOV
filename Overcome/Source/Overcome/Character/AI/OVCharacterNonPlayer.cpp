@@ -136,6 +136,7 @@ void AOVCharacterNonPlayer::SetDead()
 	AIController->GetBrainComponent()->StopLogic(TEXT("Dead"));
 
 	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *RandomItemName);
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	SpawnParams.TransformScaleMethod = ESpawnActorScaleMethod::MultiplyWithRoot;

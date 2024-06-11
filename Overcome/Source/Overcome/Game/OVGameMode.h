@@ -9,6 +9,8 @@
 /**
  * 
  */
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnBatteryCountDelegate, int /*CurrentTime*/);
+
 UCLASS()
 class OVERCOME_API AOVGameMode : public AGameModeBase
 {
@@ -16,5 +18,13 @@ class OVERCOME_API AOVGameMode : public AGameModeBase
 	
 public: 	
 	AOVGameMode();
+	void SetBatteryCount(int NewBattery);
+	
+	FOnBatteryCountDelegate OnBatteryCount;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Battery;
+
+	void ChangeLevel();
+	void UnloadOldLevel();
 };
