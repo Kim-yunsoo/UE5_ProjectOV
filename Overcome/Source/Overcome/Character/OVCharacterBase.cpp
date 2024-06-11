@@ -5,7 +5,6 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "OVCharacterControlData.h"
-#include "Engine/DamageEvents.h"
 #include "Component/OVCharacterStatComponent.h"
 #include "UI/OVHpBarWidget.h"
 #include "Physics/OVCollision.h"

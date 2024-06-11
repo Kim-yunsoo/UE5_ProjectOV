@@ -32,22 +32,31 @@ void AOVGameMode::SetBatteryCount(int NewBattery)
 {
 	Battery = NewBattery;
 	OnBatteryCount.Broadcast(Battery);
-	// if(Battery == 4)
-	// 	ChangeLevel();
+	if(Battery == 4)
+	{
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+		{
+			UnloadOldLevel();
+
+		}, 2.f, false);
+	}
 }
 
 void AOVGameMode::ChangeLevel()
 {
-	FLatentActionInfo LoadLatentInfo;		
+	FLatentActionInfo LoadLatentInfo;
+	LoadLatentInfo.CallbackTarget = this;
 	UGameplayStatics::LoadStreamLevel(this, "AI", true, true, LoadLatentInfo);
-	UnloadOldLevel();
-
 }
 
 void AOVGameMode::UnloadOldLevel()
 {
-	
+	const FName LevelName = FName("ChangeLevel");;
 	FLatentActionInfo LatentActionInfo;
+	LatentActionInfo.CallbackTarget = this;
+	LatentActionInfo.Linkage = 0;
+	LatentActionInfo.ExecutionFunction = LevelName;
 	UGameplayStatics::UnloadStreamLevel(GetWorld(), "MainMap", LatentActionInfo, false);
 
 }

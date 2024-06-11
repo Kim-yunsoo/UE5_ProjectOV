@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Battery;
 
+	UFUNCTION()
 	void ChangeLevel();
+	
+	UFUNCTION()
 	void UnloadOldLevel();
 };
