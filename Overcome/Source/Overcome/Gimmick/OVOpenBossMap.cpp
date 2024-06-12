@@ -38,7 +38,7 @@ void AOVOpenBossMap::OnTriggerEnter(UPrimitiveComponent* OverlappedComp, AActor*
 	if(MyCharacter)
 	{
 		FLatentActionInfo LatentInfo;
-		UGameplayStatics::LoadStreamLevel(this, "AI", true, true, LatentInfo) ;
+		UGameplayStatics::LoadStreamLevel(this, "AI", true, false, LatentInfo) ;
 	}
 
 }
@@ -50,7 +50,7 @@ void AOVOpenBossMap::OnTriggerExit(UPrimitiveComponent* OverlappedComp, AActor* 
 	if(MyCharacter)
 	{
 	FLatentActionInfo LatentInfo;
-	UGameplayStatics::UnloadStreamLevel(this, "MainMap", LatentInfo, true);
+	UGameplayStatics::UnloadStreamLevel(this, "MainMap", LatentInfo, false);
 	}
 }
 

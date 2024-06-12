@@ -21,7 +21,7 @@ AOVGameMode::AOVGameMode()
 	}
 
 	FLatentActionInfo LatentInfo;
-	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, true, LatentInfo) ;
+	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, false, LatentInfo) ;
 
 	Battery = 5;
 
@@ -47,7 +47,7 @@ void AOVGameMode::ChangeLevel()
 {
 	FLatentActionInfo LoadLatentInfo;
 	LoadLatentInfo.CallbackTarget = this;
-	UGameplayStatics::LoadStreamLevel(this, "Cyberpunk_Skyscraper", true, true, LoadLatentInfo);
+	UGameplayStatics::LoadStreamLevel(this, "Cyberpunk_Skyscraper", true, false, LoadLatentInfo);
 }
 
 void AOVGameMode::UnloadOldLevel()
