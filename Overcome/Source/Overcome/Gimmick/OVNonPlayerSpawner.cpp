@@ -30,7 +30,7 @@ void AOVNonPlayerSpawner::BeginPlay()
 	{
 		float X = FMath::RandRange(MinX, MaxX);
 		float Y = FMath::RandRange(MinY, MaxY);
-		FVector Location(X, Y, 100.0f);
+		FVector Location(X, Y, GetActorLocation().Z);
 		FActorSpawnParameters Params;
 		Params.Owner = this;
 		//UE_LOG(LogTemp, Warning, TEXT("Spawn AI"));

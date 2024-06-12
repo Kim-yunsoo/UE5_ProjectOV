@@ -10,13 +10,20 @@
     <list default="true" id="18d6e7f6-fd27-49b4-b72a-a28b2aed8a6d" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BP_OVAIBossController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BP_OVAIBossController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Bp_OVDropItem.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Bp_OVDropItem.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/AI1.umap" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/MainMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/MainMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HUDWidget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_Stat.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_Stat.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/BTService_Detect.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/BTService_Detect.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gimmick/OVNonPlayerSpawner.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVBatteryWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVBatteryWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVStatWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVStatWidget.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +168,9 @@
       <workItem from="1717999765189" duration="17995000" />
       <workItem from="1718030352055" duration="16511000" />
       <workItem from="1718071244495" duration="13027000" />
+      <workItem from="1718094709127" duration="8573000" />
+      <workItem from="1718114202405" duration="6306000" />
+      <workItem from="1718157696765" duration="2283000" />
     </task>
     <servers />
   </component>

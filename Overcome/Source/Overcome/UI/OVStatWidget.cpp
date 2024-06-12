@@ -21,7 +21,7 @@ void UOVStatWidget::UpdateStatWidget(float NewCurrentHp, float NewCurrentMp, flo
 		MpProgressBar->SetPercent(NewCurrentMp/100);
 	}
 	CurrentAttack = NewCurrentAttack;
-	AttackStat->SetText(FText::FromString(GetAttackStatText()));
+	//AttackStat->SetText(FText::FromString(GetAttackStatText()));
 
 	TeleportBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PBTeleport")));
 	ensure(TeleportBar);

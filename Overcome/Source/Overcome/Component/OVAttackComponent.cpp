@@ -91,7 +91,7 @@ void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo Dam
 	FVector End = GetOwner()->GetActorForwardVector() * Length + Start;
 	FHitResult HitResult;
 	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, Radius, ObjectArray, false,ActorsToNotTargeting
-	,EDrawDebugTrace::ForDuration, HitResult,  true,
+	,EDrawDebugTrace::None, HitResult,  true,
 			FLinearColor::Red, FLinearColor::Green, 1.f);
 	if(bResult)
 	{
@@ -111,7 +111,7 @@ void UOVAttackComponent::AttackAOESlash(float Radius, FDamageInfo DamageInfo)
 	ActorsToNotTargeting.Add(GetOwner());
 	TArray<AActor*> HitResultActor;
 	bool bResult =  UKismetSystemLibrary::SphereOverlapActors(GetWorld(), GetOwner()->GetActorLocation(), Radius,ObjectArray,nullptr, ActorsToNotTargeting, HitResultActor);
-	DrawDebugSphere(GetWorld(), GetOwner()->GetActorLocation(), Radius, 24, FColor::Green, false, 2.0f);
+	//DrawDebugSphere(GetWorld(), GetOwner()->GetActorLocation(), Radius, 24, FColor::Green, false, 2.0f);
 	if(bResult)
 	{
 		for (AActor* Actor : HitResultActor)

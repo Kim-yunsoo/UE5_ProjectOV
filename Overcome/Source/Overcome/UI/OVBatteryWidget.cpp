@@ -12,7 +12,7 @@ UOVBatteryWidget::UOVBatteryWidget(const FObjectInitializer& ObjectInitializer):
 
 FString UOVBatteryWidget::PrintBatteryCount()
 {
-	return FString::Printf(TEXT("%d"), Battery);
+	return FString::Printf(TEXT("0%d"), Battery);
 }
 
 void UOVBatteryWidget::UpdateBatteryCount(int32 count)

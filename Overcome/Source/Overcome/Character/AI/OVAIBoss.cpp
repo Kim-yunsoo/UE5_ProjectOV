@@ -494,7 +494,6 @@ void AOVAIBoss::TestAttack()
 			}
 		}
 	}
-	
 }
 
 void AOVAIBoss::SetMovementSpeed(E_MovementSpeed SpeedValue)

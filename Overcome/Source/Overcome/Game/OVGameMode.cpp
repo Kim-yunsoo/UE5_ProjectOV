@@ -47,7 +47,7 @@ void AOVGameMode::ChangeLevel()
 {
 	FLatentActionInfo LoadLatentInfo;
 	LoadLatentInfo.CallbackTarget = this;
-	UGameplayStatics::LoadStreamLevel(this, "AI", true, true, LoadLatentInfo);
+	UGameplayStatics::LoadStreamLevel(this, "Cyberpunk_Skyscraper", true, true, LoadLatentInfo);
 }
 
 void AOVGameMode::UnloadOldLevel()
