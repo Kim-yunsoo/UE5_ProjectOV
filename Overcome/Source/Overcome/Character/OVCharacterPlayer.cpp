@@ -25,6 +25,7 @@
 #include "UI/OVHUDWidget.h"
 #include "UI/OVStatWidget.h"
 #include "DrawDebugHelpers.h"
+#include "NiagaraFunctionLibrary.h"
 #include "Component/OVInventoryComponent.h"
 #include "Game/OVGameMode.h"
 #include "Item/OVItemBase.h"
@@ -648,6 +649,9 @@ void AOVCharacterPlayer::TakeItem(UOVItemData* InItemData)
 
 void AOVCharacterPlayer::DrinkHp()
 {
+	FVector Location = GetActorLocation();
+	FVector Scale(0.7f, 0.7f, 0.7f);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HealthPotion, Location, FRotator::ZeroRotator, Scale);
 	float HpIncreaseAmount = Stat->GetCurrentHp() + 30;
 	DamageComponent->Heal(HpIncreaseAmount);
 	Stat->SetHp(DamageComponent->Health);
@@ -655,12 +659,19 @@ void AOVCharacterPlayer::DrinkHp()
 
 void AOVCharacterPlayer::DrinkMp()
 {
+	FVector Location = GetActorLocation();
+	FVector Scale(0.7f, 0.7f, 0.7f);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ManaPotion, Location, FRotator::ZeroRotator, Scale);
 	float MpIncreaseAmount = Stat->GetCurrentMp() + 20;
 	Stat->SetMp(MpIncreaseAmount);
 }
 
 void AOVCharacterPlayer::DrinkAttack()
 {
+	FVector Location = GetActorLocation();
+	Location.Z -= 50;
+	FVector Scale(0.7f, 0.7f, 0.7f);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), AttackPotion, Location, FRotator::ZeroRotator, Scale);
 	float AttackIncreaseAmount = Stat->GetCurrentAttack() + 10;
 	Stat->SetAttack(AttackIncreaseAmount);
 }

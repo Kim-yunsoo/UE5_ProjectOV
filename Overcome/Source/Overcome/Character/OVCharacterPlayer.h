@@ -338,6 +338,15 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage>	RollMontage;
+///
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+	TObjectPtr<UNiagaraSystem> ManaPotion;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+	TObjectPtr<UNiagaraSystem> HealthPotion;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+	TObjectPtr<UNiagaraSystem> AttackPotion;
 	
 public:
 	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출

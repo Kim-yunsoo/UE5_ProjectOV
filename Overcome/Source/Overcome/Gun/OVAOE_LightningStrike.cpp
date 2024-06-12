@@ -48,7 +48,7 @@ void AOVAOE_LightningStrike::Trigger()
 	//ActorsToNotTargeting.Add(GetOwner());
 	TArray<AActor*> HitResultActor;
 	bool bResult =  UKismetSystemLibrary::SphereOverlapActors(GetWorld(), GetActorLocation(), 250,ObjectArray,nullptr, ActorsToNotTargeting, HitResultActor);
-	//DrawDebugSphere(GetWorld(), GetActorLocation(), 250, 24, FColor::Green, false, 2.0f);
+	DrawDebugSphere(GetWorld(), GetActorLocation(), 250, 24, FColor::Green, false, 2.0f);
 	if(bResult)
 	{
 		for (AActor* Actor : HitResultActor)

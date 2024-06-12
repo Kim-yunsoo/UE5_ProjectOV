@@ -316,12 +316,18 @@ void AOVAIBoss::DamageResponse(E_DamageResponses DamageResponses)
 void AOVAIBoss::SetDead()
 {
 	//Super::SetDead();
-	GetMesh()->SetSimulatePhysics(true);
-	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); //랙돌 만들기
+	// GetMesh()->SetSimulatePhysics(true);
+	// GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); //랙돌 만들기
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(DeathMontage, 1.0f);
+	
 	BossController->GetBrainComponent()->StopLogic(TEXT("Dead"));
+	BossController->StopAI();
+	BossController->ClearFocus(EAIFocusPriority::Gameplay); //보스 포커스 해제
 	SetState(E_AIState::Dead);
 	BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
-	//UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
+	UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
 }
 
 

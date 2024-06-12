@@ -41,6 +41,11 @@ void AOVAIBossController::RunAI()
 
 void AOVAIBossController::StopAI()
 {
+	UBehaviorTreeComponent* BTComponent = Cast<UBehaviorTreeComponent>(BrainComponent);
+	if (BTComponent)
+	{
+		BTComponent->StopTree();
+	}
 }
 
 

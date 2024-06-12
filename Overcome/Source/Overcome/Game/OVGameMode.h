@@ -30,4 +30,7 @@ public:
 	
 	UFUNCTION()
 	void UnloadOldLevel();
+	
+	UPROPERTY()
+	float timestamp;
 };

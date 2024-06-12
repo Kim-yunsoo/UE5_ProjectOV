@@ -80,6 +80,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> StaggerMontage;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> DeathMontage;
 	
 	UFUNCTION()
 	void OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
