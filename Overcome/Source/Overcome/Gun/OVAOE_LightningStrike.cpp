@@ -43,7 +43,7 @@ void AOVAOE_LightningStrike::Tick(float DeltaTime)
 void AOVAOE_LightningStrike::Trigger()
 {
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
-	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_GameTraceChannel1));
 	TArray<AActor*> ActorsToNotTargeting;
 	//ActorsToNotTargeting.Add(GetOwner());
 	TArray<AActor*> HitResultActor;
