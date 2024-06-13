@@ -40,6 +40,9 @@ public:
 	TObjectPtr<class UOVStatWidget> ShieldSkillWidget;
 
 	UPROPERTY()
+	TObjectPtr<class UOVStatWidget> GunSkillWidget;
+	
+	UPROPERTY()
 	TObjectPtr<class UOVBatteryWidget> BatteryWidget;
 	
 	UPROPERTY()
@@ -68,6 +71,7 @@ public:
 	void UpdateInteractionWidget(const FInteractableData* InteractionData) const;
 	void UpdateTeleportTime(float NewCurrentTime);
 	void UpdateShieldTime(float NewCurrentTime);
+	void UpdateGunTime(float NewCurrentTime);
 	void UpdateBatteryCount(int NewCount);
 	void UpdateDead();
 	UPROPERTY()

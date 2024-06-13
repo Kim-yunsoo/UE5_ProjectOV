@@ -20,6 +20,7 @@ public:
 	FString GetAttackStatText();
 	void UpdateTeleportBar(float NewCurrentPercent);
 	void UpdateShieldBar(float NewCurrentPercent);
+	void UpdateGunBar(float NewCurrentPercent);
 protected:
 	virtual  void NativeConstruct() override;
 	
@@ -37,8 +38,10 @@ protected:
 	TObjectPtr<class UProgressBar> TeleportBar;
 
 	UPROPERTY()
-	
 	TObjectPtr<class UProgressBar> ShieldBar;
+
+	UPROPERTY()
+	TObjectPtr<class UProgressBar> GunBar;
 	
 	UPROPERTY()
 	float CurrentAttack;

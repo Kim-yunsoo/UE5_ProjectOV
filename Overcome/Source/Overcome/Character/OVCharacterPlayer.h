@@ -261,12 +261,18 @@ public:
 
 	UPROPERTY()
 	uint8 bIsActiveShieldSkill : 1;
+
+	UPROPERTY()
+	uint8 bIsActiveGunSkill : 1;
 	
 	UPROPERTY()
 	TObjectPtr<class UOVTeleportSkill> TeleportSkillComponent;
 
 	UPROPERTY()
 	TObjectPtr<class UOVShieldSkill> ShieldSkillComponent;
+
+	UPROPERTY()
+	TObjectPtr<class UOVGunSkill> GunSkillComponent;
 	
 	void TeleportSkill(const FInputActionValue& Value);
 	void ShieldSkill(const FInputActionValue& Value);

@@ -31,6 +31,7 @@
 #include "Item/OVItemBase.h"
 #include "Object/OVPickup.h"
 #include "Player/OVPlayerController.h"
+#include "Skill/OVGunSkill.h"
 #include "UI/OVDeadWidget.h"
 
 DEFINE_LOG_CATEGORY(LogOVCharacter);
@@ -178,7 +179,7 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Roll.IA_OV_Rol
 	//Gun
 	Gun = CreateDefaultSubobject<AOVGun>(TEXT("Gun"));
 	bIsGun = true;
-	bIsGunRepeat = false;
+	//bIsGunRepeat = false;
 	//Item Action
 	// TakeItemActions.Add(
 	// 	FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
@@ -195,6 +196,10 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Roll.IA_OV_Rol
 
 	ShieldSkillComponent = CreateDefaultSubobject<UOVShieldSkill>(TEXT("ShieldSkillComponent"));
 	bIsActiveShieldSkill = true;
+
+	GunSkillComponent = CreateDefaultSubobject<UOVGunSkill>(TEXT("GunSkillComponent"));
+	bIsActiveGunSkill = true;
+	
 	bIsAttacking = false;
 	
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
@@ -453,6 +458,8 @@ void AOVCharacterPlayer::Roll(const FInputActionValue& Value)
 	{
 		return;
 	}
+	if(bIsRoll)
+		return;
 	bIsRoll = true;
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
@@ -607,7 +614,7 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 
 		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 0.5);
-		if(!bIsGunRepeat)
+		if(bIsActiveGunSkill)
 		{
 			FTimerHandle TimerHandle;
 			// Set up the timer to call the ResetTurning function after 0.2 seconds
@@ -714,6 +721,7 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 	GameMode->OnBatteryCount.AddUObject(InUserWidget, &UOVHUDWidget::UpdateBatteryCount);
 	TeleportSkillComponent->OnTeleportTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateTeleportTime);
 	ShieldSkillComponent->OnShieldTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateShieldTime);
+	GunSkillComponent->OnGunTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateGunTime);
 	if(StatWidget)
 	{
 		StatWidget->UpdateStatWidget(Stat->GetCurrentHp(), Stat->GetCurrentMp(), Stat->GetCurrentAttack());
@@ -760,7 +768,7 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	AimOffset(DeltaSeconds);
 	//UE_LOG(LogTemp, Warning ,TEXT("%d"), bIsRoll);
-	if (bIsGunRepeat)
+	if (!bIsActiveGunSkill)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Shoot"));
 		ServerRPCShoot();
@@ -873,13 +881,13 @@ void AOVCharacterPlayer::ToggleMenu()
 
 void AOVCharacterPlayer::GunRepeat()
 {
-	if(bIsGunRepeat)
+	UE_LOG(LogTemp,Warning,TEXT("UpdateGunBar"));
+	if (bIsActiveGunSkill && Stat->GetCurrentMp())
 	{
-		bIsGunRepeat = false;
-	}
-	else
-	{
-		bIsGunRepeat = true;
+		bIsActiveGunSkill = false;
+		GunSkillComponent->SkillAction();
+		float MpIncreaseAmount = Stat->GetCurrentMp() - 30;
+		Stat->SetMp(MpIncreaseAmount);
 	}
 	
 }

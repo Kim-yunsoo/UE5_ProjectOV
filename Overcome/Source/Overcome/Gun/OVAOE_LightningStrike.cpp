@@ -39,7 +39,6 @@ void AOVAOE_LightningStrike::Tick(float DeltaTime)
 }
 
 
-
 void AOVAOE_LightningStrike::Trigger()
 {
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;

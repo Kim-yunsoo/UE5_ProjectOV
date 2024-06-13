@@ -28,6 +28,7 @@ void UOVHUDWidget::NativeConstruct()
 	BossHpWidget = Cast<UOVBossHpWidget>(GetWidgetFromName(TEXT("WBP_BossHpBar")));
 	TeleportSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
 	ShieldSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
+	GunSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
 	BatteryWidget = Cast<UOVBatteryWidget>(GetWidgetFromName("WBP_Battery"));
 	DeadWidget = Cast<UOVDeadWidget>(GetWidgetFromName("WBP_Dead"));
 	//OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
@@ -154,6 +155,11 @@ void UOVHUDWidget::UpdateTeleportTime(float NewCurrentTime)
 void UOVHUDWidget::UpdateShieldTime(float NewCurrentTime)
 {
 	ShieldSkillWidget->UpdateShieldBar(NewCurrentTime);
+}
+
+void UOVHUDWidget::UpdateGunTime(float NewCurrentTime)
+{
+	GunSkillWidget->UpdateGunBar(NewCurrentTime);
 }
 
 void UOVHUDWidget::UpdateBatteryCount(int NewCount)
