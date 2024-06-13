@@ -327,7 +327,7 @@ void AOVAIBoss::SetDead()
 	BossController->ClearFocus(EAIFocusPriority::Gameplay); //보스 포커스 해제
 	SetState(E_AIState::Dead);
 	BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
-	UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
+	//UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
 }
 
 

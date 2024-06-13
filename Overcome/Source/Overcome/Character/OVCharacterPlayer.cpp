@@ -31,6 +31,7 @@
 #include "Item/OVItemBase.h"
 #include "Object/OVPickup.h"
 #include "Player/OVPlayerController.h"
+#include "UI/OVDeadWidget.h"
 
 DEFINE_LOG_CATEGORY(LogOVCharacter);
 
@@ -213,6 +214,7 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Roll.IA_OV_Rol
 
 	bIsGun = false;
 	bIsRoll = false;
+	bIsShowInventory = false;
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -392,7 +394,7 @@ void AOVCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
-	if (bIsGun && !bIsRoll)
+	if (bIsGun && !bIsRoll && !bIsShowInventory)
 	{
 		if (!bIsAiming)
 		{
@@ -623,6 +625,12 @@ void AOVCharacterPlayer::SetDead()
 	// GetMesh()->SetSimulatePhysics(true);
 	// GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); //랙돌 만들기
 	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	if(HUDWidget->DeadWidget)
+	{
+		HUDWidget->UpdateDead();
+		
+	
+	}
 	if(PlayerController) //죽으면 키 입력 없애기
 	{
 		DisableInput(PlayerController);
@@ -643,7 +651,7 @@ void AOVCharacterPlayer::TakeItem(UOVItemData* InItemData)
 {
 	if (InItemData)
 	{
-		//		TakeItemActions[(uint8)InItemData->Type].ItemDelegate.ExecuteIfBound(InItemData);
+		//TakeItemActions[(uint8)InItemData->Type].ItemDelegate.ExecuteIfBound(InItemData);
 	}
 }
 
@@ -851,9 +859,16 @@ void AOVCharacterPlayer::UpdateInteractionWidget() const
 }
 void AOVCharacterPlayer::ToggleMenu()
 {
-	UE_LOG(LogTemp, Warning, TEXT("ToggleMenu111"));
-
-	HUDWidget->ToggleMenu();
+	if(!bIsShowInventory) //bIsShowInventory = false
+	{
+		HUDWidget->ToggleMenu();
+		bIsShowInventory = true;
+	}
+	else
+	{
+		HUDWidget->ToggleMenu();
+		bIsShowInventory = false;
+	}
 }
 
 void AOVCharacterPlayer::GunRepeat()

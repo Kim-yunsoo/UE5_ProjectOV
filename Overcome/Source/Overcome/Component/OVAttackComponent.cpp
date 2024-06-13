@@ -84,7 +84,7 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo DamageInfo)
 {
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
-	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_GameTraceChannel1));
 	TArray<AActor*> ActorsToNotTargeting;
 	ActorsToNotTargeting.Add(GetOwner());
 	FVector Start = GetOwner()->GetActorLocation();
@@ -98,6 +98,7 @@ void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo Dam
 		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
 		if(DamagableInterface)
 		{
+			UE_LOG(LogTemp,Warning, TEXT("AttackSlash"));
 			DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
 		}
 	}
@@ -106,7 +107,7 @@ void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo Dam
 void UOVAttackComponent::AttackAOESlash(float Radius, FDamageInfo DamageInfo)
 {
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
-	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_GameTraceChannel1));
 	TArray<AActor*> ActorsToNotTargeting;
 	ActorsToNotTargeting.Add(GetOwner());
 	TArray<AActor*> HitResultActor;

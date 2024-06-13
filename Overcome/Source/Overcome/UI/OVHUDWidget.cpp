@@ -5,6 +5,7 @@
 
 #include "OVBatteryWidget.h"
 #include "OVBossHpWidget.h"
+#include "OVDeadWidget.h"
 #include "UI/OVMainMenu.h"
 #include "UI/Interaction/OVInteractionWidget.h"
 #include "OVStatWidget.h"
@@ -28,6 +29,7 @@ void UOVHUDWidget::NativeConstruct()
 	TeleportSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
 	ShieldSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
 	BatteryWidget = Cast<UOVBatteryWidget>(GetWidgetFromName("WBP_Battery"));
+	DeadWidget = Cast<UOVDeadWidget>(GetWidgetFromName("WBP_Dead"));
 	//OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
 	// InteractionWidget = Cast<UOVInteractionWidget>(GetWidgetFromName(TEXT("WBP_InteractionWidget")));
 	// if(InteractionWidget)
@@ -61,6 +63,9 @@ void UOVHUDWidget::NativeConstruct()
 		GameState->OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
 	}
 	Battery = 5;
+	bIsMenuVisible  = false;
+	if(DeadWidget)
+		DeadWidget->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UOVHUDWidget::DisplayMenu()
@@ -72,19 +77,29 @@ void UOVHUDWidget::DisplayMenu()
 	}
 }
 
-// void UOVHUDWidget::HideMenu()
-// {
-// 	if(MainMenuWidget)
-// 	{
-// 		bIsMenuVisible=false;
-// 	}
-// }
+
+void UOVHUDWidget::HideMenu()
+{
+	if(MainMenuWidget)
+	{
+		bIsMenuVisible=false;
+		MainMenuWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
 
 void UOVHUDWidget::ToggleMenu()
 {
+	if(bIsMenuVisible) //화면 보이는 중
 	{
-		DisplayMenu();
-		const FInputModeUIOnly InputMode;
+		HideMenu(); //화면 사라짐
+		const FInputModeGameOnly InputMode;
+		GetOwningPlayer()->SetInputMode(InputMode);
+		GetOwningPlayer()->SetShowMouseCursor(false);
+	}
+	else //화면 안보임
+	{
+		DisplayMenu(); //화면 보이게
+		const FInputModeGameAndUI InputMode;
 		GetOwningPlayer()->SetInputMode(InputMode);
 		GetOwningPlayer()->SetShowMouseCursor(true);
 	}
@@ -144,6 +159,14 @@ void UOVHUDWidget::UpdateShieldTime(float NewCurrentTime)
 void UOVHUDWidget::UpdateBatteryCount(int NewCount)
 {
 	BatteryWidget->UpdateBatteryCount(NewCount);
+}
+
+void UOVHUDWidget::UpdateDead()
+{
+	DeadWidget->SetVisibility(ESlateVisibility::Visible);
+	const FInputModeGameAndUI InputMode;
+	GetOwningPlayer()->SetInputMode(InputMode);
+	GetOwningPlayer()->SetShowMouseCursor(true);
 }
 
 

@@ -34,10 +34,10 @@ bool UOVMainMenu::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent
 	return false;
 }
 
-void UOVMainMenu::CloseMainMenu()
-{
-	SetVisibility(ESlateVisibility::Collapsed);
-	const FInputModeGameOnly InputMode;
-	GetOwningPlayer()->SetInputMode(InputMode);
-	GetOwningPlayer()->SetShowMouseCursor(false);
-}
+// void UOVMainMenu::CloseMainMenu()
+// {
+// 	SetVisibility(ESlateVisibility::Collapsed);
+// 	const FInputModeGameOnly InputMode;
+// 	GetOwningPlayer()->SetInputMode(InputMode);
+// 	GetOwningPlayer()->SetShowMouseCursor(false);
+// }

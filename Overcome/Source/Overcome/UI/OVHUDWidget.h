@@ -46,26 +46,30 @@ public:
 	TObjectPtr<class UOVStatWidget> StatWidget;
 
 	UPROPERTY()
+	TObjectPtr<class UOVDeadWidget> DeadWidget;
+
+	UPROPERTY()
 	TObjectPtr<class UOVBossHpWidget> BossHpWidget;
 	TObjectPtr<UOVMainMenu> MainMenuWidget;
 	
 	UPROPERTY()
 	TObjectPtr<UOVInteractionWidget> InteractionWidget ;
 
-	UPROPERTY(EditAnywhere)
-	bool bIsMenuVisible;
+
 
 	void DisplayMenu();
-	//void HideMenu();
-	void ToggleMenu();
+	void HideMenu();
 
+	void ToggleMenu();
+	UPROPERTY(EditAnywhere)
+	bool bIsMenuVisible;
 	void ShowInteractionWidget() const;
 	void HideInteractionWidget() const;
 	void UpdateInteractionWidget(const FInteractableData* InteractionData) const;
 	void UpdateTeleportTime(float NewCurrentTime);
 	void UpdateShieldTime(float NewCurrentTime);
 	void UpdateBatteryCount(int NewCount);
-
+	void UpdateDead();
 	UPROPERTY()
 	int32 Battery;
 };

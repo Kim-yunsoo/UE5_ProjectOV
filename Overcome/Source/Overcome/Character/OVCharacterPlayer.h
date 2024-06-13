@@ -247,6 +247,9 @@ protected:
 public:
 	FOnAimChangedDelegate OnAimChanged;
 	
+	UPROPERTY()
+	uint8 bIsShowInventory : 1;
+	
 protected:
 	virtual void SetupHUDWidget(UOVHUDWidget* InUserWidget) override;
 
@@ -335,6 +338,7 @@ protected:
 
 	UPROPERTY()
 	uint8 bIsGunRepeat :1;
+
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage>	RollMontage;
