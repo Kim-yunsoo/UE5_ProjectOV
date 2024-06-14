@@ -131,7 +131,7 @@ void AOVPickup::UpdateInteractableData()
 	InteractableData = InstanceInteractableData;
 }
 
-void AOVPickup::TakePickup(const AOVCharacterPlayer* Taker)
+void AOVPickup::TakePickup(AOVCharacterPlayer* Taker)
 {
 	if(!IsPendingKillPending()) // 액터가 현재 파괴중이 아니라면 ?? 
 	{
@@ -140,7 +140,7 @@ void AOVPickup::TakePickup(const AOVCharacterPlayer* Taker)
 			if (UOVInventoryComponent* PlayerInventory = Taker->GetInventory())
 			{
 				const FItemAddResult AddResult = PlayerInventory->HandleAddItem(ItemReference);
-
+				Taker->PlayPickupMontage();
 				switch (AddResult.OperationResult)
 				{
 				case EItemAddResult::IAR_NoItemAdded:

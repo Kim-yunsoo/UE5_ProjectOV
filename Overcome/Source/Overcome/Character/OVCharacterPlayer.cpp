@@ -981,6 +981,30 @@ void AOVCharacterPlayer::AttackEnded()
 	bIsAttacking = false;
 }
 
+void AOVCharacterPlayer::PlayPickupMontage()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	int32 RandomIndex = FMath::RandRange(0, 1); 
+	UE_LOG(LogTemp, Warning, TEXT("PlayPickupMontage"));
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+	//if(GetMesh()->GetAnimInstance()->Montage_IsPlaying(PickupMontageRH))
+	if (RandomIndex == 0)
+	{
+		AnimInstance->Montage_Play(PickupMontageRH, 1.0f);
+	}
+	else
+	{
+		AnimInstance->Montage_Play(PickupMontageLH, 1.0f);
+	}
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+	{
+		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+			
+	}, 1.8f, false);
+}
+
 void AOVCharacterPlayer::TestAttack() //V키
 {
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;

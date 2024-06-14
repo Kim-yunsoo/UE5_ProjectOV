@@ -303,6 +303,15 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UAnimMontage> StaggerMontage;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> PickupMontageRH;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> PickupMontageLH;
+
+	void PlayPickupMontage();
+	
 	
 	//TEST ATTACK
 	UFUNCTION()
