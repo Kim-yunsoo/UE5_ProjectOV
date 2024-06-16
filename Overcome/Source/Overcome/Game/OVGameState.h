@@ -23,6 +23,10 @@ public:
 	void SetBossHp(float NewHp);
 
 	float GetBossHp() const;
+	
+	void SetCharacterDead(bool NewDead);
+
+	bool GetCharacterDead() const;
 
 	void BossState(bool start);
 	
@@ -32,10 +36,16 @@ public:
 	//공격 상태인지
 	FOnBossAttackStateChanged OnBossAttackState;
 
+	UPROPERTY(EditAnywhere)
+	bool bIsResumeMenuVisible; //정지모드인지!
+	
 private:
 	float BossHp;
 
 	bool BossStart;
-	
 
+	UPROPERTY()
+	uint8 CharacterDead : 1;
+	
+	
 };

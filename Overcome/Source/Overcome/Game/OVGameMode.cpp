@@ -22,6 +22,7 @@ AOVGameMode::AOVGameMode()
 
 	FLatentActionInfo LatentInfo;
 	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, false, LatentInfo) ;
+	GoalCount = 4;
 	Battery = 5;
 }
 
@@ -30,7 +31,7 @@ void AOVGameMode::SetBatteryCount(int NewBattery)
 {
 	Battery = NewBattery;
 	OnBatteryCount.Broadcast(Battery);
-	if(Battery == 4)
+	if(Battery == GoalCount)
 	{
 		FTimerHandle TimerHandle;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()

@@ -13,6 +13,8 @@
 #include "Component/OVDamageComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Game/OVGameMode.h"
+#include "Game/OVGameState.h"
 #include "Kismet/GameplayStatics.h"
 #include "Physics/OVCollision.h"
 #include "UI/OVWidgetComponent.h"
@@ -218,25 +220,42 @@ void AOVCharacterNonPlayer::DamageResponse(E_DamageResponses DamageResponses)
 void AOVCharacterNonPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-	if (PlayerController && HpBar)
+	AOVGameMode* GameMode = Cast<AOVGameMode>(GetWorld()->GetAuthGameMode());
+	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	AOVAIController* AIController = Cast<AOVAIController>(GetController());
+	if(GameMode->Battery == GameMode->GoalCount || GameState->GetCharacterDead())
 	{
-		APlayerCameraManager* CameraManager = PlayerController->PlayerCameraManager;
-		if (CameraManager)
-		{
-			FVector CameraLocation = CameraManager->GetCameraLocation();
-            
-			// Get the location of the HpBar
-			FVector HpBarLocation = HpBar->GetComponentLocation();
-            
-			// Calculate the direction from the HpBar to the camera
-			FVector Direction = CameraLocation - HpBarLocation;
-			FRotator LookAtRotation = Direction.Rotation();
-            
-			// Set the relative rotation of the HpBar to face the camera
-			HpBar->SetWorldRotation(LookAtRotation);
-		}
+		
+		AIController->GetBrainComponent()->StopLogic(TEXT("Dead"));
+		AIController->StopAI();
 	}
+	if(GameState->bIsResumeMenuVisible)
+	{
+		AIController->GetBrainComponent()->PauseLogic(TEXT("Pause for UI"));
+	}
+	else if(!GameState->bIsResumeMenuVisible)
+	{
+		AIController->GetBrainComponent()->ResumeLogic(TEXT("Resume for UI"));
+	}
+	// APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	// if (PlayerController && HpBar)
+	// {
+	// 	APlayerCameraManager* CameraManager = PlayerController->PlayerCameraManager;
+	// 	if (CameraManager)
+	// 	{
+	// 		FVector CameraLocation = CameraManager->GetCameraLocation();
+ //            
+	// 		// Get the location of the HpBar
+	// 		FVector HpBarLocation = HpBar->GetComponentLocation();
+ //            
+	// 		// Calculate the direction from the HpBar to the camera
+	// 		FVector Direction = CameraLocation - HpBarLocation;
+	// 		FRotator LookAtRotation = Direction.Rotation();
+ //            
+	// 		// Set the relative rotation of the HpBar to face the camera
+	// 		HpBar->SetWorldRotation(LookAtRotation);
+	// 	}
+	// }
 }
 
 float AOVCharacterNonPlayer::GetAIPatrolRadius()

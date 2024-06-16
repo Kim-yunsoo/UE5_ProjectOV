@@ -167,6 +167,14 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Roll.IA_OV_Rol
 	{
 		RollAction = RollActionRef.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> ResumeActionRef(
+TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Resume.IA_OV_Resume'"));
+	if (nullptr != ResumeActionRef.Object)
+	{
+		ResumeAction = ResumeActionRef.Object;
+	}
+	
 	
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
@@ -269,6 +277,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Completed, this, &AOVCharacterPlayer::ToggleMenu);
 	EnhancedInputComponent->BindAction(GunRepeatAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::GunRepeat);
 	EnhancedInputComponent->BindAction(RollAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Roll);
+	EnhancedInputComponent->BindAction(ResumeAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::Resume);
 
 	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
 	//EndInteraction 안함
@@ -399,7 +408,8 @@ void AOVCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
-	if (bIsGun && !bIsRoll && !bIsShowInventory)
+	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	if (bIsGun && !bIsRoll && !bIsShowInventory && !GameState->bIsResumeMenuVisible)
 	{
 		if (!bIsAiming)
 		{
@@ -473,6 +483,11 @@ void AOVCharacterPlayer::Roll(const FInputActionValue& Value)
 		});
 		AnimInstance->Montage_SetEndDelegate(EndDelegate, RollMontage);
 	}
+}
+
+void AOVCharacterPlayer::Resume(const FInputActionValue& Value)
+{
+	HUDWidget->ResumeMenu();
 }
 
 void AOVCharacterPlayer::ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse)

@@ -6,11 +6,13 @@
 #include "OVBatteryWidget.h"
 #include "OVBossHpWidget.h"
 #include "OVDeadWidget.h"
+#include "OVResumeWidget.h"
 #include "UI/OVMainMenu.h"
 #include "UI/Interaction/OVInteractionWidget.h"
 #include "OVStatWidget.h"
 #include "OVTargetWidget.h"
 #include "Components/VerticalBox.h"
+#include "Game/OVGameMode.h"
 #include "Game/OVGameState.h"
 #include "Interface/OVCharacterHUDInterface.h"
 #include "Kismet/GameplayStatics.h"
@@ -31,6 +33,7 @@ void UOVHUDWidget::NativeConstruct()
 	GunSkillWidget = Cast<UOVStatWidget>(GetWidgetFromName("WBP_Stat"));
 	BatteryWidget = Cast<UOVBatteryWidget>(GetWidgetFromName("WBP_Battery"));
 	DeadWidget = Cast<UOVDeadWidget>(GetWidgetFromName("WBP_Dead"));
+	ResumeWidget = Cast<UOVResumeWidget>(GetWidgetFromName("WBP_Resume"));
 	//OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
 	// InteractionWidget = Cast<UOVInteractionWidget>(GetWidgetFromName(TEXT("WBP_InteractionWidget")));
 	// if(InteractionWidget)
@@ -67,7 +70,13 @@ void UOVHUDWidget::NativeConstruct()
 	bIsMenuVisible  = false;
 	if(DeadWidget)
 		DeadWidget->SetVisibility(ESlateVisibility::Hidden);
+
+	if(ResumeWidget)
+	{
+		ResumeWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
+
 
 void UOVHUDWidget::DisplayMenu()
 {
@@ -106,6 +115,26 @@ void UOVHUDWidget::ToggleMenu()
 	}
 }
 
+void UOVHUDWidget::ResumeMenu()
+{
+	// if(bIsResumeMenuVisible)
+	// {
+	// 	ResumeWidget->SetVisibility(ESlateVisibility::Hidden);
+	// 	const FInputModeGameOnly InputMode;
+	// 	GetOwningPlayer()->SetInputMode(InputMode);
+	// 	GetOwningPlayer()->SetShowMouseCursor(false);
+	// }
+	// else
+	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	GameState->bIsResumeMenuVisible = true;
+	{
+		ResumeWidget->SetVisibility(ESlateVisibility::Visible);
+		const FInputModeGameAndUI InputMode;
+		GetOwningPlayer()->SetInputMode(InputMode);
+		GetOwningPlayer()->SetShowMouseCursor(true);
+	}
+}
+
 void UOVHUDWidget::ShowInteractionWidget() const
 {
 	if(InteractionWidget)
@@ -121,7 +150,6 @@ void UOVHUDWidget::HideInteractionWidget() const
 		//UE_LOG(LogTemp,Log,TEXT("%s"),*InteractionWidget->GetName() )
 		InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}
-
 }
 
 void UOVHUDWidget::UpdateInteractionWidget(const FInteractableData* InteractionData) const
@@ -132,7 +160,6 @@ void UOVHUDWidget::UpdateInteractionWidget(const FInteractableData* InteractionD
 		{
 			InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
 		}
-
 		InteractionWidget->UpdateWidget(InteractionData);
 	}
 }
@@ -170,6 +197,8 @@ void UOVHUDWidget::UpdateBatteryCount(int NewCount)
 void UOVHUDWidget::UpdateDead()
 {
 	DeadWidget->SetVisibility(ESlateVisibility::Visible);
+	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	GameState->SetCharacterDead(true);
 	const FInputModeGameAndUI InputMode;
 	GetOwningPlayer()->SetInputMode(InputMode);
 	GetOwningPlayer()->SetShowMouseCursor(true);

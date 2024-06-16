@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Battery;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 GoalCount;
+
 	UFUNCTION()
 	void ChangeLevel();
 	
@@ -33,4 +36,5 @@ public:
 	
 	UPROPERTY()
 	float timestamp;
+	
 };

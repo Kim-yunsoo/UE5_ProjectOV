@@ -22,6 +22,16 @@ float AOVGameState::GetBossHp() const
 	return BossHp;
 }
 
+void AOVGameState::SetCharacterDead(bool NewDead)
+{
+	CharacterDead = NewDead;
+}
+
+bool AOVGameState::GetCharacterDead() const
+{
+	return CharacterDead;
+}
+
 void AOVGameState::BossState(bool start)
 {
 	BossStart = start;

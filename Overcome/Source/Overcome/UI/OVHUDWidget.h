@@ -52,6 +52,9 @@ public:
 	TObjectPtr<class UOVDeadWidget> DeadWidget;
 
 	UPROPERTY()
+	TObjectPtr<class UOVResumeWidget> ResumeWidget;
+	
+	UPROPERTY()
 	TObjectPtr<class UOVBossHpWidget> BossHpWidget;
 	TObjectPtr<UOVMainMenu> MainMenuWidget;
 	
@@ -64,8 +67,13 @@ public:
 	void HideMenu();
 
 	void ToggleMenu();
+	void ResumeMenu();
 	UPROPERTY(EditAnywhere)
 	bool bIsMenuVisible;
+
+
+
+	
 	void ShowInteractionWidget() const;
 	void HideInteractionWidget() const;
 	void UpdateInteractionWidget(const FInteractableData* InteractionData) const;
