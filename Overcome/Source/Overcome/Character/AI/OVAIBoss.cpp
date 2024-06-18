@@ -386,6 +386,7 @@ void AOVAIBoss::StrikeCheck()
 		FRotator Rotation {-90 , 0,0,};
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this; // 액터의 소유자 설정
+		
 		AOVAOE_LightningStrike* LightningStrike = GetWorld()->SpawnActor<AOVAOE_LightningStrike>(AOVAOE_LightningStrike::StaticClass(), Location, Rotation, SpawnParams);
 		LightningStrike->OnOverlapActor.AddDynamic(this, &AOVAIBoss::AOEDelegate);
 	}

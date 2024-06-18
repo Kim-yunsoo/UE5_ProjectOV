@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "OVAOE_LightningStrike.generated.h"
 
+class UNiagaraSystem;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnOverlapActor, AActor*, OverlappedActor);
 
 UCLASS()
@@ -32,5 +33,9 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
-	
+	UPROPERTY()
+	TObjectPtr<UNiagaraSystem> Emitter;
+
+	UPROPERTY()
+	TObjectPtr<UNiagaraSystem> EmitterHit;
 };

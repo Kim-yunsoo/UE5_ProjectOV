@@ -210,7 +210,6 @@ bool AOVCharacterNonPlayer::IsAttacking()
 
 void AOVCharacterNonPlayer::DamageResponse(E_DamageResponses DamageResponses)
 {
-	//UE_LOG(LogTemp,Warning ,TEXT("Mini AI DamageResponse"));
 	GetCharacterMovement()->StopMovementImmediately();
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
