@@ -896,7 +896,7 @@ void AOVCharacterPlayer::ToggleMenu()
 
 void AOVCharacterPlayer::GunRepeat()
 {
-	UE_LOG(LogTemp,Warning,TEXT("UpdateGunBar"));
+	//UE_LOG(LogTemp,Warning,TEXT("UpdateGunBar"));
 	if (bIsActiveGunSkill && Stat->GetCurrentMp())
 	{
 		bIsActiveGunSkill = false;

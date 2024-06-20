@@ -48,7 +48,6 @@ void AOVAOE_LightningStrike::BeginPlay()
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
 	{
 		Trigger();
-		
 		DecalComponent->SetVisibility(false); //삭제는 안하는데 삭제를 해야한다!!
 	}, 1.0f, false);
 }
