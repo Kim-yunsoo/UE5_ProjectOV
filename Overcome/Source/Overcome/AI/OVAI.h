@@ -3,6 +3,8 @@
 #define BBKEY_HOMEPOS TEXT("HomePos")
 #define BBKEY_PATROLPOS TEXT("PatrolPos")
 #define BBKEY_TARGET TEXT("Target")
+#define BBKEY_CHARACTER TEXT("Character")
+#define BBKEY_RUNLOCATION TEXT("RunLocation")
 
 //Boss KEY
 #define BBKEY_ATTACKTARGET TEXT("AttackTarget")

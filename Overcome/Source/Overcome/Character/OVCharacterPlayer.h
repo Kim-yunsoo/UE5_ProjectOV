@@ -168,6 +168,7 @@ protected:
 public:
 	FORCEINLINE float GetAO_Yaw() const {return AO_Yaw;};
 	FORCEINLINE float GetAO_Pitch() const {return AO_Pitch;};
+	FORCEINLINE bool GetIsGun() const {return bIsGun;};
 
 protected:
 	UPROPERTY(Replicated, BlueprintReadWrite, Category = "Character")

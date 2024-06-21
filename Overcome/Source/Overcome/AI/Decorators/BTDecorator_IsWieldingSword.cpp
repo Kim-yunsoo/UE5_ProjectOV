@@ -5,6 +5,7 @@
 
 #include "AIController.h"
 #include "Character/AI/OVEnemy_Base.h"
+#include "Interface/OVEnemyAIInterface.h"
 
 UBTDecorator_IsWieldingSword::UBTDecorator_IsWieldingSword()
 {

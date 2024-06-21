@@ -264,7 +264,7 @@ float AOVCharacterNonPlayer::GetAIPatrolRadius()
 
 float AOVCharacterNonPlayer::GetAIDetectRange()
 {
-	return 400.f;
+	return 800.f;
 }
 
 float AOVCharacterNonPlayer::GetAIAttackRange()
