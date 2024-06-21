@@ -9,18 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="18d6e7f6-fd27-49b4-b72a-a28b2aed8a6d" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_OVCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_OVCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Map/MainMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/MainMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_HpBar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_HpBar.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/BTService_CheckTargetDistance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/BTService_CheckTargetDistance.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/AI/BTService_Detect.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/AI/BTService_Detect.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVCharacterNonPlayer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVCharacterAIInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVCharacterAIInterface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVHpBarWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVHpBarWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Character/BP_OVAIBoss.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +191,7 @@
       <workItem from="1718725965497" duration="953000" />
       <workItem from="1718771070851" duration="17000" />
       <workItem from="1718866426365" duration="6421000" />
-      <workItem from="1718926618561" duration="22314000" />
+      <workItem from="1718926618561" duration="25096000" />
     </task>
     <servers />
   </component>
