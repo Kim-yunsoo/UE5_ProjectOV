@@ -98,4 +98,9 @@ protected:
 	TObjectPtr<class UMaterialInterface> AttackPotionMaterial;
 
 	virtual void Tick(float DeltaTime) override;
+
+
+	UFUNCTION()
+	void OnMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	
 };

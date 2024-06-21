@@ -210,10 +210,15 @@ bool AOVCharacterNonPlayer::IsAttacking()
 
 void AOVCharacterNonPlayer::DamageResponse(E_DamageResponses DamageResponses)
 {
-	GetCharacterMovement()->StopMovementImmediately();
+	//GetCharacterMovement()->StopMovementImmediately();
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
 	AnimInstance->Montage_Play(StaggerMontage, 1.0f);
+	FOnMontageEnded CompleteDelegate;
+	CompleteDelegate.BindUObject(this, &AOVCharacterNonPlayer::OnMontageEnded);
+	AnimInstance->Montage_SetEndDelegate(CompleteDelegate, StaggerMontage);
+	//AnimInstance->Montage_SetEndDelegate(FOnMontageEnded::CreateUObject(this, &AOVCharacterNonPlayer::OnMontageEnded), StaggerMontage);
 }
 
 void AOVCharacterNonPlayer::Tick(float DeltaTime)
@@ -255,6 +260,11 @@ void AOVCharacterNonPlayer::Tick(float DeltaTime)
 	// 		HpBar->SetWorldRotation(LookAtRotation);
 	// 	}
 	// }
+}
+
+void AOVCharacterNonPlayer::OnMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 }
 
 float AOVCharacterNonPlayer::GetAIPatrolRadius()
