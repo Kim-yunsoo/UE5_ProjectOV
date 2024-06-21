@@ -6,6 +6,9 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AI/OVAI.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Damage.h"
+
 
 AOVAIController::AOVAIController()
 {
@@ -20,6 +23,7 @@ AOVAIController::AOVAIController()
 	{
 		BTAsset = BTAssetRef.Object;
 	}
+	SetPerceptionSystem();
 }
 
 void AOVAIController::RunAI()
@@ -48,4 +52,30 @@ void AOVAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 	RunAI();
+}
+
+void AOVAIController::SetPerceptionSystem()
+{
+	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
+
+	if(AIPerception)
+	{
+		UAISenseConfig_Damage* DamageConfig = CreateDefaultSubobject<UAISenseConfig_Damage>(TEXT("DamageConfig"));
+		DamageConfig->SetMaxAge(5.0);
+		AIPerception->ConfigureSense(*DamageConfig);
+
+		//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleDamageSense);
+		AIPerception->SetDominantSense(DamageConfig->GetSenseImplementation());
+
+		AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIController::HandleDamageSense);
+	}
+}
+
+void AOVAIController::HandleDamageSense(AActor* Actor, FAIStimulus Stimulus)
+{
+	UBlackboardComponent* BlackboardPtr = Blackboard.Get();
+	if (UseBlackboard(BBAsset, BlackboardPtr))
+	{
+		Blackboard->SetValueAsObject(BBKEY_TARGET, Actor);
+	}
 }

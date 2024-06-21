@@ -11,7 +11,7 @@ UOVCharacterStatComponent::UOVCharacterStatComponent()
 {
 	//MaxHp = 100;
 	CurrentHp = MaxHp;
-	CurrentAttack = 30;
+	CurrentAttack = 20;
 	CurrentMp = 100;
 	bIsBossCharacter = false;
 }

@@ -21,7 +21,7 @@ AOVDropItem::AOVDropItem()
 	}
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
 	Trigger->SetupAttachment(Mesh);
-	Battery = 5;
+	Battery = 3;
 }
 
 void AOVDropItem::BeginPlay()

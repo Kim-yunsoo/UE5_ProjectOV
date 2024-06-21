@@ -259,7 +259,7 @@ void AOVCharacterNonPlayer::Tick(float DeltaTime)
 
 float AOVCharacterNonPlayer::GetAIPatrolRadius()
 {
-	return 800.f;
+	return 300.f;
 }
 
 float AOVCharacterNonPlayer::GetAIDetectRange()

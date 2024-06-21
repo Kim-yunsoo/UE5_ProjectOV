@@ -140,7 +140,7 @@ void AOVPickup::TakePickup(AOVCharacterPlayer* Taker)
 			if (UOVInventoryComponent* PlayerInventory = Taker->GetInventory())
 			{
 				const FItemAddResult AddResult = PlayerInventory->HandleAddItem(ItemReference);
-				Taker->PlayPickupMontage();
+				//Taker->PlayPickupMontage();
 				switch (AddResult.OperationResult)
 				{
 				case EItemAddResult::IAR_NoItemAdded:

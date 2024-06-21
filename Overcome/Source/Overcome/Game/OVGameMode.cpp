@@ -22,8 +22,8 @@ AOVGameMode::AOVGameMode()
 
 	FLatentActionInfo LatentInfo;
 	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, false, LatentInfo) ;
-	GoalCount = 4;
-	Battery = 5;
+	GoalCount = 2;
+	Battery = 3;
 }
 
 

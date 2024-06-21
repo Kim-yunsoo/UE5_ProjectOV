@@ -29,4 +29,13 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<class UBehaviorTree> BTAsset;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAIPerceptionComponent> AIPerception;
+	
+	UFUNCTION()
+	virtual void SetPerceptionSystem();
+
+	UFUNCTION()
+	void HandleDamageSense(AActor *Actor, FAIStimulus Stimulus);
 };
