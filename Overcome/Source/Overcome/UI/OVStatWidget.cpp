@@ -71,5 +71,5 @@ void UOVStatWidget::UpdateShieldBar(float NewCurrentPercent)
 void UOVStatWidget::UpdateGunBar(float NewCurrentPercent)
 {
 	GunBar->SetPercent(NewCurrentPercent);
-	UE_LOG(LogTemp,Warning,TEXT("UpdateGunBar"));
+	//UE_LOG(LogTemp,Warning,TEXT("UpdateGunBar"));
 }

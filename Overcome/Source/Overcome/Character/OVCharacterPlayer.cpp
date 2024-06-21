@@ -223,7 +223,7 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Resume.IA_OV_R
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
 
 	PlayerInventory = CreateDefaultSubobject<UOVInventoryComponent>(TEXT("PlayerInventory"));
-	PlayerInventory->SetSlotsCapacity(20);
+	PlayerInventory->SetSlotsCapacity(10);
 
 	bIsGun = false;
 	bIsRoll = false;
@@ -1017,7 +1017,7 @@ void AOVCharacterPlayer::PlayPickupMontage()
 	{
 		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 			
-	}, 1.8f, false);
+	}, 1.5f, false);
 }
 
 void AOVCharacterPlayer::TestAttack() //V키

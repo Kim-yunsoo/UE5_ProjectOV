@@ -9,13 +9,13 @@
   <component name="ChangeListManager">
     <list default="true" id="18d6e7f6-fd27-49b4-b72a-a28b2aed8a6d" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/NS/NS_IonLaser.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/NS/NS_IonLaser.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Map/AI.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/AI.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/MainMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/MainMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Map/Map3.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/Map3.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_InventoryItemSlot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_InventoryItemSlot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_InventoryPanel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_InventoryPanel.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/WBP_MainMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/WBP_MainMenu.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVStatWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVStatWidget.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +38,10 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graph.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphUtils.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/stack.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Gimmick/OVDropItem.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Gimmick/OVDropItem.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Skill/OVGunSkill.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -186,7 +189,8 @@
       <workItem from="1718718174876" duration="3993000" />
       <workItem from="1718725965497" duration="953000" />
       <workItem from="1718771070851" duration="17000" />
-      <workItem from="1718866426365" duration="4200000" />
+      <workItem from="1718866426365" duration="6421000" />
+      <workItem from="1718926618561" duration="3310000" />
     </task>
     <servers />
   </component>
