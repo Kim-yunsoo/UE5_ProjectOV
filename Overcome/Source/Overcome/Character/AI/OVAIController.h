@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "OVAIController.generated.h"
 
+struct FAIStimulus;
 /**
  * 
  */

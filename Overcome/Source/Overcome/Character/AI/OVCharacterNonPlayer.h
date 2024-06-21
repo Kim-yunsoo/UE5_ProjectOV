@@ -27,7 +27,6 @@ class OVERCOME_API AOVCharacterNonPlayer : public AOVCharacterBase, public IOVCh
 	GENERATED_BODY()
 public:
 	AOVCharacterNonPlayer();
-	
 	// AI Section
 protected:
 	
@@ -40,6 +39,7 @@ protected:
 
 	virtual void SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished) override;
 	virtual void AttackByAI() override;
+	virtual void HpBarVisible(bool Visible); 
 
 	FAICharacterAttackFinished OnAttackFinished;
 
@@ -83,6 +83,8 @@ protected:
 	virtual bool IsDead() override;
 	virtual bool IsAttacking() override;
 
+	
+	
 	UPROPERTY()
 	uint8 bIsAttacking : 1;
 

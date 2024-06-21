@@ -24,7 +24,6 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	{
 		return;
 	}
-
 	FVector Center = ControllingPawn->GetActorLocation();
 	UWorld* World = ControllingPawn->GetWorld();
 	if (nullptr == World)
@@ -59,6 +58,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			if (Pawn && Pawn->GetController()->IsPlayerController()) //폰을 감지했는데 플레이어 캐릭터인 경우에만!
 			{
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(BBKEY_CHARACTER, Pawn);
+				AIPawn->HpBarVisible(true);
 				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Green, false, 0.2f);
 				DrawDebugPoint(World, Pawn->GetActorLocation(), 10.0f, FColor::Green, false, 0.2f);
 				DrawDebugLine(World, ControllingPawn->GetActorLocation(), Pawn->GetActorLocation(), FColor::Green, false, 0.27f);
@@ -67,4 +67,5 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		}
 	}
 	OwnerComp.GetBlackboardComponent()->SetValueAsObject(BBKEY_CHARACTER, nullptr);
+	AIPawn->HpBarVisible(false);
 }

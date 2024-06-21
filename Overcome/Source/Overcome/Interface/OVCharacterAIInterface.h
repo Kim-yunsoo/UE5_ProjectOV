@@ -30,4 +30,5 @@ public:
 
 	virtual void SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished) = 0;
 	virtual void AttackByAI() = 0;
+	virtual void HpBarVisible(bool Visible) = 0; 
 };

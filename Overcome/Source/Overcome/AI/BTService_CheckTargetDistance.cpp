@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "OVAI.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Interface/OVCharacterAIInterface.h"
 
 UBTService_CheckTargetDistance::UBTService_CheckTargetDistance()
 {
@@ -16,32 +17,37 @@ void UBTService_CheckTargetDistance::TickNode(UBehaviorTreeComponent& OwnerComp,
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
-	AAIController* AIController = OwnerComp.GetAIOwner();
-	if (AIController)
+	APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
+	if (nullptr == ControllingPawn)
 	{
-		APawn* AIPawn = AIController->GetPawn();
-		if (AIPawn)
+		return;
+	}
+	
+	IOVCharacterAIInterface* AIPawn = Cast<IOVCharacterAIInterface>(ControllingPawn);
+	if (nullptr == AIPawn)
+	{
+		return;
+	}
+	UObject* TargetObject = OwnerComp.GetBlackboardComponent()->GetValueAsObject(BBKEY_TARGET);
+	AActor* TargetActor = Cast<AActor>(TargetObject);
+	if (TargetActor)
+	{
+		AIPawn->HpBarVisible(true);
+		float Distance = FVector::Dist(ControllingPawn->GetActorLocation(), TargetActor->GetActorLocation());
+		if (Distance > DistanceThreshold)
 		{
-			UObject* TargetObject = OwnerComp.GetBlackboardComponent()->GetValueAsObject(BBKEY_TARGET);
-			AActor* TargetActor = Cast<AActor>(TargetObject);
-
-			if (TargetActor)
+			TimeSinceOutOfRange += DeltaSeconds;
+			//UE_LOG(LogTemp, Warning, TEXT("Distance Over %f"), TimeSinceOutOfRange);
+			if (TimeSinceOutOfRange >= TimeToForgetTarget)
 			{
-				float Distance = FVector::Dist(AIPawn->GetActorLocation(), TargetActor->GetActorLocation());
-				if (Distance > DistanceThreshold)
-				{
-					TimeSinceOutOfRange += DeltaSeconds;
-					//UE_LOG(LogTemp, Warning, TEXT("Distance Over %f"), TimeSinceOutOfRange);
-					if (TimeSinceOutOfRange >= TimeToForgetTarget)
-					{
-						OwnerComp.GetBlackboardComponent()->ClearValue(BBKEY_TARGET);
-					}
-				}
-				else
-				{
-					TimeSinceOutOfRange = 0.0f;
-				}
+				AIPawn->HpBarVisible(false);
+				OwnerComp.GetBlackboardComponent()->ClearValue(BBKEY_TARGET);
 			}
 		}
+		else
+		{
+			TimeSinceOutOfRange = 0.0f;
+		}
 	}
+	
 }

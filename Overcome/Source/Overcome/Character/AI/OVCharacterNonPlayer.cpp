@@ -70,17 +70,18 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 	AIControllerClass = AOVAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	// HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
-	// HpBar->SetupAttachment(GetMesh());
-	// HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
-	// static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
-	// if (HpBarWidgetRef.Class)
-	// {
-	// 	HpBar->SetWidgetClass(HpBarWidgetRef.Class);
-	// 	HpBar->SetWidgetSpace(EWidgetSpace::World);
-	// 	HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
-	// 	HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	// }
+	HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
+	HpBar->SetupAttachment(GetMesh());
+	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 170.0f));
+	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
+	if (HpBarWidgetRef.Class)
+	{
+		HpBar->SetWidgetClass(HpBarWidgetRef.Class);
+		HpBar->SetWidgetSpace(EWidgetSpace::World);
+		HpBar->SetDrawSize(FVector2D(100.0f, 10.0f));
+		HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		HpBar->SetVisibility(false);
+	}
 
 	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
 	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
@@ -131,7 +132,7 @@ void AOVCharacterNonPlayer::AttackHitCheck()
 void AOVCharacterNonPlayer::SetDead()
 {
 	Super::SetDead();
-	//HpBar->SetHiddenInGame(true);
+	HpBar->SetHiddenInGame(true);
 	PlayDeadAnimation();
 	FTimerHandle DeadTimerHandle;
 	AOVAIController* AIController = Cast<AOVAIController>(GetController());
@@ -241,25 +242,22 @@ void AOVCharacterNonPlayer::Tick(float DeltaTime)
 	{
 		AIController->GetBrainComponent()->ResumeLogic(TEXT("Resume for UI"));
 	}
-	// APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-	// if (PlayerController && HpBar)
-	// {
-	// 	APlayerCameraManager* CameraManager = PlayerController->PlayerCameraManager;
-	// 	if (CameraManager)
-	// 	{
-	// 		FVector CameraLocation = CameraManager->GetCameraLocation();
- //            
-	// 		// Get the location of the HpBar
-	// 		FVector HpBarLocation = HpBar->GetComponentLocation();
- //            
-	// 		// Calculate the direction from the HpBar to the camera
-	// 		FVector Direction = CameraLocation - HpBarLocation;
-	// 		FRotator LookAtRotation = Direction.Rotation();
- //            
-	// 		// Set the relative rotation of the HpBar to face the camera
-	// 		HpBar->SetWorldRotation(LookAtRotation);
-	// 	}
-	// }
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController && HpBar)
+	{
+		APlayerCameraManager* CameraManager = PlayerController->PlayerCameraManager;
+		if (CameraManager)
+		{
+			FVector CameraLocation = CameraManager->GetCameraLocation();
+            
+			FVector HpBarLocation = HpBar->GetComponentLocation();
+            
+			FVector Direction = CameraLocation - HpBarLocation;
+			FRotator LookAtRotation = Direction.Rotation();
+            
+			HpBar->SetWorldRotation(LookAtRotation);
+		}
+	}
 }
 
 void AOVCharacterNonPlayer::OnMontageEnded(UAnimMontage* Montage, bool bInterrupted)
@@ -307,6 +305,18 @@ void AOVCharacterNonPlayer::AttackByAI()
 			NotifyActionEnd();
 		}
 	), 1.0f, false);
+}
+
+void AOVCharacterNonPlayer::HpBarVisible(bool Visible)
+{
+	if(Visible)
+	{
+		HpBar->SetVisibility(true);
+	}
+	else
+	{
+		HpBar->SetVisibility(false);
+	}
 }
 
 void AOVCharacterNonPlayer::NotifyActionEnd()

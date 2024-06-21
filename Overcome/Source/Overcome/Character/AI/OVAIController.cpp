@@ -2,10 +2,13 @@
 
 
 #include "Character/AI/OVAIController.h"
+
+#include "OVCharacterNonPlayer.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AI/OVAI.h"
+#include "Character/OVCharacterPlayer.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Damage.h"
 
@@ -78,4 +81,6 @@ void AOVAIController::HandleDamageSense(AActor* Actor, FAIStimulus Stimulus)
 	{
 		Blackboard->SetValueAsObject(BBKEY_TARGET, Actor);
 	}
+	
+	AOVCharacterNonPlayer * Nonplayer = Cast<AOVCharacterNonPlayer>(GetPawn());
 }
