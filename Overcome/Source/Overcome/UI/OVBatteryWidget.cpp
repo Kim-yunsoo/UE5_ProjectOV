@@ -4,6 +4,8 @@
 #include "UI/OVBatteryWidget.h"
 
 #include "Components/TextBlock.h"
+#include "Game/OVGameMode.h"
+#include "Game/OVGameState.h"
 
 UOVBatteryWidget::UOVBatteryWidget(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {
@@ -26,4 +28,18 @@ void UOVBatteryWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	BatteryCount = Cast<UTextBlock>(GetWidgetFromName(TEXT("Count")));
+}
+
+void UOVBatteryWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	Super::NativeTick(MyGeometry, InDeltaTime);
+	AOVGameMode* GameMode = Cast<AOVGameMode>(GetWorld()->GetAuthGameMode());
+	if(GameMode->Battery == GameMode->GoalCount)
+	{
+		FTimerHandle VisibilityTimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(VisibilityTimerHandle, [this]()
+		{
+			SetVisibility(ESlateVisibility::Collapsed);
+		}, 2.0f, false);
+	}
 }
