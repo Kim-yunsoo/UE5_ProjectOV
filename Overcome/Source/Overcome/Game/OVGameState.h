@@ -36,9 +36,6 @@ public:
 	//공격 상태인지
 	FOnBossAttackStateChanged OnBossAttackState;
 
-	UPROPERTY(EditAnywhere)
-	bool bIsResumeMenuVisible; //정지모드인지!
-
 	UPROPERTY()
 	uint8 BossDead : 1;
 	

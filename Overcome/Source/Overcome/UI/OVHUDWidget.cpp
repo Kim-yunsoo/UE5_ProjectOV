@@ -125,8 +125,6 @@ void UOVHUDWidget::ResumeMenu()
 	// 	GetOwningPlayer()->SetShowMouseCursor(false);
 	// }
 	// else
-	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
-	GameState->bIsResumeMenuVisible = true;
 	{
 		ResumeWidget->SetVisibility(ESlateVisibility::Visible);
 		const FInputModeGameAndUI InputMode;

@@ -3,13 +3,15 @@
 
 #include "UI/OVResumeWidget.h"
 
+#include "Character/OVCharacterPlayer.h"
 #include "Game/OVGameState.h"
 #include "Kismet/GameplayStatics.h"
+#include "Player/OVPlayerController.h"
 
 void UOVResumeWidget::ClickResume()
 {
-	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
-	GameState->bIsResumeMenuVisible = false;
+	AOVPlayerController* Controller = Cast<AOVPlayerController>(GetOwningPlayer());
+	Controller->SetPause(false);
 	{
 		SetVisibility(ESlateVisibility::Collapsed);
 		const FInputModeGameOnly InputMode;

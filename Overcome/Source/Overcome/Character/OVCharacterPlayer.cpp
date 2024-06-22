@@ -410,8 +410,7 @@ void AOVCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
-	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
-	if (bIsGun && !bIsRoll && !bIsShowInventory && !GameState->bIsResumeMenuVisible)
+	if (bIsGun && !bIsRoll && !bIsShowInventory)
 	{
 		if (!bIsAiming)
 		{
@@ -490,6 +489,7 @@ void AOVCharacterPlayer::Roll(const FInputActionValue& Value)
 void AOVCharacterPlayer::Resume(const FInputActionValue& Value)
 {
 	HUDWidget->ResumeMenu();
+	GetWorld()->GetFirstPlayerController()->SetPause(true);
 }
 
 void AOVCharacterPlayer::ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse)

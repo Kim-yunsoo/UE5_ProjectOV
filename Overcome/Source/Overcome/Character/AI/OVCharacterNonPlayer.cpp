@@ -234,14 +234,6 @@ void AOVCharacterNonPlayer::Tick(float DeltaTime)
 		AIController->GetBrainComponent()->StopLogic(TEXT("Dead"));
 		AIController->StopAI();
 	}
-	if(GameState->bIsResumeMenuVisible)
-	{
-		AIController->GetBrainComponent()->PauseLogic(TEXT("Pause for UI"));
-	}
-	else if(!GameState->bIsResumeMenuVisible)
-	{
-		AIController->GetBrainComponent()->ResumeLogic(TEXT("Resume for UI"));
-	}
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController && HpBar)
 	{
