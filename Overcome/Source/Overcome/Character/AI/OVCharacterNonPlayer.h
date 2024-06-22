@@ -8,6 +8,8 @@
 #include "Interface/OVDamagableInterface.h"
 #include "OVCharacterNonPlayer.generated.h"
 
+class USoundCue;
+
 UENUM(BlueprintType)
 enum class E_Item : uint8
 {
@@ -101,7 +103,9 @@ protected:
 
 	virtual void Tick(float DeltaTime) override;
 
-
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category="Default")
+	USoundCue* MetalSound;
+	
 	UFUNCTION()
 	void OnMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	

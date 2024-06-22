@@ -3,6 +3,7 @@
 
 #include "Game/OVGameMode.h"
 #include "OVGameState.h"
+#include "GameFramework/GameMode.h"
 #include "Kismet/GameplayStatics.h"
 
 AOVGameMode::AOVGameMode()
@@ -24,6 +25,8 @@ AOVGameMode::AOVGameMode()
 	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, false, LatentInfo) ;
 	GoalCount = 2;
 	Battery = 3;
+
+
 }
 
 

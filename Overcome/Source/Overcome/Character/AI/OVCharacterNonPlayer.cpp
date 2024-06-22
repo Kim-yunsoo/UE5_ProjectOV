@@ -18,6 +18,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "Physics/OVCollision.h"
 #include "UI/OVWidgetComponent.h"
+#include "Sound/SoundCue.h"
+
+class USoundCue;
 
 AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 {
@@ -93,6 +96,12 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 	if(RandomItemName == "None")
 	{
 		UE_LOG(LogTemp,Warning, TEXT("NameNone"));
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundCue> MetalSoundRef(TEXT("/Script/Engine.SoundCue'/Game/Vefects/Shots_VFX/Audio/SFX_Vefects_Shots_Squib_Metal_Cue.SFX_Vefects_Shots_Squib_Metal_Cue'"));
+	if (MetalSoundRef.Succeeded())
+	{
+		MetalSound = MetalSoundRef.Object;
 	}
 }
 
@@ -211,6 +220,8 @@ bool AOVCharacterNonPlayer::IsAttacking()
 
 void AOVCharacterNonPlayer::DamageResponse(E_DamageResponses DamageResponses)
 {
+	FVector Location = GetActorLocation();
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), Cast<USoundBase>(MetalSound), Location);
 	//GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();

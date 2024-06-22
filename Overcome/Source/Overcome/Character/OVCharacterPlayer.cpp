@@ -590,7 +590,11 @@ void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 
 void AOVCharacterPlayer::Shoot()
 {
-	ServerRPCShoot();
+	if(!bIsShooting)
+	{
+		bIsShooting = true;
+		ServerRPCShoot();
+	}
 }
 
 void AOVCharacterPlayer::StopShoot()
@@ -620,7 +624,7 @@ void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
 
 void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 {
-	if (bIsGun)
+	if (bIsGun && bIsAiming && bIsShooting)
 	{
 		if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 		{
@@ -645,10 +649,11 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 
 			// Spawn Niagara system at the socket location
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), MuzzleEffect, MuzzleLocation, MuzzleRotation);
-			UE_LOG(LogTemp, Warning, TEXT("Spawned muzzle effect"));
+			//UE_LOG(LogTemp, Warning, TEXT("Spawned muzzle effect"));
 		}
 		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 2.0);
+		bIsShooting = false;
 	}
 }
 
@@ -799,7 +804,7 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 	if (!bIsActiveGunSkill)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Shoot"));
-		ServerRPCShoot();
+		Shoot();
 	}
 	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
 	if(GameState->BossDead)
@@ -836,6 +841,7 @@ void AOVCharacterPlayer::FoundInteractable(AActor* NewInteractable)
 
 	HUDWidget->UpdateInteractionWidget(&TargetInteractable->InteractableData);
 	TargetInteractable->BeginFocus();
+	
 }
 
 void AOVCharacterPlayer::NoInteractableFound()
