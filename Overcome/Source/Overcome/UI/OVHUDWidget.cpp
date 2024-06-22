@@ -75,6 +75,8 @@ void UOVHUDWidget::NativeConstruct()
 	{
 		ResumeWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
+
+	bIsfirst = true;
 }
 
 
@@ -204,20 +206,30 @@ void UOVHUDWidget::UpdateDead()
 
 void UOVHUDWidget::Ending()
 {
-	EndingWidget = CreateWidget<UUserWidget>(this, EndingWidgetClass);
-	if (EndingWidget)
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
 	{
-		EndingWidget->AddToViewport(10);
-		EndingWidget->SetVisibility(ESlateVisibility::Visible);
-		UE_LOG(LogTemp, Log, TEXT("Ending widget created and added to viewport."));
-	}
+		if(bIsfirst)
+		{
+			bIsfirst = false;
+			EndingWidget = CreateWidget<UUserWidget>(this, EndingWidgetClass);
+			if (EndingWidget)
+			{
+				EndingWidget->AddToViewport(10);
+				const FInputModeUIOnly InputMode;
+				GetOwningPlayer()->SetInputMode(InputMode);
+				GetOwningPlayer()->SetShowMouseCursor(true);
+				EndingWidget->SetVisibility(ESlateVisibility::Visible);
+			}
 
-	TargetWidget->SetVisibility(ESlateVisibility::Hidden);
-	StatWidget->SetVisibility(ESlateVisibility::Hidden);
-	BossHpWidget->SetVisibility(ESlateVisibility::Hidden);
-	TeleportSkillWidget->SetVisibility(ESlateVisibility::Hidden);
-	BatteryWidget->SetVisibility(ESlateVisibility::Hidden);
-	
+			TargetWidget->SetVisibility(ESlateVisibility::Hidden);
+			StatWidget->SetVisibility(ESlateVisibility::Hidden);
+			BossHpWidget->SetVisibility(ESlateVisibility::Hidden);
+			TeleportSkillWidget->SetVisibility(ESlateVisibility::Hidden);
+			BatteryWidget->SetVisibility(ESlateVisibility::Hidden);
+		
+		}
+	}, 1.0f, false);
 }
 
 

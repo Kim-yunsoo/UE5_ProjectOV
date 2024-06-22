@@ -89,6 +89,9 @@ public:
 	
 	void Ending();
 
+	UPROPERTY(EditAnywhere)
+	uint8 bIsfirst :1;
+	
 	UPROPERTY()
 	int32 Battery;
 };

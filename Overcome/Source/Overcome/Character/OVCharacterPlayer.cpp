@@ -809,6 +809,7 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
 	if(GameState->BossDead)
 	{
+		bIsAiming = false;
 		HUDWidget->Ending();
 		FRotator NewRotator = UGameplayStatics::GetPlayerController(this, 0)->GetControlRotation();
 		NewRotator.Yaw += 0.5;
