@@ -56,6 +56,7 @@ public:
 	
 	UPROPERTY()
 	TObjectPtr<class UOVBossHpWidget> BossHpWidget;
+	
 	TObjectPtr<UOVMainMenu> MainMenuWidget;
 	
 	UPROPERTY()
@@ -71,8 +72,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	bool bIsMenuVisible;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HUD)
+	TSubclassOf<class UUserWidget> EndingWidgetClass;
 
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = HUD)
+	TObjectPtr<class UUserWidget> EndingWidget;
 	
 	void ShowInteractionWidget() const;
 	void HideInteractionWidget() const;
@@ -82,6 +86,9 @@ public:
 	void UpdateGunTime(float NewCurrentTime);
 	void UpdateBatteryCount(int NewCount);
 	void UpdateDead();
+	
+	void Ending();
+
 	UPROPERTY()
 	int32 Battery;
 };

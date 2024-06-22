@@ -328,6 +328,8 @@ void AOVAIBoss::SetDead()
 	SetState(E_AIState::Dead);
 	BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
 	//UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
+	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	GameState->BossDead = true;
 }
 
 

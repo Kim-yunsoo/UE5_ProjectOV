@@ -375,5 +375,6 @@ public:
 	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출
 	void PerformInteractionCheck(AActor* MyActor); // 매틱마다 호출하며 라인트레이스
 	void DropItem(UOVItemBase* ItemToDrop, const int32 QuantityToDrop);
-	
+
+	float AngleAxis;
 };

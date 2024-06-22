@@ -204,4 +204,22 @@ void UOVHUDWidget::UpdateDead()
 	GetOwningPlayer()->SetShowMouseCursor(true);
 }
 
+void UOVHUDWidget::Ending()
+{
+	EndingWidget = CreateWidget<UUserWidget>(this, EndingWidgetClass);
+	if (EndingWidget)
+	{
+		EndingWidget->AddToViewport(10);
+		EndingWidget->SetVisibility(ESlateVisibility::Visible);
+		UE_LOG(LogTemp, Log, TEXT("Ending widget created and added to viewport."));
+	}
+
+	TargetWidget->SetVisibility(ESlateVisibility::Hidden);
+	StatWidget->SetVisibility(ESlateVisibility::Hidden);
+	BossHpWidget->SetVisibility(ESlateVisibility::Hidden);
+	TeleportSkillWidget->SetVisibility(ESlateVisibility::Hidden);
+	BatteryWidget->SetVisibility(ESlateVisibility::Hidden);
+	
+}
+
 

@@ -7,6 +7,7 @@ AOVGameState::AOVGameState()
 {
 	BossHp = 100.0f;
 	BossStart = false;
+	BossDead = false;
 }
 
 void AOVGameState::SetBossHp(float NewHp)

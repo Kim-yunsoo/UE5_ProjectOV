@@ -38,6 +38,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool bIsResumeMenuVisible; //정지모드인지!
+
+	UPROPERTY()
+	uint8 BossDead : 1;
 	
 private:
 	float BossHp;
@@ -47,5 +50,5 @@ private:
 	UPROPERTY()
 	uint8 CharacterDead : 1;
 	
-	
+
 };

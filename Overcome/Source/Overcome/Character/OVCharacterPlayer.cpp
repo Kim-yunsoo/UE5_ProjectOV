@@ -228,6 +228,8 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Resume.IA_OV_R
 	bIsGun = false;
 	bIsRoll = false;
 	bIsShowInventory = false;
+
+	AngleAxis = 0;
 }
 
 void AOVCharacterPlayer::BeginPlay()
@@ -781,12 +783,22 @@ void AOVCharacterPlayer::PostInitializeComponents()
 void AOVCharacterPlayer::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	bUseControllerRotationYaw = false;
+
 	AimOffset(DeltaSeconds);
 	//UE_LOG(LogTemp, Warning ,TEXT("%d"), bIsRoll);
 	if (!bIsActiveGunSkill)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Shoot"));
 		ServerRPCShoot();
+	}
+	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	if(GameState->BossDead)
+	{
+		HUDWidget->Ending();
+		FRotator NewRotator = UGameplayStatics::GetPlayerController(this, 0)->GetControlRotation();
+		NewRotator.Yaw += 0.5;
+		UGameplayStatics::GetPlayerController(this, 0)->SetControlRotation(NewRotator);
 	}
 }
 

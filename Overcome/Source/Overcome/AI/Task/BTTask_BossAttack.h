@@ -23,5 +23,4 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	E_BossAttack BossAttackValue;
-	
 };
