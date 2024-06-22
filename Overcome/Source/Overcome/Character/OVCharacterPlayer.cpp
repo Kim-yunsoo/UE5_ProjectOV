@@ -175,6 +175,13 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Resume.IA_OV_R
 		ResumeAction = ResumeActionRef.Object;
 	}
 	
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem> MuzzleEffectRef(
+TEXT("/Script/Niagara.NiagaraSystem'/Game/Vefects/Shots_VFX/VFX/MuzzleFlash/Looped/FX_MuzzleFlash_Rifle_Custom.FX_MuzzleFlash_Rifle_Custom'"));
+
+	if (MuzzleEffectRef.Succeeded())
+	{
+		MuzzleEffect = MuzzleEffectRef.Object;
+	}
 	
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
 	bIsAiming = false;
@@ -268,7 +275,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::QuaterMove);
 	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Aiming);
 	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopAiming);
-	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Shoot);
+	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AOVCharacterPlayer::Shoot);
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopShoot);
 	EnhancedInputComponent->BindAction(WheelAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeWeapon);
 	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this,
@@ -474,7 +481,6 @@ void AOVCharacterPlayer::Roll(const FInputActionValue& Value)
 	bIsRoll = true;
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	AnimInstance->StopAllMontages(0.0f);
-	//AnimInstance->Montage_Play(RollMontage, 1.0f);
 	if (AnimInstance->Montage_Play(RollMontage, 1.0f) > 0.0f)
 	{
 		FOnMontageEnded EndDelegate;
@@ -584,11 +590,7 @@ void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 
 void AOVCharacterPlayer::Shoot()
 {
-	if (!bIsShooting)
-	{
-		bIsShooting = true;
-		ServerRPCShoot();
-	}
+	ServerRPCShoot();
 }
 
 void AOVCharacterPlayer::StopShoot()
@@ -618,28 +620,35 @@ void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
 
 void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 {
-	if (bIsShooting && bIsGun)
+	if (bIsGun)
 	{
+		if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+		{
+			if (AnimInstance->Montage_IsPlaying(Shooting_Gun))
+			{
+				return; // 몽타주가 재생 중일 때 함수를 종료
+			}
+		}
 		bIsAttacking = true;
-		//bIsShooting = true;
-		//Gun->PullTrigger();
 		FVector Start;
 		FRotator Rotation;
 		GetController()->GetPlayerViewPoint(Start, Rotation);
 		FVector End = Start + Rotation.Vector() * 1500;
 		FDamageInfo DamageInfo = {Stat->GetCurrentAttack(), E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
 
-		AttackComponent->FireBullet(Start, End, DamageInfo);
-		PlayAnimMontage(Shooting_Gun, 0.5);
-		if(bIsActiveGunSkill)
+		UStaticMeshComponent* WeaponMesh = Gun->Mesh; // Assuming GetMesh() returns the weapon mesh
+		if (WeaponMesh)
 		{
-			FTimerHandle TimerHandle;
-			// Set up the timer to call the ResetTurning function after 0.2 seconds
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-				{
-					bIsShooting = false;
-				}, 0.5, false);
+			FName SocketName = TEXT("Socket"); // Replace with your socket name
+			FVector MuzzleLocation = WeaponMesh->GetSocketLocation(SocketName);
+			FRotator MuzzleRotation = WeaponMesh->GetSocketRotation(SocketName);
+
+			// Spawn Niagara system at the socket location
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), MuzzleEffect, MuzzleLocation, MuzzleRotation);
+			UE_LOG(LogTemp, Warning, TEXT("Spawned muzzle effect"));
 		}
+		AttackComponent->FireBullet(Start, End, DamageInfo);
+		PlayAnimMontage(Shooting_Gun, 2.0);
 	}
 }
 

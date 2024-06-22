@@ -25,15 +25,16 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* Mesh;
 
 	FORCEINLINE int32 GetBulletCount(){return BulletCount;};
 private:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh;
+
 
 	UPROPERTY(EditAnywhere);
 	float MaxRange = 1000.f;
@@ -49,4 +50,7 @@ private:
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void MulticastEffect(FVector Location);
+	
+	UPROPERTY()
+	TObjectPtr<UNiagaraSystem> MuzzleEffect;
 };

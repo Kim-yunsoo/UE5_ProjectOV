@@ -12,6 +12,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Perception/AISense_Damage.h"
+#include "Player/OVPlayerController.h"
 
 class AAIController;
 
@@ -24,6 +25,10 @@ TEXT("/Script/Niagara.NiagaraSystem'/Game/Vefects/Blood_VFX/VFX/Performance_Vers
 	{
 		EmitterHit = HitRef.Object;
 	}
+	
+
+
+	
 }
 
 
@@ -51,6 +56,7 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 	// ,EDrawDebugTrace::ForDuration, HitResult,  true,
 	// 		FLinearColor::Red, FLinearColor::Green, 1.f);
 
+	
 	bool bResult = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_GameTraceChannel1);
 	if(bResult && HitResult.GetActor() != GetOwner())
 	{

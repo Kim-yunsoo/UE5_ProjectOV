@@ -51,4 +51,6 @@ public:
 	
 	UPROPERTY()
 	TObjectPtr<UNiagaraSystem> EmitterHit;
+
+
 };

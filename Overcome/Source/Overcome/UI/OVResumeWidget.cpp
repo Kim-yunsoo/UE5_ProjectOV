@@ -2,10 +2,6 @@
 
 
 #include "UI/OVResumeWidget.h"
-
-#include "Character/OVCharacterPlayer.h"
-#include "Game/OVGameState.h"
-#include "Kismet/GameplayStatics.h"
 #include "Player/OVPlayerController.h"
 
 void UOVResumeWidget::ClickResume()

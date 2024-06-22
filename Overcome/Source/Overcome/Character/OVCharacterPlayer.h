@@ -197,6 +197,7 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Gun")
 	TSubclassOf<AOVGun> GunClass;
+
 protected:
 	void Shoot();
 	void StopShoot();
@@ -213,6 +214,10 @@ public:
 	UPROPERTY()
 	AOVGun* Gun;
 
+		
+	UPROPERTY()
+	TObjectPtr<UNiagaraSystem> MuzzleEffect;
+	
 	UPROPERTY()
 	TObjectPtr<class UOVHUDWidget> HUDWidget;
 
