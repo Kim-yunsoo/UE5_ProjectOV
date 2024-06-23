@@ -37,5 +37,9 @@ public:
 	UPROPERTY()
 	float timestamp;
 
-	
+	UPROPERTY()
+	TObjectPtr<USoundWave> MainSound;
+
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> AudioComponent;
 };

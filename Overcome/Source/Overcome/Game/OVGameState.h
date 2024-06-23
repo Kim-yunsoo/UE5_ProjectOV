@@ -47,5 +47,7 @@ private:
 	UPROPERTY()
 	uint8 CharacterDead : 1;
 	
-
+	UPROPERTY()
+	TObjectPtr<USoundWave> BossSound;
+	
 };

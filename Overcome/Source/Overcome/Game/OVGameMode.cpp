@@ -5,6 +5,7 @@
 #include "OVGameState.h"
 #include "GameFramework/GameMode.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/AudioComponent.h"
 
 AOVGameMode::AOVGameMode()
 {
@@ -26,6 +27,8 @@ AOVGameMode::AOVGameMode()
 	GoalCount = 2;
 	Battery = 3;
 
+	MainSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Main.Main'"));
+	AudioComponent = UGameplayStatics::SpawnSound2D(GetWorld(), MainSound);
 
 }
 
@@ -60,5 +63,5 @@ void AOVGameMode::UnloadOldLevel()
 	LatentActionInfo.Linkage = 0;
 	LatentActionInfo.ExecutionFunction = LevelName;
 	UGameplayStatics::UnloadStreamLevel(GetWorld(), "MainMap", LatentActionInfo, false);
-
+	AudioComponent->Stop();
 }

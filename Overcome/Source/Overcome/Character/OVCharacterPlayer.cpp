@@ -653,7 +653,8 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 		}
 		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 2.0);
-		bIsShooting = false;
+		if(bIsActiveGunSkill)
+			bIsShooting = false;
 	}
 }
 
@@ -804,7 +805,7 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 	if (!bIsActiveGunSkill)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Shoot"));
-		Shoot();
+		ServerRPCShoot();
 	}
 	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
 	if(GameState->BossDead)
