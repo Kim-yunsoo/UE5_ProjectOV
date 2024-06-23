@@ -11,4 +11,4 @@
 #define BBKEY_STATE TEXT("State")
 #define BBKEY_POINTOFINTEREST TEXT("PointOfInterest")
 #define BBKEY_DISTANCETARGET TEXT("DistanceToAttackTarget")
-
+#define BBKEY_BOSSPATROLPOS TEXT("BossPatrolPos")

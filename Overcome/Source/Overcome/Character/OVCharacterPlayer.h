@@ -375,6 +375,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
 	TObjectPtr<UNiagaraSystem> AttackPotion;
+
+
+
+	//CameraShake
+	UPROPERTY(EditAnywhere, Category = "CameraShake")
+	TSubclassOf<UCameraShakeBase> GunShake;
 	
 public:
 	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출

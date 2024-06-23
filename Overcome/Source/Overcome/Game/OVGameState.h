@@ -30,6 +30,8 @@ public:
 
 	void BossState(bool start);
 	
+	bool BossStart;
+
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnBossHpChanged OnBossHpChanged;
 
@@ -42,7 +44,6 @@ public:
 private:
 	float BossHp;
 
-	bool BossStart;
 
 	UPROPERTY()
 	uint8 CharacterDead : 1;

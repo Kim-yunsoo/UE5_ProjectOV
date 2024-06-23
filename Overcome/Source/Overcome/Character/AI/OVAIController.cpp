@@ -35,7 +35,7 @@ void AOVAIController::RunAI()
 	if (UseBlackboard(BBAsset, BlackboardPtr))
 	{
 		Blackboard->SetValueAsVector(BBKEY_HOMEPOS, GetPawn()->GetActorLocation()); //홈포지션 설정
-
+		
 		bool RunResult = RunBehaviorTree(BTAsset);
 		ensure(RunResult);
 	}

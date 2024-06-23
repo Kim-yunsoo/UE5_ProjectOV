@@ -653,6 +653,7 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 		}
 		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 2.0);
+		UGameplayStatics::PlayWorldCameraShake(this, GunShake, GetActorLocation(), 0.f, 500.f, 1.f, false);
 		if(bIsActiveGunSkill)
 			bIsShooting = false;
 	}
@@ -667,8 +668,6 @@ void AOVCharacterPlayer::SetDead()
 	if(HUDWidget->DeadWidget)
 	{
 		HUDWidget->UpdateDead();
-		
-	
 	}
 	if(PlayerController) //죽으면 키 입력 없애기
 	{
@@ -810,6 +809,7 @@ void AOVCharacterPlayer::Tick(float DeltaSeconds)
 	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
 	if(GameState->BossDead)
 	{
+		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 		bIsAiming = false;
 		HUDWidget->Ending();
 		FRotator NewRotator = UGameplayStatics::GetPlayerController(this, 0)->GetControlRotation();

@@ -10,6 +10,8 @@ AOVGameState::AOVGameState()
 	BossHp = 100.0f;
 	BossStart = false;
 	BossDead = false;
+	BossSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Boss.Boss'"));
+
 }
 
 void AOVGameState::SetBossHp(float NewHp)
@@ -40,8 +42,7 @@ void AOVGameState::BossState(bool start)
 	BossStart = start;
 	if(BossStart)
 	{
-		BossSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Boss.Boss'"));
-		UGameplayStatics::PlaySound2D(GetWorld(), BossSound);
+		//UGameplayStatics::PlaySound2D(GetWorld(), BossSound);
 	}
 	OnBossAttackState.Broadcast(BossStart);
 }

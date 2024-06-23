@@ -140,7 +140,7 @@ void AOVPickup::TakePickup(AOVCharacterPlayer* Taker)
 			if (UOVInventoryComponent* PlayerInventory = Taker->GetInventory())
 			{
 				const FItemAddResult AddResult = PlayerInventory->HandleAddItem(ItemReference);
-				//Taker->PlayPickupMontage();
+				Taker->PlayPickupMontage();
 				switch (AddResult.OperationResult)
 				{
 				case EItemAddResult::IAR_NoItemAdded:
@@ -150,7 +150,11 @@ void AOVPickup::TakePickup(AOVCharacterPlayer* Taker)
 					Taker->UpdateInteractionWidget();
 					break;
 				case EItemAddResult::IAR_AllItemAdded:
-					Destroy(); //완전히 인벤토리에 추가 됨을 나타낸다. 삭제가 일어난다. 
+					FTimerHandle TimerHandle;
+					GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+					{
+						Destroy(); //완전히 인벤토리에 추가 됨을 나타낸다. 삭제가 일어난다. 
+					}, 0.8f, false);
 					break;
 				}
 				UE_LOG(LogTemp,Warning,TEXT("%s"), *AddResult.ResultMessage.ToString());
