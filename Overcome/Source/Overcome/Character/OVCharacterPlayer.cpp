@@ -1059,7 +1059,7 @@ void AOVCharacterPlayer::TestAttack() //V키
 	FVector End = GetActorForwardVector() * 100 + Start;
 	FHitResult HitResult;
 	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, 20, ObjectArray, false,ActorsToNotTargeting
-	,EDrawDebugTrace::ForDuration, HitResult,  true,
+	,EDrawDebugTrace::None, HitResult,  true,
 			FLinearColor::Red, FLinearColor::Green, 1.f);
 
 	//테스트 공격 100 

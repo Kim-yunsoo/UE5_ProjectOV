@@ -24,7 +24,7 @@ AOVGameMode::AOVGameMode()
 
 	FLatentActionInfo LatentInfo;
 	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, false, LatentInfo) ;
-	GoalCount = 2;
+	GoalCount = 0;
 	Battery = 3;
 
 	MainSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Main.Main'"));
@@ -56,7 +56,7 @@ void AOVGameMode::ChangeLevel()
 
 void AOVGameMode::UnloadOldLevel()
 {
-	const FName LevelName = FName("ChangeLevel");;
+	const FName LevelName = FName("ChangeLevel");
 	FLatentActionInfo LatentActionInfo;
 	LatentActionInfo.CallbackTarget = this;
 	LatentActionInfo.Linkage = 0;
