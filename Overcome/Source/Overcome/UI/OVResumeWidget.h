@@ -16,4 +16,5 @@ class OVERCOME_API UOVResumeWidget : public UUserWidget
 
 	UFUNCTION(BlueprintCallable)
 	void ClickResume();
+
 };

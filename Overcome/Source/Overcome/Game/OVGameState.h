@@ -43,12 +43,8 @@ public:
 	
 private:
 	float BossHp;
-
-
-	UPROPERTY()
-	uint8 CharacterDead : 1;
 	
 	UPROPERTY()
-	TObjectPtr<USoundWave> BossSound;
+	uint8 CharacterDead : 1;
 	
 };

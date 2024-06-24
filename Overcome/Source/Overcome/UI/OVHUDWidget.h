@@ -86,8 +86,9 @@ public:
 	void UpdateGunTime(float NewCurrentTime);
 	void UpdateBatteryCount(int NewCount);
 	void UpdateDead();
-	
 	void Ending();
+
+	
 
 	UPROPERTY(EditAnywhere)
 	uint8 bIsfirst :1;

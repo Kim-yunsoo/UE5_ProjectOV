@@ -16,7 +16,7 @@ AOVGameMode::AOVGameMode()
 	{
 		DefaultPawnClass = DefaultPawnClassRef.Class;
 	}
-
+	
 	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerClassRef(TEXT("/Script/Overcome.OVPlayerController"));
 	if (PlayerControllerClassRef.Class) {
 		PlayerControllerClass = PlayerControllerClassRef.Class;
@@ -28,8 +28,8 @@ AOVGameMode::AOVGameMode()
 	Battery = 3;
 
 	MainSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Main.Main'"));
-	//AudioComponent = UGameplayStatics::SpawnSound2D(GetWorld(), MainSound);
-
+	AudioComponent = UGameplayStatics::SpawnSound2D(GetWorld(), MainSound);
+	BossSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Boss.Boss'"));
 }
 
 
@@ -43,7 +43,6 @@ void AOVGameMode::SetBatteryCount(int NewBattery)
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
 		{
 			UnloadOldLevel();
-
 		}, 2.f, false);
 	}
 }
@@ -63,5 +62,6 @@ void AOVGameMode::UnloadOldLevel()
 	LatentActionInfo.Linkage = 0;
 	LatentActionInfo.ExecutionFunction = LevelName;
 	UGameplayStatics::UnloadStreamLevel(GetWorld(), "MainMap", LatentActionInfo, false);
-	//AudioComponent->Stop();
+	AudioComponent->Stop();
+	UGameplayStatics::PlaySound2D(GetWorld(), BossSound);
 }

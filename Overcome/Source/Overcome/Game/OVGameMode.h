@@ -42,4 +42,7 @@ public:
 
 	UPROPERTY()
 	TObjectPtr<UAudioComponent> AudioComponent;
+
+	UPROPERTY()
+	TObjectPtr<USoundWave> BossSound;
 };

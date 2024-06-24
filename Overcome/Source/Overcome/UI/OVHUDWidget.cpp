@@ -2,7 +2,6 @@
 
 
 #include "UI/OVHUDWidget.h"
-
 #include "OVBatteryWidget.h"
 #include "OVBossHpWidget.h"
 #include "OVDeadWidget.h"
@@ -12,11 +11,9 @@
 #include "OVStatWidget.h"
 #include "OVTargetWidget.h"
 #include "Components/VerticalBox.h"
-#include "Game/OVGameMode.h"
 #include "Game/OVGameState.h"
 #include "Interface/OVCharacterHUDInterface.h"
 #include "Kismet/GameplayStatics.h"
-#include "WorldPartition/ContentBundle/ContentBundleLog.h"
 
 UOVHUDWidget::UOVHUDWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {       
@@ -34,13 +31,6 @@ void UOVHUDWidget::NativeConstruct()
 	BatteryWidget = Cast<UOVBatteryWidget>(GetWidgetFromName("WBP_Battery"));
 	DeadWidget = Cast<UOVDeadWidget>(GetWidgetFromName("WBP_Dead"));
 	ResumeWidget = Cast<UOVResumeWidget>(GetWidgetFromName("WBP_Resume"));
-	//OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
-	// InteractionWidget = Cast<UOVInteractionWidget>(GetWidgetFromName(TEXT("WBP_InteractionWidget")));
-	// if(InteractionWidget)
-	// {
-	// 	InteractionWidget->AddToViewport(-1);
-	// 	InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
-	// }
 
 	if(InteractionWidgetClass)
 	{
@@ -56,7 +46,6 @@ void UOVHUDWidget::NativeConstruct()
 		MainMenuWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}
 
-	
 	IOVCharacterHUDInterface* CharacterWidget = Cast<IOVCharacterHUDInterface>(GetOwningPlayerPawn());
 	if(CharacterWidget)
 	{
@@ -70,12 +59,10 @@ void UOVHUDWidget::NativeConstruct()
 	bIsMenuVisible  = false;
 	if(DeadWidget)
 		DeadWidget->SetVisibility(ESlateVisibility::Hidden);
-
 	if(ResumeWidget)
 	{
 		ResumeWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
-
 	bIsfirst = true;
 }
 
@@ -119,14 +106,6 @@ void UOVHUDWidget::ToggleMenu()
 
 void UOVHUDWidget::ResumeMenu()
 {
-	// if(bIsResumeMenuVisible)
-	// {
-	// 	ResumeWidget->SetVisibility(ESlateVisibility::Hidden);
-	// 	const FInputModeGameOnly InputMode;
-	// 	GetOwningPlayer()->SetInputMode(InputMode);
-	// 	GetOwningPlayer()->SetShowMouseCursor(false);
-	// }
-	// else
 	{
 		ResumeWidget->SetVisibility(ESlateVisibility::Visible);
 		const FInputModeGameAndUI InputMode;
@@ -147,7 +126,6 @@ void UOVHUDWidget::HideInteractionWidget() const
 {
 	if(InteractionWidget)
 	{
-		//UE_LOG(LogTemp,Log,TEXT("%s"),*InteractionWidget->GetName() )
 		InteractionWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}
 }
@@ -206,10 +184,10 @@ void UOVHUDWidget::UpdateDead()
 
 void UOVHUDWidget::Ending()
 {
-	FTimerHandle TimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+	if (bIsfirst)
 	{
-		if(bIsfirst)
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
 		{
 			bIsfirst = false;
 			EndingWidget = CreateWidget<UUserWidget>(this, EndingWidgetClass);
@@ -221,15 +199,14 @@ void UOVHUDWidget::Ending()
 				GetOwningPlayer()->SetShowMouseCursor(true);
 				EndingWidget->SetVisibility(ESlateVisibility::Visible);
 			}
-
 			TargetWidget->SetVisibility(ESlateVisibility::Hidden);
 			StatWidget->SetVisibility(ESlateVisibility::Hidden);
 			BossHpWidget->SetVisibility(ESlateVisibility::Hidden);
 			TeleportSkillWidget->SetVisibility(ESlateVisibility::Hidden);
 			BatteryWidget->SetVisibility(ESlateVisibility::Hidden);
-		
-		}
-	}, 1.0f, false);
+		}, 1.0f, false);
+	}
 }
+
 
 

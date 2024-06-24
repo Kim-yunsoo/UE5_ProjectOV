@@ -637,7 +637,7 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 		FVector Start;
 		FRotator Rotation;
 		GetController()->GetPlayerViewPoint(Start, Rotation);
-		FVector End = Start + Rotation.Vector() * 1500;
+		FVector End = Start + Rotation.Vector() * 2000;
 		FDamageInfo DamageInfo = {Stat->GetCurrentAttack(), E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
 
 		UStaticMeshComponent* WeaponMesh = Gun->Mesh; // Assuming GetMesh() returns the weapon mesh
