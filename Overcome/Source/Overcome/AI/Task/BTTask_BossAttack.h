@@ -7,7 +7,7 @@
 #include "Interface/OVEnemyAIInterface.h"
 #include "BTTask_BossAttack.generated.h"
 
-enum class E_AIState : uint8;
+enum class EAIState : uint8;
 /**
  * 
  */

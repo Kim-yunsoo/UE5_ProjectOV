@@ -11,7 +11,7 @@
 
 UBTTaskNode_RunAwayFromPlayer::UBTTaskNode_RunAwayFromPlayer()
 {
-	NodeName = "Run Away From Player";
+	NodeName = "DetermineEscapeLocation";
 }
 
 EBTNodeResult::Type UBTTaskNode_RunAwayFromPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -22,7 +22,7 @@ EBTNodeResult::Type UBTTaskNode_RunAwayFromPlayer::ExecuteTask(UBehaviorTreeComp
 	{
 		return EBTNodeResult::Failed;
 	}
-
+	
 	UObject* TargetObject = OwnerComp.GetBlackboardComponent()->GetValueAsObject(BBKEY_CHARACTER);
 	AOVCharacterPlayer* TargetActor = Cast<AOVCharacterPlayer>(TargetObject);
 	if (TargetActor)
@@ -37,7 +37,6 @@ EBTNodeResult::Type UBTTaskNode_RunAwayFromPlayer::ExecuteTask(UBehaviorTreeComp
 			FNavLocation NavLocation;
 			if (NavSystem->GetRandomPointInNavigableRadius(RunLocation, SafeDistance, NavLocation))
 			{
-				//AIController->MoveToLocation(NavLocation.Location);
 				OwnerComp.GetBlackboardComponent()->SetValueAsVector(BBKEY_RUNLOCATION, NavLocation.Location);
 				return EBTNodeResult::Succeeded;
 			}

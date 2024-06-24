@@ -9,7 +9,7 @@
 
 class AOVEnemy_Base;
 class AOVCharacterPlayer;
-enum class E_AIState : uint8;
+enum class EAIState : uint8;
 /**
  * 
  */

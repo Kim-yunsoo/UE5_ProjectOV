@@ -6,7 +6,7 @@
 #include "BehaviorTree/BTDecorator.h"
 #include "BTDecorator_Condition.generated.h"
 
-enum class E_AIState : uint8;
+enum class EAIState : uint8;
 /**
  * 
  */
@@ -24,5 +24,5 @@ protected:
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 	
 	UPROPERTY(EditAnywhere)
-	E_AIState AIStateCondition;
+	EAIState AIStateCondition;
 };

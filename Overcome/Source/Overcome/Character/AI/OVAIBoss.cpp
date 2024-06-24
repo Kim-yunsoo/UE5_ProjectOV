@@ -153,14 +153,14 @@ void AOVAIBoss::OnDefaultAttackMontageEnded(UAnimMontage* Montage, bool bInterru
 
 void AOVAIBoss::OnStaggerMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	SetState(E_AIState::Attacking);
+	SetState(EAIState::Attacking);
 	BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
 }
 
-void AOVAIBoss::SetState(E_AIState AIStateValue)
+void AOVAIBoss::SetState(EAIState AIStateValue)
 {
 	AIState = AIStateValue;
-	if(bIsFirst && AIState == E_AIState::Attacking)
+	if(bIsFirst && AIState == EAIState::Attacking)
 	{
 		bIsFirst = false;
 		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
@@ -171,7 +171,7 @@ void AOVAIBoss::SetState(E_AIState AIStateValue)
 	}
 }
 
-E_AIState AOVAIBoss::GetState()
+EAIState AOVAIBoss::GetState()
 {
 	return AIState;
 }
@@ -300,7 +300,7 @@ void AOVAIBoss::DamageResponse(E_DamageResponses DamageResponses)
 	//if(GetState() != E_AIState::Frozen) //공격 받고 있지 않을때 공격 들어감!
 	{
 		GetCharacterMovement()->StopMovementImmediately();
-		SetState(E_AIState::Frozen);
+		SetState(EAIState::Frozen);
 		BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
 		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 		AnimInstance->StopAllMontages(0.0f);
@@ -325,7 +325,7 @@ void AOVAIBoss::SetDead()
 	BossController->GetBrainComponent()->StopLogic(TEXT("Dead"));
 	BossController->StopAI();
 	BossController->ClearFocus(EAIFocusPriority::Gameplay); //보스 포커스 해제
-	SetState(E_AIState::Dead);
+	SetState(EAIState::Dead);
 	BossController->GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(GetState()));
 	//UE_LOG(LogTemp,Warning ,TEXT("Boss Dead"));
 	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
@@ -505,24 +505,24 @@ void AOVAIBoss::TestAttack()
 	}
 }
 
-void AOVAIBoss::SetMovementSpeed(E_MovementSpeed SpeedValue)
+void AOVAIBoss::SetMovementSpeed(EMovementSpeed SpeedValue)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Boss SetMovementSpeed"));
 
-	if(SpeedValue == E_MovementSpeed::Idle)
+	if(SpeedValue == EMovementSpeed::Idle)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 0.f;
 	}
-	else if(SpeedValue == E_MovementSpeed::Walking)
+	else if(SpeedValue == EMovementSpeed::Walking)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 100.f;
 	}
-	else if(SpeedValue == E_MovementSpeed::Jogging)
+	else if(SpeedValue == EMovementSpeed::Jogging)
 	{
 	//UE_LOG(LogTemp, Warning, TEXT("Jogging"));
 		GetCharacterMovement()->MaxWalkSpeed = 200.f;
 	}
-	else if(SpeedValue == E_MovementSpeed::Sprinting)
+	else if(SpeedValue == EMovementSpeed::Sprinting)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 350.f;
 	}

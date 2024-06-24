@@ -19,23 +19,18 @@ EBTNodeResult::Type UBTTask_BossAttack::ExecuteTask(UBehaviorTreeComponent& Owne
 	{
 		return EBTNodeResult::Failed;
 	}
-
 	IOVEnemyAIInterface* AIPawn = Cast<IOVEnemyAIInterface>(ControllingPawn);
 	if (nullptr == AIPawn)
 	{
 		return EBTNodeResult::Failed;
 	}
-	
 	FAIEnemyAttackFinished OnAttackFinished;
 	OnAttackFinished.BindLambda(
 		[&]()
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("Default Attack End"));
-			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); //마무리 했다
-
+			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); 
 		}
 	);
-
 	AIPawn->SetAIDefaultAttackDelegate(OnAttackFinished);
 	AIPawn->BossAttack(BossAttackValue);
 	return EBTNodeResult::InProgress;

@@ -37,7 +37,7 @@ void UBTService_StopAttacking::TickNode(UBehaviorTreeComponent& OwnerComp, uint8
 		if(TargetActor->Stat->GetCurrentHp() == 0) //죽음 판정
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("DEAD"));
-			AIPawn->SetState(E_AIState::Passive);
+			AIPawn->SetState(EAIState::Passive);
 			OwnerComp.GetBlackboardComponent()->SetValueAsEnum(BBKEY_STATE,static_cast<uint8>(AIPawn->GetState()));
 		}
 	}

@@ -42,7 +42,6 @@ void UOVAttackComponent::BeginPlay()
 void UOVAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 }
 
 void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo DamageInfo)
@@ -52,39 +51,29 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 	TArray<AActor*> ActorsToNotTargeting;
 	ActorsToNotTargeting.Add(GetOwner());
 	FHitResult HitResult;
-	// bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, 20, ObjectArray, false,ActorsToNotTargeting
-	// ,EDrawDebugTrace::ForDuration, HitResult,  true,
-	// 		FLinearColor::Red, FLinearColor::Green, 1.f);
-
-	
 	bool bResult = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_GameTraceChannel1);
 	if(bResult && HitResult.GetActor() != GetOwner())
 	{
 		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
 		if(DamagableInterface)
 		{
-			//
-			DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
+			DamagableInterface->TakeDamage(DamageInfo);
 			UAISense_Damage::ReportDamageEvent(
 					GetWorld(),
-					HitResult.GetActor(),        // Damaged Actor
-					GetOwner(),                  // Instigator
-					DamageInfo.Amount,     // Amount of Damage
-					GetOwner()->GetActorLocation(),       // Event Location
-					HitResult.ImpactPoint,       // Hit Location (same as event location for simplicity)
-					FName(TEXT("DamageEvent"))   // Tag (optional)
+					HitResult.GetActor(),        
+					GetOwner(),                
+					DamageInfo.Amount,    
+					GetOwner()->GetActorLocation(),     
+					HitResult.ImpactPoint,       
+					FName(TEXT("DamageEvent")) 
 				);
 			OnAttackEnded.Broadcast();
 		}
-		//DrawDebugPoint(GetWorld(), HitResult.Location, 20, FColor::Red, true);
 		if(GetOwner()->IsA<AOVCharacterPlayer>())
 		{
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, HitResult.Location, FRotator::ZeroRotator);
-			//UE_LOG(LogTemp, Warning, TEXT("Character"));
 		}
 	}
-	
-	
 }
 
 void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo DamageInfo)
@@ -146,20 +135,13 @@ void UOVAttackComponent::JumpTarget(AActor* AttackTarget)
 		FVector Location = CalculateFutureActorLocation(AttackTarget, 1.0f);
 		FVector OutLaunchVelocity;
 		//UE_LOG(LogTemp, Warning, TEXT("%s"), *Location.ToString())
-		double BossTargetDistance;
-		BossTargetDistance = AttackTarget->GetDistanceTo(GetOwner());
+		double BossTargetDistance = AttackTarget->GetDistanceTo(GetOwner());
 		BossTargetDistance = UKismetMathLibrary::NormalizeToRange(BossTargetDistance, 400, 800);
 		BossTargetDistance = UKismetMathLibrary::FClamp(BossTargetDistance, 0.0, 1.0);
 		BossTargetDistance = UKismetMathLibrary::Lerp(0.5, 0.94, BossTargetDistance);
 		Location.Z += 50;
-		//UE_LOG(LogTemp, Warning, TEXT("%f"), BossTargetDistance)
-		//UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), OutLaunchVelocity, GetOwner()->GetActorLocation(),AttackTarget->GetActorLocation(), 0.0, 0.5 );
 		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), OutLaunchVelocity, GetOwner()->GetActorLocation(),Location, 0.0, BossTargetDistance );
-		//UE_LOG(LogTemp, Warning, TEXT("%s"), *OutLaunchVelocity.ToString());
-
-		//FVector TestLocation {0,0,500};
 		OwnerCharacter->LaunchCharacter(OutLaunchVelocity, true, true);
-		//OwnerCharacter->GetCharacterMovement()->StopMovementImmediately();
 		OwnerCharacter->LandedDelegate.AddDynamic(this, &UOVAttackComponent::OnCharacterLanded);
 	}
 }
@@ -176,7 +158,6 @@ void UOVAttackComponent::OnCharacterLanded(const FHitResult& Hit)
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
 	if(OwnerCharacter)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("OnLanded"));
 		OwnerCharacter->GetCharacterMovement()->StopMovementImmediately();
 		OwnerCharacter->LandedDelegate.RemoveDynamic(this, &UOVAttackComponent::OnCharacterLanded);
 	}

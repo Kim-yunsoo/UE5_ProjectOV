@@ -14,6 +14,14 @@ DECLARE_MULTICAST_DELEGATE(FOnDeathDelegate);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnBlockedDelegate, bool /*Blocked*/);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnDamageResponseDelegate, E_DamageResponses /*DamageResponse*/);
 
+UENUM(BlueprintType)
+enum class EDamageResult : uint8
+{
+	Block UMETA(DisplayName = "Block Damage"),
+	Damage UMETA(DisplayName = "Do Damage"),
+	NoDamage UMETA(DisplayName = "No Damage")
+};
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class OVERCOME_API UOVDamageComponent : public UActorComponent
@@ -69,5 +77,5 @@ public:
 	void SetMaxHealth(float NewMaxHealth);
 
 	UFUNCTION()
-	float CanbeDamage(bool ShouldDamageInvincible, bool CanbeBlocked);
+	EDamageResult CanbeDamage(bool ShouldDamageInvincible, bool CanbeBlocked);
 };

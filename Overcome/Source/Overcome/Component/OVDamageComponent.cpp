@@ -29,30 +29,32 @@ void UOVDamageComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 
 bool UOVDamageComponent::TakeDamage(FDamageInfo DamageInfo)
 {
-	if(CanbeDamage(DamageInfo.ShouldDamageInvincible, DamageInfo.CanBeBlocked) == 0)
+	EDamageResult DamageResult = CanbeDamage(DamageInfo.ShouldDamageInvincible, DamageInfo.CanBeBlocked);
+	switch (DamageResult)
 	{
+	case EDamageResult::Block:
 		OnBlocked.Broadcast(DamageInfo.CanBeBlocked);
 		return false;
-	}
-	if(CanbeDamage(DamageInfo.ShouldDamageInvincible, DamageInfo.CanBeBlocked) == 1)
-	{
-		float NewHp = Health - DamageInfo.Amount;
-		Health = FMath::Clamp<float>(NewHp, 0.0f, MaxHealth);
-		if(Health <= 0)
+	case EDamageResult::Damage:
 		{
-			bIsDead = true;
-			OnDeath.Broadcast(); //죽음 알리기!
-			return true;
+			float NewHp = Health - DamageInfo.Amount;
+			Health = FMath::Clamp<float>(NewHp, 0.0f, MaxHealth);
+			if (Health <= 0)
+			{
+				bIsDead = true;
+				OnDeath.Broadcast(); 
+				return true;
+			}
+			if (bIsInterruptible || DamageInfo.ShouldForceInterrupt)
+			{
+				OnDamageResponse.Broadcast(DamageInfo.DamageResponse);
+				return true;
+			}
+			break;
 		}
-		if(bIsInterruptible || DamageInfo.ShouldForceInterrupt)
-		{
-			//Damage Response 출력
-			OnDamageResponse.Broadcast(DamageInfo.DamageResponse);
-			return true;
-		}
-	}
-	else if(CanbeDamage(DamageInfo.ShouldDamageInvincible, DamageInfo.CanBeBlocked) == 2)
-	{
+	case EDamageResult::NoDamage:
+		return false;
+	default:
 		return false;
 	}
 	return false;
@@ -75,30 +77,19 @@ void UOVDamageComponent::SetMaxHealth(float NewMaxHealth)
 	MaxHealth = NewMaxHealth;
 }
 
-float UOVDamageComponent::CanbeDamage(bool ShouldDamageInvincible, bool CanbeBlocked)
+EDamageResult UOVDamageComponent::CanbeDamage(bool ShouldDamageInvincible, bool CanbeBlocked)
 {
-	//0 Block Damage
-	//1 Do Damage
-	//2 No Damage
-
-	if(!bIsDead && (!bIsInvincible|| ShouldDamageInvincible ))
+	if(!bIsDead && (!bIsInvincible || ShouldDamageInvincible))
 	{
 		if(bIsBlocking && CanbeBlocked)
 		{
-			return 0;
+			return EDamageResult::Block;
 		}
-		else if(bIsShieldSkill)
+		if(bIsShieldSkill)
 		{
-			return 2;
+			return EDamageResult::NoDamage;
 		}
-		else
-		{
-			return 1;
-		}
+		return EDamageResult::Damage;
 	}
-	else
-	{
-		return 2;
-	}
+	return EDamageResult::NoDamage;
 }
-

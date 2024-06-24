@@ -35,7 +35,7 @@ AOVAIBossController::AOVAIBossController()
 void AOVAIBossController::RunAI()
 {
 	bool RunResult = RunBehaviorTree(BTAsset);
-	Boss->SetState(E_AIState::Passive);
+	Boss->SetState(EAIState::Passive);
 	ensure(RunResult);
 }
 
@@ -64,7 +64,6 @@ void AOVAIBossController::OnPossess(APawn* InPawn)
 			UE_LOG(LogTemp, Warning, TEXT("CharacterPlayer Wrong"));
 		}
 		
-		//SetBlackBoardKey();
 		UBlackboardComponent* BlackboardPtr = Blackboard.Get();
 		if (UseBlackboard(BBAsset, BlackboardPtr))
 		{
@@ -91,7 +90,6 @@ void AOVAIBossController::SetPerceptionSystem()
 			SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 			AIPerception->ConfigureSense(*SightConfig);
 
-			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleSightSense);
 
 		//청각
 			UAISenseConfig_Hearing* SoundConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("SoundConfig"));
@@ -101,15 +99,12 @@ void AOVAIBossController::SetPerceptionSystem()
 			SoundConfig->DetectionByAffiliation.bDetectNeutrals = true;
 			SoundConfig->DetectionByAffiliation.bDetectFriendlies = true;
 			AIPerception->ConfigureSense(*SoundConfig);
-
-			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleSoundSense);
-
+		
 		// 데미지
 			UAISenseConfig_Damage* DamageConfig = CreateDefaultSubobject<UAISenseConfig_Damage>(TEXT("DamageConfig"));
 			DamageConfig->SetMaxAge(5.0);
 			AIPerception->ConfigureSense(*DamageConfig);
 
-			//AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIEnemyBaseController::HandleDamageSense);
 		AIPerception->SetDominantSense(SightConfig->GetSenseImplementation());
 
 		AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AOVAIBossController::HandlePerceptionUpdated);
@@ -133,9 +128,9 @@ void AOVAIBossController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus)
 	AOVCharacterPlayer* player = Cast<AOVCharacterPlayer>(Actor);
 	if(!player)
 		return;
-	if ((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating)) // && player ) //&& (Actor == CharacterPlayer))
+	if ((Boss->GetState() == EAIState::Passive || Boss->GetState() == EAIState::Investigating)) // && player ) //&& (Actor == CharacterPlayer))
 	{
-		Boss->SetState(E_AIState::Attacking);
+		Boss->SetState(EAIState::Attacking);
 		//UE_LOG(LogTemp, Warning, TEXT("Sight Attack"));
 		SetBlackBoardKey();
 	}
@@ -143,9 +138,9 @@ void AOVAIBossController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus)
 
 void AOVAIBossController::HandleSoundSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	if((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating))
+	if((Boss->GetState() == EAIState::Passive || Boss->GetState() == EAIState::Investigating))
 	{
-		Boss->SetState(E_AIState::Investigating);
+		Boss->SetState(EAIState::Investigating);
 		FVector Location = Stimulus.StimulusLocation;
 		//UE_LOG(LogTemp, Warning, TEXT("Sound"));
 		UBlackboardComponent* BlackboardPtr = Blackboard.Get();
@@ -160,9 +155,9 @@ void AOVAIBossController::HandleSoundSense(AActor* Actor, FAIStimulus Stimulus)
 void AOVAIBossController::HandleDamageSense(AActor* Actor, FAIStimulus Stimulus)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Damage"));
-	if((Boss->GetState() == E_AIState::Passive || Boss->GetState() == E_AIState::Investigating))
+	if((Boss->GetState() == EAIState::Passive || Boss->GetState() == EAIState::Investigating))
 	{
-		Boss->SetState(E_AIState::Attacking);
+		Boss->SetState(EAIState::Attacking);
 		SetBlackBoardKey();
 	}
 }

@@ -14,7 +14,7 @@ class UOVEnemyAIInterface : public UInterface
 };
 
 UENUM(BlueprintType)
-enum class E_MovementSpeed : uint8
+enum class EMovementSpeed : uint8
 {
 	Idle UMETA(DisplayName = "Idle"),
 	Walking UMETA(DisplayName = "Walking"),
@@ -24,7 +24,7 @@ enum class E_MovementSpeed : uint8
 };
 
 UENUM(BlueprintType)
-enum class E_AIState : uint8
+enum class EAIState : uint8
 {
 	Passive UMETA(DisplayName = "Passive"),
 	Attacking UMETA(DisplayName = "Attacking"),
@@ -42,7 +42,6 @@ enum class E_BossAttack : uint8
 	QuickAttack UMETA(DisplayName = "QuickAttack"),
 	GroundSmash UMETA(DisplayName = "GroundSmash"),
 	AOEAttack UMETA(DisplayName = "AOEAttack")
-
 };
 
 DECLARE_DELEGATE(FAIEnemyAttackFinished);
@@ -64,9 +63,9 @@ public:
 	virtual void DefaultAttack() = 0;
 	virtual void EauipWeapon() = 0;
 	virtual void UneauipWeapon() = 0;
-	virtual void SetState(E_AIState AIStateValue) = 0;
-	virtual E_AIState GetState() = 0;
-	virtual void SetMovementSpeed(E_MovementSpeed SpeedValue) = 0;
+	virtual void SetState(EAIState AIStateValue) = 0;
+	virtual EAIState GetState() = 0;
+	virtual void SetMovementSpeed(EMovementSpeed SpeedValue) = 0;
 	virtual void BossAttack(E_BossAttack BossAttack) = 0;
 	virtual void SetIsInterruptible(bool bIsInterruptibleValue) = 0;
 	virtual void BossTeleport(FVector Location) = 0;

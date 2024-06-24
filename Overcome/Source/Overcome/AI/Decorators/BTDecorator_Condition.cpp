@@ -34,7 +34,7 @@ bool UBTDecorator_Condition::CalculateRawConditionValue(UBehaviorTreeComponent& 
 	}
 
 	uint8 CurrentStateint = OwnerComp.GetBlackboardComponent()->GetValueAsEnum(BBKEY_STATE);
-	E_AIState CurrentState = static_cast<E_AIState>(CurrentStateint);
+	EAIState CurrentState = static_cast<EAIState>(CurrentStateint);
 	if(CurrentState == AIStateCondition)
 	{
 		return true;

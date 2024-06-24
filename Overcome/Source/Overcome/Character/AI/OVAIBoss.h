@@ -58,7 +58,7 @@ protected:
 
 	virtual float GetIsWieldingWeapon() override;
 
-	virtual  void SetMovementSpeed(E_MovementSpeed SpeedValue) override;
+	virtual  void SetMovementSpeed(EMovementSpeed SpeedValue) override;
 
 	UPROPERTY()
 	uint8 bIsFirst : 1;
@@ -69,7 +69,7 @@ protected:
 	UPROPERTY()
 	uint8 bIsWieldingWeapon : 1;
 
-	E_MovementSpeed MovementSpeed;
+	EMovementSpeed MovementSpeed;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Sword")
 	TSubclassOf<AOVSword> SwordClass;
@@ -91,15 +91,15 @@ protected:
 	void OnStaggerMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	
 	UPROPERTY(EditAnywhere)
-	E_AIState AIState;
+	EAIState AIState;
 
 
 public:
 	UFUNCTION()
-	virtual void SetState(E_AIState AIStateValue) override;
+	virtual void SetState(EAIState AIStateValue) override;
 
 	UFUNCTION()
-	virtual E_AIState GetState() override;
+	virtual EAIState GetState() override;
 	virtual void PostInitializeComponents() override;
 
 	//Damage
