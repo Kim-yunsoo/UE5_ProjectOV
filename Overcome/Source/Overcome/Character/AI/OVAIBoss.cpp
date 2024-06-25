@@ -16,6 +16,7 @@
 #include "Component/OVAttackComponent.h"
 #include "Component/OVCharacterStatComponent.h"
 #include "Component/OVDamageComponent.h"
+#include "Gimmick/OVDamageWidgetActor.h"
 
 AOVAIBoss::AOVAIBoss()
 {
@@ -205,6 +206,10 @@ bool AOVAIBoss::TakeDamage(FDamageInfo DamageInfo) //영향 받음
 {
 	//UE_LOG(LogTemp, Warning, TEXT("TakeDamage"));
 	DamageComponent->TakeDamage(DamageInfo);
+	// FActorSpawnParameters SpawnParams;
+	// SpawnParams.Owner = this;
+	// AOVDamageWidgetActor* DamageWidget = GetWorld()->SpawnActor<AOVDamageWidgetActor>(AOVDamageWidgetActor::StaticClass() , DamageInfo.Location, GetActorRotation(), SpawnParams );
+	// DamageWidget->SetDamage(DamageInfo.Amount);
 	Stat->SetHp(DamageComponent->Health);
 	return true;
 }

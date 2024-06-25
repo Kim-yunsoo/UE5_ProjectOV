@@ -7,6 +7,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Character/OVCharacterPlayer.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Gimmick/OVDamageWidgetActor.h"
 #include "Interface/OVDamagableInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -58,6 +59,22 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 		if(DamagableInterface)
 		{
 			DamagableInterface->TakeDamage(DamageInfo);
+			FActorSpawnParameters SpawnParams;
+			AOVDamageWidgetActor* DamageActor = GetWorld()->SpawnActor<AOVDamageWidgetActor>(AOVDamageWidgetActor::StaticClass() , HitResult.Location, FRotator::ZeroRotator, SpawnParams );
+			if (DamageActor)
+			{
+				ACharacter *Character = Cast<ACharacter>(HitResult.GetActor());
+				DamageActor->AttachToComponent(Character->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+				FVector Loc = HitResult.Location;
+				DamageActor->SetActorLocation(Loc);
+
+				AOVDamageWidgetActor* Widget = Cast<AOVDamageWidgetActor>(DamageActor);
+				if (Widget)
+				{
+					Widget->SetDamage(DamageInfo.Amount);
+				}
+			}
+
 			UAISense_Damage::ReportDamageEvent(
 					GetWorld(),
 					HitResult.GetActor(),        

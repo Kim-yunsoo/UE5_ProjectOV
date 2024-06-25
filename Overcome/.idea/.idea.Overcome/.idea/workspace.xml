@@ -9,31 +9,12 @@
   <component name="ChangeListManager">
     <list default="true" id="18d6e7f6-fd27-49b4-b72a-a28b2aed8a6d" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/AM_ThrowStart.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/AM_Throwing.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/MF_Run_Fwd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Asset/Animation/MF_Run_Fwd.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/RTG_OVCharater.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Asset/Animation/RTG_OVCharater.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVCharacterStatComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVCharacterStatComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVDamageComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVDamageComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVDamageComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVDamageComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/MainMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/MainMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVDamagableInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVDamagableInterface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Item/OVItemData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Item/OVItemData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryTooltip.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryTooltip.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,64 +39,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="cidr-memory-view://3" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graph.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UE_5.2/Engine/Source/Developer/GraphColor/Private/graphUtils.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -127,10 +50,13 @@
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTTaskNode_RunAwayFromPlayer.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/BTTaskNode_RunAwayFromPlayer.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/AI/Task/BTTask_RandomLocation.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/Gimmick/OVDamageWidgetActor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Gimmick/OVDropItem.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Gimmick/OVDropItem.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Skill/OVGunSkill.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/Skill/OVGunSkill.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVAttackDamageWidget.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVAttackDamageWidget.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVBatteryWidget.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVBatteryWidget.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Overcome/UI/OVDeadWidget.h" root0="FORCE_HIGHLIGHTING" />
@@ -148,7 +74,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "C++ 프로젝트.Overcome.executor": "Debug",
+    "C++ 프로젝트.Overcome.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
@@ -286,7 +212,7 @@
       <workItem from="1719208770718" duration="19320000" />
       <workItem from="1719262183419" duration="410000" />
       <workItem from="1719262654158" duration="224000" />
-      <workItem from="1719263425527" duration="7239000" />
+      <workItem from="1719263425527" duration="13993000" />
     </task>
     <servers />
   </component>

@@ -40,6 +40,7 @@ struct FDamageInfo
 public:
 	UPROPERTY(EditAnywhere)
 	float Amount;
+	//FVector Location;
 	E_DamageType DamageType;
 	E_DamageResponses DamageResponse;
 	bool ShouldDamageInvincible; //무적상태
