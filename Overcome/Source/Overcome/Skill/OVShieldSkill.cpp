@@ -37,10 +37,7 @@ void UOVShieldSkill::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		}
 		// 위젯 업데이트
 		CooldownPercent = CooldownRemaining / ShieldCooltime;
-		//UE_LOG(LogTemp,	Warning, TEXT("Cooldown %f"), CooldownPercent);
-		//UE_LOG(LogTemp,	Warning, TEXT("CooldownRemaining %f"), CooldownRemaining);
 		OnShieldTime.Broadcast(CooldownPercent);
-		//UpdateCooldownBar();
 	}
 }
 
@@ -48,7 +45,6 @@ void UOVShieldSkill::SkillAction()
 {
 	UE_LOG(LogSkillCharacter, Log, TEXT("StartShieldSkill"));
 	Super::SkillAction();
-	
 	FTimerHandle Handle;
 	GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
 		{

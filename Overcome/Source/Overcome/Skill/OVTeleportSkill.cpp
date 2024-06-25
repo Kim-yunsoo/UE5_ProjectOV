@@ -8,7 +8,6 @@
 UOVTeleportSkill::UOVTeleportSkill()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-	//CoolTime = 10;
 	TeleportOffset = 600.0f;
 	TeleportCooltime = 5.f;
 	CooldownRemaining = 5.f;
@@ -42,7 +41,6 @@ void UOVTeleportSkill::TickComponent(float DeltaTime, ELevelTick TickType,
 		CooldownPercent = CooldownRemaining / TeleportCooltime;
 		
 		OnTeleportTime.Broadcast(CooldownPercent);
-		//UpdateCooldownBar();
 	}
 }
 

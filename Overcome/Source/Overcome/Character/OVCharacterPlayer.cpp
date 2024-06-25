@@ -265,10 +265,8 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
-
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Jumping);
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-	//EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::TestAttack);
 	EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderMove);
 	EnhancedInputComponent->BindAction(ShoulderLookActionX, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookX);
 	EnhancedInputComponent->BindAction(ShoulderLookActionY, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookY);
@@ -278,8 +276,7 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AOVCharacterPlayer::Shoot);
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopShoot);
 	EnhancedInputComponent->BindAction(WheelAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeWeapon);
-	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this,
-	                                   &AOVCharacterPlayer::TeleportSkill);
+	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this,&AOVCharacterPlayer::TeleportSkill);
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
 	EnhancedInputComponent->BindAction(HealAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::HealSkill);
 	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
@@ -287,12 +284,6 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	EnhancedInputComponent->BindAction(GunRepeatAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::GunRepeat);
 	EnhancedInputComponent->BindAction(RollAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Roll);
 	EnhancedInputComponent->BindAction(ResumeAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::Resume);
-
-	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
-	//EndInteraction 안함
-	//EnhancedInputComponent->BindAction(ItemUseAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ItemUse);
-
-	
 }
 
 void AOVCharacterPlayer::SmoothInterpReturn(float Value)
@@ -868,8 +859,6 @@ void AOVCharacterPlayer::NoInteractableFound()
 
 void AOVCharacterPlayer::BeginInteract()
 {
-	//PerformInteractionCheck(); //보고 있다는 것을 확인
-
 	if (InteractionData.CurrentInteractable)
 	{
 		if (IsValid(TargetInteractable.GetObject()))

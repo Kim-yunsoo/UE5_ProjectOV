@@ -39,8 +39,6 @@ TEXT("/Script/Niagara.NiagaraSystem'/Game/EnergyBeam/NS/NS_Hit_Constant_IonLaser
 	}
 }
 
-
-
 void AOVAOE_LightningStrike::BeginPlay()
 {
 	Super::BeginPlay();
@@ -56,7 +54,6 @@ void AOVAOE_LightningStrike::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
-
 
 void AOVAOE_LightningStrike::Trigger()
 {
@@ -81,10 +78,8 @@ void AOVAOE_LightningStrike::Trigger()
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
 	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_GameTraceChannel1));
 	TArray<AActor*> ActorsToNotTargeting;
-	//ActorsToNotTargeting.Add(GetOwner());
 	TArray<AActor*> HitResultActor;
 	bool bResult =  UKismetSystemLibrary::SphereOverlapActors(GetWorld(), GetActorLocation(), 250,ObjectArray,nullptr, ActorsToNotTargeting, HitResultActor);
-	//DrawDebugSphere(GetWorld(), GetActorLocation(), 250, 24, FColor::Green, false, 2.0f);
 	if(bResult)
 	{
 		for (AActor* Actor : HitResultActor)

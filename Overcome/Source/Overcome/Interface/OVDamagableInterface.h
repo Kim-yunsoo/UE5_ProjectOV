@@ -55,11 +55,10 @@ class OVERCOME_API IOVDamagableInterface
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual float GetCurrentHealth() = 0;
 	virtual float GetMaxHealth() = 0;
-	virtual float Heal(float Amount) = 0; //안쓸지도?
+	virtual float Heal(float Amount) = 0;
 	virtual bool TakeDamage(FDamageInfo DamageInfo)  = 0;
 	virtual bool IsDead() = 0;
 	virtual bool IsAttacking() = 0;

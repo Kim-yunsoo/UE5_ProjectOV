@@ -7,7 +7,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18d6e7f6-fd27-49b4-b72a-a28b2aed8a6d" name="변경" comment="" />
+    <list default="true" id="18d6e7f6-fd27-49b4-b72a-a28b2aed8a6d" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/AM_ThrowStart.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/AM_Throwing.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/MF_Run_Fwd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Asset/Animation/MF_Run_Fwd.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Asset/Animation/RTG_OVCharater.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Asset/Animation/RTG_OVCharater.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVCharacterStatComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVCharacterStatComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVDamageComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVDamageComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVDamageComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVDamageComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVInventoryComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVAOE_LightningStrike.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Gun/OVGun.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVDamagableInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVDamagableInterface.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVEnemyAIInterface.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVInteractionInterface.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Item/OVItemData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Item/OVItemData.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVShieldSkill.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryItemSlot.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryPanel.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryTooltip.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/Inventory/OVInventoryTooltip.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/UI/OVMainMenu.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -121,7 +148,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "C++ 프로젝트.Overcome.executor": "Run",
+    "C++ 프로젝트.Overcome.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
@@ -257,6 +284,9 @@
       <workItem from="1719161245668" duration="4849000" />
       <workItem from="1719193605375" duration="12210000" />
       <workItem from="1719208770718" duration="19320000" />
+      <workItem from="1719262183419" duration="410000" />
+      <workItem from="1719262654158" duration="224000" />
+      <workItem from="1719263425527" duration="7239000" />
     </task>
     <servers />
   </component>

@@ -30,6 +30,7 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UMaterialInterface> DecalMaterial;
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 

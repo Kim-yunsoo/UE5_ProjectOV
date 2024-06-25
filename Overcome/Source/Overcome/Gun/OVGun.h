@@ -29,12 +29,11 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
 
-	FORCEINLINE int32 GetBulletCount(){return BulletCount;};
+	FORCEINLINE int32 GetBulletCount(){return BulletCount;}
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
-
-
 
 	UPROPERTY(EditAnywhere);
 	float MaxRange = 1000.f;

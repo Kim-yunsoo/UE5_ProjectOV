@@ -17,7 +17,6 @@ UOVDamageComponent::UOVDamageComponent()
 void UOVDamageComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
 	Health = MaxHealth;
 }
 

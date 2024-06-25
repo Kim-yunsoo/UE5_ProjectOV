@@ -18,6 +18,7 @@ class OVERCOME_API UOVShieldSkill : public UOVSkillBase
 public:	
 	UOVShieldSkill();
 	FOnShieldTimeChangedDelegate OnShieldTime;
+	
 protected:
 	UPROPERTY()
 	float ShieldCooltime;

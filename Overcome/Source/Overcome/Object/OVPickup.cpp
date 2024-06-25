@@ -16,12 +16,12 @@ AOVPickup::AOVPickup()
 	PickupMesh->SetMobility(EComponentMobility::Movable);
 	PickupMesh->SetSimulatePhysics(true);
 	SetRootComponent(PickupMesh);
-	//PickupMesh->SetCollisionProfileName(TEXT("NoCollision"));
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
 	Trigger->SetupAttachment(PickupMesh);
 	Trigger->SetBoxExtent(FVector(45.f, 45.f, 45.f));
     Trigger->SetMobility(EComponentMobility::Movable);
 	static ConstructorHelpers::FObjectFinder<UDataTable> DataTableFinder(TEXT("/Script/Engine.DataTable'/Game/ItemData/DT_ItemData.DT_ItemData'"));
+
 	if (DataTableFinder.Succeeded())
 	{
 		ItemDataTable = DataTableFinder.Object;

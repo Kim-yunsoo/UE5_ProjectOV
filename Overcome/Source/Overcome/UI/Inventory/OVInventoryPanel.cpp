@@ -26,7 +26,6 @@ void UOVInventoryPanel::NativeOnInitialized()
 			SetInfoText();
 		}
 	}
-	
 }
 void UOVInventoryPanel::SetInfoText() const
 {

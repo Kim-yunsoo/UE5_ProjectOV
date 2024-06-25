@@ -7,17 +7,6 @@
 #include "EnvironmentQuery/EnvQueryTypes.h"
 #include "OVItemData.generated.h"
 
-
-// UENUM()
-// enum class EItemQuality :uint8 //아이템이 어떤 상태인지 열거형 
-// {
-// 	Shoddy UMETA(DisplayName = "Shoddy"),
-// 	Common UMETA(DisplayName = "Common"),
-// 	Quality UMETA(DisplayName = "Quality"),
-// 	Masterwork UMETA(DisplayName = "Masterwork"),
-// 	Grandmaster UMETA(DisplayName = "Grandmaster"),
-// };
-
 UENUM()
 enum class EItemType : uint8 //무기 종류
 {
@@ -26,7 +15,6 @@ enum class EItemType : uint8 //무기 종류
 	AttackPotion UMETA(DisplayName = "AttackPotion"),
 	Bullet UMETA(DisplayName = "Bullet"),
 	Battery UMETA(DisplayName = "Battery")
-	//Bullet UMETA(DisplayName = "Bullet"),
 };
 
 USTRUCT()
@@ -53,6 +41,7 @@ struct FItemTextData
 	UPROPERTY(EditAnyWhere)
 	FText UsageText;
 };
+
 USTRUCT()
 struct FItemNumericData
 {
@@ -97,7 +86,4 @@ struct FItemData: public FTableRowBase
 
 	UPROPERTY(EditAnyWhere,Category="Item Data")
 	FItemAssetData AssetData;
-
-
-	
 };

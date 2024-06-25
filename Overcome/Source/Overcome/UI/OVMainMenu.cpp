@@ -20,10 +20,8 @@ void UOVMainMenu::NativeConstruct()
 }
 
 bool UOVMainMenu::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
-	UDragDropOperation* InOperation) //Main보다 먼저 감지하는듯한 ...
+	UDragDropOperation* InOperation) 
 {
-	//return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
-
 	const UOVItemDragDropOperation* ItemDragDrop = Cast<UOVItemDragDropOperation>(InOperation);
 
 	if(PlayerCharacter && ItemDragDrop->SourceItem)

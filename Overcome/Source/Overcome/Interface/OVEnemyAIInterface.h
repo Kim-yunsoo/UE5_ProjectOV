@@ -20,7 +20,6 @@ enum class EMovementSpeed : uint8
 	Walking UMETA(DisplayName = "Walking"),
 	Jogging UMETA(DisplayName = "Jogging"),
 	Sprinting UMETA(DisplayName = "Sprinting"),
-	
 };
 
 UENUM(BlueprintType)
@@ -57,7 +56,6 @@ class OVERCOME_API IOVEnemyAIInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual float GetIsWieldingWeapon() = 0;
-	
 	virtual void SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished) = 0;
 	virtual void SetAITeleportDelegate(const FAIEnemyTeleportFinished& InOnTeleportFinished) = 0;
 	virtual void DefaultAttack() = 0;
