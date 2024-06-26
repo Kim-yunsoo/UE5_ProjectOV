@@ -265,10 +265,10 @@ protected:
 
 	//Skill
 public:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	uint8 bIsActiveTeleportSkill : 1;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	uint8 bIsActiveShieldSkill : 1;
 
 	UPROPERTY()

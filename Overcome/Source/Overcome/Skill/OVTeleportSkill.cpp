@@ -3,7 +3,10 @@
 
 #include "Skill/OVTeleportSkill.h"
 #include "Character/OVCharacterPlayer.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 UOVTeleportSkill::UOVTeleportSkill()
@@ -12,6 +15,14 @@ UOVTeleportSkill::UOVTeleportSkill()
 	TeleportOffset = 600.0f;
 	TeleportCooltime = 5.f;
 	CooldownRemaining = 5.f;
+
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> EmitterRef(
+TEXT("/Script/Engine.ParticleSystem'/Game/InfinityBladeEffects/Effects/FX_Mobile/ICE/combat/P_Shout_Charge_Ice_02.P_Shout_Charge_Ice_02'"));
+
+	if (EmitterRef.Succeeded())
+	{
+		Emitter = EmitterRef.Object;
+	}
 }
 
 void UOVTeleportSkill::TickComponent(float DeltaTime, ELevelTick TickType,
@@ -49,6 +60,14 @@ void UOVTeleportSkill::SkillAction()
 {
 	UE_LOG(LogSkillCharacter, Log, TEXT("StartTeleportSkill"));
 	Super::SkillAction();
+	
+	UParticleSystemComponent* ParticleSystemComponent = UGameplayStatics::SpawnEmitterAtLocation(
+		   GetWorld(), Emitter, GetOwner()->GetActorLocation() + GetOwner()->GetActorForwardVector() *600, FRotator(0, 90, 0));
+
+	ParticleSystemComponent->SetWorldScale3D(FVector(2.0f, 2.0f, 2.0f));
+
+
+	
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
 	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
 	TArray<AActor*> ActorsToNotTargeting;
@@ -57,7 +76,7 @@ void UOVTeleportSkill::SkillAction()
 	FVector End = GetOwner()->GetActorForwardVector() * TeleportOffset + Start;
 	FHitResult HitResult;
 	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, 40, ObjectArray, false,ActorsToNotTargeting
-	,EDrawDebugTrace::ForDuration, HitResult,  true,
+	,EDrawDebugTrace::None, HitResult,  true,
 			FLinearColor::Red, FLinearColor::Green, 1.f);
 	if(bResult)
 	{

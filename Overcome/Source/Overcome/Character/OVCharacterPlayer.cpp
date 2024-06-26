@@ -637,10 +637,7 @@ void AOVCharacterPlayer::ServerRPCShoot_Implementation()
 			FName SocketName = TEXT("Socket"); // Replace with your socket name
 			FVector MuzzleLocation = WeaponMesh->GetSocketLocation(SocketName);
 			FRotator MuzzleRotation = WeaponMesh->GetSocketRotation(SocketName);
-
-			// Spawn Niagara system at the socket location
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), MuzzleEffect, MuzzleLocation, MuzzleRotation);
-			//UE_LOG(LogTemp, Warning, TEXT("Spawned muzzle effect"));
 		}
 		AttackComponent->FireBullet(Start, End, DamageInfo);
 		PlayAnimMontage(Shooting_Gun, 2.0);
@@ -730,12 +727,9 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 	if(BossHpWidget)
 	{
 		InUserWidget->UpdateBossUI(false);
-		// BossHpWidget->UpdateHpBar(Stat->GetCurrentHp());
-		// Stat->OnHpchanged.AddUObject(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
 		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
 		{
 			BossHpWidget->UpdateHpBar(GameState->GetBossHp());
-			//UE_LOG(LogTemp, Warning, TEXT(" BOSS %f"), GameState->GetBossHp());
 			GameState->OnBossHpChanged.AddDynamic(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
 		}
 	}

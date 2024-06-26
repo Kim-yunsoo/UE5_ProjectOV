@@ -113,7 +113,7 @@ void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo Dam
 	FVector End = GetOwner()->GetActorForwardVector() * Length + Start;
 	FHitResult HitResult;
 	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, Radius, ObjectArray, false,ActorsToNotTargeting
-	,EDrawDebugTrace::ForDuration, HitResult,  true,
+	,EDrawDebugTrace::None, HitResult,  true,
 			FLinearColor::Red, FLinearColor::Green, 1.f);
 	if(bResult)
 	{

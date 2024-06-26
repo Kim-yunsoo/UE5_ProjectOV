@@ -29,6 +29,10 @@ protected:
 	UPROPERTY()
 	float CooldownRemaining;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UPROPERTY()
+	TObjectPtr<UParticleSystem> Emitter;
+	
 public:
 	virtual void SkillAction() override;
 };
