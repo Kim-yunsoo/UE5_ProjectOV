@@ -6,6 +6,9 @@
 #include "NavigationSystem.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Character/OVCharacterPlayer.h"
+#include "Character/AI/OVAIBoss.h"
+#include "Character/AI/OVCharacterNonPlayer.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Gimmick/OVDamageWidgetActor.h"
 #include "Interface/OVDamagableInterface.h"
@@ -20,16 +23,20 @@ class AAIController;
 UOVAttackComponent::UOVAttackComponent()
 {
 	static ConstructorHelpers::FObjectFinder<UNiagaraSystem> HitRef(
-TEXT("/Script/Niagara.NiagaraSystem'/Game/Vefects/Blood_VFX/VFX/Performance_Versions/Bullet_Hits/One_Shot/OS_NS_Bullet_Hit_Medium_Blue.OS_NS_Bullet_Hit_Medium_Blue'"));
+TEXT("/Script/Niagara.NiagaraSystem'/Game/SlashHitVFX/NS/NS_Hit_Stick.NS_Hit_Stick'"));
 
 	if (HitRef.Succeeded())
 	{
 		EmitterHit = HitRef.Object;
 	}
 	
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem> BossRef(
+TEXT("/Script/Niagara.NiagaraSystem'/Game/SlashHitVFX/NS/NS_Hit_Halberd.NS_Hit_Halberd'"));
 
-
-	
+	if (BossRef.Succeeded())
+	{
+		BossHit = BossRef.Object;
+	}
 }
 
 
@@ -74,7 +81,6 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 					Widget->SetDamage(DamageInfo.Amount);
 				}
 			}
-
 			UAISense_Damage::ReportDamageEvent(
 					GetWorld(),
 					HitResult.GetActor(),        
@@ -86,9 +92,13 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 				);
 			OnAttackEnded.Broadcast();
 		}
-		if(GetOwner()->IsA<AOVCharacterPlayer>())
+		if(Cast<AOVCharacterNonPlayer>(HitResult.GetActor()))
 		{
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, HitResult.Location, FRotator::ZeroRotator);
+		}
+		else if(Cast<AOVAIBoss>(HitResult.GetActor()))
+		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), BossHit, HitResult.Location, FRotator::ZeroRotator);
 		}
 	}
 }
@@ -103,7 +113,7 @@ void UOVAttackComponent::AttackSlash(float Radius, float Length, FDamageInfo Dam
 	FVector End = GetOwner()->GetActorForwardVector() * Length + Start;
 	FHitResult HitResult;
 	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, Radius, ObjectArray, false,ActorsToNotTargeting
-	,EDrawDebugTrace::None, HitResult,  true,
+	,EDrawDebugTrace::ForDuration, HitResult,  true,
 			FLinearColor::Red, FLinearColor::Green, 1.f);
 	if(bResult)
 	{
@@ -147,16 +157,16 @@ void UOVAttackComponent::AttackAOEStrike(FDamageInfo DamageInfo)
 void UOVAttackComponent::JumpTarget(AActor* AttackTarget)
 {
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
+	ACharacter* TargetCharacter = Cast<ACharacter>(AttackTarget);
 	if(OwnerCharacter && AttackTarget)
 	{
 		FVector Location = CalculateFutureActorLocation(AttackTarget, 1.0f);
 		FVector OutLaunchVelocity;
-		//UE_LOG(LogTemp, Warning, TEXT("%s"), *Location.ToString())
 		double BossTargetDistance = AttackTarget->GetDistanceTo(GetOwner());
 		BossTargetDistance = UKismetMathLibrary::NormalizeToRange(BossTargetDistance, 400, 800);
 		BossTargetDistance = UKismetMathLibrary::FClamp(BossTargetDistance, 0.0, 1.0);
 		BossTargetDistance = UKismetMathLibrary::Lerp(0.5, 0.94, BossTargetDistance);
-		Location.Z += 50;
+		Location.Z += TargetCharacter->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
 		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), OutLaunchVelocity, GetOwner()->GetActorLocation(),Location, 0.0, BossTargetDistance );
 		OwnerCharacter->LaunchCharacter(OutLaunchVelocity, true, true);
 		OwnerCharacter->LandedDelegate.AddDynamic(this, &UOVAttackComponent::OnCharacterLanded);

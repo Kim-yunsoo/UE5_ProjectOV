@@ -52,5 +52,7 @@ public:
 	UPROPERTY()
 	TObjectPtr<UNiagaraSystem> EmitterHit;
 
-
+	UPROPERTY()
+	TObjectPtr<UNiagaraSystem> BossHit;
+	
 };

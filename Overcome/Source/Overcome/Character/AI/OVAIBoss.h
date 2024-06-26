@@ -93,7 +93,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	EAIState AIState;
 
-
 public:
 	UFUNCTION()
 	virtual void SetState(EAIState AIStateValue) override;

@@ -3,6 +3,7 @@
 
 #include "Skill/OVTeleportSkill.h"
 #include "Character/OVCharacterPlayer.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 UOVTeleportSkill::UOVTeleportSkill()
@@ -48,8 +49,24 @@ void UOVTeleportSkill::SkillAction()
 {
 	UE_LOG(LogSkillCharacter, Log, TEXT("StartTeleportSkill"));
 	Super::SkillAction();
-	FVector TargetLocation = GetOwner()->GetActorLocation() + GetOwner()->GetActorForwardVector() * TeleportOffset;
-	GetOwner()->TeleportTo(TargetLocation, GetOwner()->GetActorRotation(), false, true);
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
+	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
+	TArray<AActor*> ActorsToNotTargeting;
+	ActorsToNotTargeting.Add(GetOwner());
+	FVector Start = GetOwner()->GetActorLocation();
+	FVector End = GetOwner()->GetActorForwardVector() * TeleportOffset + Start;
+	FHitResult HitResult;
+	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, 40, ObjectArray, false,ActorsToNotTargeting
+	,EDrawDebugTrace::ForDuration, HitResult,  true,
+			FLinearColor::Red, FLinearColor::Green, 1.f);
+	if(bResult)
+	{
+		GetOwner()->TeleportTo(HitResult.Location, GetOwner()->GetActorRotation(), false, true);
+	}
+	else
+	{
+		GetOwner()->TeleportTo(End, GetOwner()->GetActorRotation(), false, true);
+	}
 	
 	FTimerHandle Handle;
 	GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]

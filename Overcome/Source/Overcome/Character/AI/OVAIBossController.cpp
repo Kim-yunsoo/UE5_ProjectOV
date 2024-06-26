@@ -75,12 +75,17 @@ void AOVAIBossController::OnPossess(APawn* InPawn)
 
 void AOVAIBossController::SetPerceptionSystem()
 {
-	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
+	const FString AIPerceptionName = TEXT("AIPerception");
+	const FString SightConfigName = TEXT("SightConfig");
+	const FString SoundConfigName = TEXT("SoundConfig");
+	const FString DamageConfigName = TEXT("DamageConfig");
+	
+	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(*AIPerceptionName);
 
 	if(AIPerception)
 	{
 		//시각
-			UAISenseConfig_Sight* SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
+		UAISenseConfig_Sight* SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(*SightConfigName);
 			SightConfig->SightRadius = 800;
 			SightConfig->LoseSightRadius = 1200;
 			SightConfig->PeripheralVisionAngleDegrees = 60;
@@ -92,7 +97,7 @@ void AOVAIBossController::SetPerceptionSystem()
 
 
 		//청각
-			UAISenseConfig_Hearing* SoundConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("SoundConfig"));
+		UAISenseConfig_Hearing* SoundConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(*SoundConfigName);
 			SoundConfig->HearingRange = 500.f;
 			SoundConfig->SetMaxAge(3.0);
 			SoundConfig->DetectionByAffiliation.bDetectEnemies = true;
@@ -101,7 +106,7 @@ void AOVAIBossController::SetPerceptionSystem()
 			AIPerception->ConfigureSense(*SoundConfig);
 		
 		// 데미지
-			UAISenseConfig_Damage* DamageConfig = CreateDefaultSubobject<UAISenseConfig_Damage>(TEXT("DamageConfig"));
+		UAISenseConfig_Damage* DamageConfig = CreateDefaultSubobject<UAISenseConfig_Damage>(*DamageConfigName);
 			DamageConfig->SetMaxAge(5.0);
 			AIPerception->ConfigureSense(*DamageConfig);
 

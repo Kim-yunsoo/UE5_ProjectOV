@@ -28,7 +28,7 @@ AOVGameMode::AOVGameMode()
 	Battery = 3;
 
 	MainSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Main.Main'"));
-	//AudioComponent = UGameplayStatics::SpawnSound2D(GetWorld(), MainSound);
+	AudioComponent = UGameplayStatics::SpawnSound2D(GetWorld(), MainSound);
 	BossSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Boss.Boss'"));
 }
 
@@ -62,6 +62,6 @@ void AOVGameMode::UnloadOldLevel()
 	LatentActionInfo.Linkage = 0;
 	LatentActionInfo.ExecutionFunction = LevelName;
 	UGameplayStatics::UnloadStreamLevel(GetWorld(), "MainMap", LatentActionInfo, false);
-	//AudioComponent->Stop();
+	AudioComponent->Stop();
 	UGameplayStatics::PlaySound2D(GetWorld(), BossSound);
 }

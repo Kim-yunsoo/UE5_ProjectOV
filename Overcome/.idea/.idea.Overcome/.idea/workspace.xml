@@ -8,13 +8,151 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18d6e7f6-fd27-49b4-b72a-a28b2aed8a6d" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BehaviorTress/BT_Enemy_Boss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Aluminum01.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Aluminum01.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Aluminum01_N.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Aluminum01_N.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Rubber_Blue_01_D.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Rubber_Blue_01_D.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Rubber_Blue_01_N.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Rubber_Blue_01_N.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UE4_Mannequin_MAT_MASKA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UE4_Mannequin_MAT_MASKA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UE4_Mannequin__normals.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UE4_Mannequin__normals.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UELogo_Mask.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UELogo_Mask.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UELogo_N_TGA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UELogo_N_TGA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_ASAOPMASK_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_ASAOPMASK_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_BN.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_BN.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_CCRCCPlastic_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_CCRCCPlastic_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_D.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_D.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_MSR_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_MSR_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_N.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_N.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_Tan.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_Tan.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_ASAOPMASK_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_ASAOPMASK_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_BN.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_BN.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_CCRCCPlastic_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_CCRCCPlastic_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_D.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_D.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_MSR_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_MSR_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_N.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_N.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_Tan.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_Tan.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_BN.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_BN.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_D.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_D.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_MSR_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_MSR_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_N.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_N.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_Tan.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_Tan.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01_ASAOMASK_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01_ASAOMASK_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01_CCRCCPlastic_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01_CCRCCPlastic_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_BN.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_BN.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_D.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_D.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_MSR_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_MSR_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_N.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_N.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_Tan.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_Tan.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02_ASAOMASK_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02_ASAOMASK_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02_CCRCCPlastic_MSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02_CCRCCPlastic_MSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Shared/T_UE_Logo_M.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Shared/T_UE_Logo_M.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_BasicDot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_BasicDot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Center_Flare_02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Center_Flare_02.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Center_flash02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Center_flash02.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_CircleCenter_bg.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_CircleCenter_bg.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_CircleDot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_CircleDot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Circle_Fist.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Circle_Fist.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Circle_Stick.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Circle_Stick.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_EletricThunder.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_EletricThunder.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_Jet_09.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_Jet_09.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_PhoenixTail.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_PhoenixTail.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_WaterRing.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_WaterRing.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_fireball.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_fireball.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_thunder01.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_thunder01.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_trail_07.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_trail_07.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_waterlight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Energy_waterlight.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Ground_Cave.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Ground_Cave.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Ground_Fire.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Ground_Fire.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Lightning014_D.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Lightning014_D.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_01.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_01.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_05.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_05.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_07.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_07.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_3Distort.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_3Distort.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_Cell03.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_Cell03.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_Fire01.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_Fire01.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_Water.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_Water.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_WaterNrm.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_WaterNrm.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_caustic.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_caustic.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_cell_.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_cell_.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_wave.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Noise_wave.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Electric_33.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Electric_33.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Electric_43.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Electric_43.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Electrical_33.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Electrical_33.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Ember_44.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Ember_44.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_HitWhip_55.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_HitWhip_55.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_OnmiLightning_44.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_OnmiLightning_44.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Smoke02_88.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Smoke02_88.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Thunder_44.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Thunder_44.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Water02_71.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Water02_71.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Water02_71_swap.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_Water02_71_swap.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_WaterDrop_44.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_WaterDrop_44.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_engrywindBigBG_44.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_engrywindBigBG_44.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_firestand_88.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_firestand_88.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_flame_66.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_flame_66.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_flash_14.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_flash_14.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_flash_22.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_flash_22.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_lighting03_24.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_lighting03_24.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_lighting14.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_lighting14.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_smalllighting_19.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stamp_smalllighting_19.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_Gush.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_Gush.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_Splash_Water.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_Splash_Water.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_WaterFallFluid.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_WaterFallFluid.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_WaterFallFluid_gray.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_WaterFallFluid_gray.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_splash_03.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_Stuff_splash_03.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_Eletric_02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_Eletric_02.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_SoundWave.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_SoundWave.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_Trail006.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_Trail006.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_WaterFallFluid_Gray.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_WaterFallFluid_Gray.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_WaterFallFuild.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_WaterFallFuild.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_band.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVS_band.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVs_flow03.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_UVs_flow03.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_bullet_01_b.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_bullet_01_b.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_center_03.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_center_03.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_stamp_fog3_88.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_stamp_fog3_88.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_stamp_fog4_88.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_stamp_fog4_88.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_stuff_Crack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/EnergyBeam/_GenericSource/Texture/T_Vfx_stuff_Crack.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/IMC_OV_Shoulder.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Textures/T_GridChecker_A.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/Textures/T_GridChecker_A.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/EmptyMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/MainMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/MainMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/BossDead3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/bossdead.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/bossdead2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/bossdead4.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/victory.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/BossDead/victory.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/victory1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/BossDead/victory1.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/victory2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/BossDead/victory2.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/victory3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/BossDead/victory3.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/BossDead/victoryimage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/BossDead/victoryimage.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Restart/GameOver.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Restart/GameOver.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Restart/Gameoverimage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Restart/Gameoverimage.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/E.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/E.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/GunSkill.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/GunSkill.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/Gun_Blue.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/Gun_Blue.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/Q.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/Q.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/R.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/R.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/Shield1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/Shield1.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/ShieldSkill.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/ShieldSkill.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/Teleport.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/Teleport.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/TeleportSkill.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/TeleportSkill.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Skill/shape.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Skill/shape.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Start/BtnBackground.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Start/BtnBackground.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Start/Btnstroke.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Start/Btnstroke.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Start/Overcomeimage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Start/Overcomeimage.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Start/Title3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Start/Title3.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/T_Battery0.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/T_Battery0.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/Target2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/Target2.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/target.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/target.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UMG/target3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UMG/target3.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBoss.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/AI/OVAIBossController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Component/OVAttackComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Game/OVGameMode.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Interface/OVDamagableInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Interface/OVDamagableInterface.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Skill/OVTeleportSkill.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,26 +210,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ 프로젝트.Overcome.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ 프로젝트.Overcome.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\ingyeong\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\ingyeong\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\ingyeong\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CidrLocalAttachDebugger.recentlyUsed">
       <recent name="com.jetbrains.rider.cpp.debugger.RiderCppLLDBDriverConfiguration" />
@@ -213,6 +351,9 @@
       <workItem from="1719262183419" duration="410000" />
       <workItem from="1719262654158" duration="224000" />
       <workItem from="1719263425527" duration="13993000" />
+      <workItem from="1719285259354" duration="9183000" />
+      <workItem from="1719359494586" duration="5042000" />
+      <workItem from="1719368967407" duration="13907000" />
     </task>
     <servers />
   </component>
