@@ -5,6 +5,7 @@
 #include "BrainComponent.h"
 #include "NavigationSystem.h"
 #include "OVAIBossController.h"
+#include "OVAIController.h"
 #include "AI/OVAI.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -16,7 +17,6 @@
 #include "Component/OVAttackComponent.h"
 #include "Component/OVCharacterStatComponent.h"
 #include "Component/OVDamageComponent.h"
-#include "Gimmick/OVDamageWidgetActor.h"
 
 AOVAIBoss::AOVAIBoss()
 {
@@ -60,6 +60,12 @@ void AOVAIBoss::BeginPlay()
 void AOVAIBoss::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	if(GameState->GetCharacterDead())
+	{
+		BossController->GetBrainComponent()->StopLogic(TEXT("Dead"));
+		BossController->StopAI();
+	}
 }
 
 void AOVAIBoss::SetAIDefaultAttackDelegate(const FAIEnemyAttackFinished& InOnAttackFinished)
