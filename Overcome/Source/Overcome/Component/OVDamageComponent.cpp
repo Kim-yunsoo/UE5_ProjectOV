@@ -41,22 +41,21 @@ bool UOVDamageComponent::TakeDamage(FDamageInfo DamageInfo)
 			if (Health <= 0)
 			{
 				bIsDead = true;
-				OnDeath.Broadcast(); 
-				return true;
+				OnDeath.Broadcast();
+				return false;
 			}
 			if (bIsInterruptible || DamageInfo.ShouldForceInterrupt)
 			{
 				OnDamageResponse.Broadcast(DamageInfo.DamageResponse);
 				return true;
 			}
-			break;
+			return true;
 		}
 	case EDamageResult::NoDamage:
 		return false;
 	default:
 		return false;
 	}
-	return false;
 }
 
 

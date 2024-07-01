@@ -55,7 +55,7 @@ void UOVHUDWidget::NativeConstruct()
 	{
 		GameState->OnBossAttackState.AddDynamic(this, &UOVHUDWidget::UpdateBossUI);
 	}
-	Battery = 5;
+	Battery = 0;
 	bIsMenuVisible  = false;
 	if(DeadWidget)
 		DeadWidget->SetVisibility(ESlateVisibility::Hidden);
@@ -108,6 +108,7 @@ void UOVHUDWidget::ResumeMenu()
 {
 	{
 		ResumeWidget->SetVisibility(ESlateVisibility::Visible);
+		ToggleMenu();
 		const FInputModeGameAndUI InputMode;
 		GetOwningPlayer()->SetInputMode(InputMode);
 		GetOwningPlayer()->SetShowMouseCursor(true);

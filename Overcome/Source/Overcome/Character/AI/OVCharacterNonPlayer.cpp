@@ -88,8 +88,8 @@ AOVCharacterNonPlayer::AOVCharacterNonPlayer()
 
 	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
 	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
-	Stat->SetMaxHp(50);
-	DamageComponent->SetMaxHealth(50);
+	Stat->SetMaxHp(100);
+	DamageComponent->SetMaxHealth(100);
 	bIsAttacking = false;
 	
 	//GetMesh()->SetOverlayMaterial(MPPotionMaterial);

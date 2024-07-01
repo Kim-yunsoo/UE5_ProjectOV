@@ -66,6 +66,8 @@ FReply UOVInventoryItemSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry
 	}
 	else if(InMouseEvent.GetEffectingButton() == EKeys::RightMouseButton)
 	{
+		if(ItemReference->ItemType == EItemType::Battery)
+			return Reply.Unhandled();
 		AOVCharacterPlayer* PlayerCharacter = Cast<AOVCharacterPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		if (PlayerCharacter)
 		{

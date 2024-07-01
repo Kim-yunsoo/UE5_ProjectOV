@@ -3,6 +3,7 @@
 
 #include "Skill/OVTeleportSkill.h"
 #include "Character/OVCharacterPlayer.h"
+#include "Character/AI/OVCharacterNonPlayer.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Particles/ParticleSystem.h"
@@ -61,17 +62,14 @@ void UOVTeleportSkill::SkillAction()
 	UE_LOG(LogSkillCharacter, Log, TEXT("StartTeleportSkill"));
 	Super::SkillAction();
 	
-	UParticleSystemComponent* ParticleSystemComponent = UGameplayStatics::SpawnEmitterAtLocation(
-		   GetWorld(), Emitter, GetOwner()->GetActorLocation() + GetOwner()->GetActorForwardVector() *600, FRotator(0, 90, 0));
-
-	ParticleSystemComponent->SetWorldScale3D(FVector(2.0f, 2.0f, 2.0f));
-
-
-	
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
 	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
 	TArray<AActor*> ActorsToNotTargeting;
 	ActorsToNotTargeting.Add(GetOwner());
+	AOVCharacterNonPlayer *NonPlayer = Cast<AOVCharacterNonPlayer>(GetOwner());
+	if(NonPlayer)
+		ActorsToNotTargeting.Add(NonPlayer);
+	
 	FVector Start = GetOwner()->GetActorLocation();
 	FVector End = GetOwner()->GetActorForwardVector() * TeleportOffset + Start;
 	FHitResult HitResult;
@@ -81,10 +79,17 @@ void UOVTeleportSkill::SkillAction()
 	if(bResult)
 	{
 		GetOwner()->TeleportTo(HitResult.Location, GetOwner()->GetActorRotation(), false, true);
+		UParticleSystemComponent* ParticleSystemComponent = UGameplayStatics::SpawnEmitterAtLocation(
+	   GetWorld(), Emitter, HitResult.Location, FRotator(0, 90, 0));
+
+		ParticleSystemComponent->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
 	}
 	else
 	{
 		GetOwner()->TeleportTo(End, GetOwner()->GetActorRotation(), false, true);
+		UParticleSystemComponent* ParticleSystemComponent = UGameplayStatics::SpawnEmitterAtLocation(
+			   GetWorld(), Emitter, GetOwner()->GetActorLocation(), FRotator(0, 90, 0));
+		ParticleSystemComponent->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
 	}
 	
 	FTimerHandle Handle;

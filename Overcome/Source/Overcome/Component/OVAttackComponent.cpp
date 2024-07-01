@@ -3,9 +3,7 @@
 
 #include "Component/OVAttackComponent.h"
 
-#include "NavigationSystem.h"
 #include "NiagaraFunctionLibrary.h"
-#include "Character/OVCharacterPlayer.h"
 #include "Character/AI/OVAIBoss.h"
 #include "Character/AI/OVCharacterNonPlayer.h"
 #include "Components/CapsuleComponent.h"
@@ -16,7 +14,6 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Perception/AISense_Damage.h"
-#include "Player/OVPlayerController.h"
 
 class AAIController;
 
@@ -65,22 +62,25 @@ void UOVAttackComponent::FireBullet(FVector Start, FVector End, FDamageInfo Dama
 		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
 		if(DamagableInterface)
 		{
-			DamagableInterface->TakeDamage(DamageInfo);
-			FActorSpawnParameters SpawnParams;
-			AOVDamageWidgetActor* DamageActor = GetWorld()->SpawnActor<AOVDamageWidgetActor>(AOVDamageWidgetActor::StaticClass() , HitResult.Location, FRotator::ZeroRotator, SpawnParams );
-			if (DamageActor)
+			if(DamagableInterface->TakeDamage(DamageInfo))
 			{
-				ACharacter *Character = Cast<ACharacter>(HitResult.GetActor());
-				DamageActor->AttachToComponent(Character->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
-				FVector Loc = HitResult.Location;
-				DamageActor->SetActorLocation(Loc);
-
-				AOVDamageWidgetActor* Widget = Cast<AOVDamageWidgetActor>(DamageActor);
-				if (Widget)
+				FActorSpawnParameters SpawnParams;
+				AOVDamageWidgetActor* DamageActor = GetWorld()->SpawnActor<AOVDamageWidgetActor>(AOVDamageWidgetActor::StaticClass() , HitResult.Location, FRotator::ZeroRotator, SpawnParams );
+				if (DamageActor)
 				{
-					Widget->SetDamage(DamageInfo.Amount);
+					ACharacter *Character = Cast<ACharacter>(HitResult.GetActor());
+					DamageActor->AttachToComponent(Character->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+					FVector Loc = HitResult.Location;
+					DamageActor->SetActorLocation(Loc);
+
+					AOVDamageWidgetActor* Widget = Cast<AOVDamageWidgetActor>(DamageActor);
+					if (Widget)
+					{
+						Widget->SetDamage(DamageInfo.Amount);
+					}
 				}
 			}
+			
 			UAISense_Damage::ReportDamageEvent(
 					GetWorld(),
 					HitResult.GetActor(),        
@@ -157,7 +157,6 @@ void UOVAttackComponent::AttackAOEStrike(FDamageInfo DamageInfo)
 void UOVAttackComponent::JumpTarget(AActor* AttackTarget)
 {
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
-	ACharacter* TargetCharacter = Cast<ACharacter>(AttackTarget);
 	if(OwnerCharacter && AttackTarget)
 	{
 		FVector Location = CalculateFutureActorLocation(AttackTarget, 1.0f);
@@ -166,7 +165,7 @@ void UOVAttackComponent::JumpTarget(AActor* AttackTarget)
 		BossTargetDistance = UKismetMathLibrary::NormalizeToRange(BossTargetDistance, 400, 800);
 		BossTargetDistance = UKismetMathLibrary::FClamp(BossTargetDistance, 0.0, 1.0);
 		BossTargetDistance = UKismetMathLibrary::Lerp(0.5, 0.94, BossTargetDistance);
-		Location.Z += TargetCharacter->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+		Location.Z += OwnerCharacter->GetCapsuleComponent()->GetScaledCapsuleHalfHeight()+15;
 		UGameplayStatics::SuggestProjectileVelocity_CustomArc(GetWorld(), OutLaunchVelocity, GetOwner()->GetActorLocation(),Location, 0.0, BossTargetDistance );
 		OwnerCharacter->LaunchCharacter(OutLaunchVelocity, true, true);
 		OwnerCharacter->LandedDelegate.AddDynamic(this, &UOVAttackComponent::OnCharacterLanded);

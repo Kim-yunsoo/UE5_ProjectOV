@@ -9,7 +9,7 @@
 
 UOVBatteryWidget::UOVBatteryWidget(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {
-	Battery = 3;
+	Battery = 0;
 }
 
 FString UOVBatteryWidget::PrintBatteryCount()

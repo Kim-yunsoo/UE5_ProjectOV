@@ -24,8 +24,8 @@ AOVGameMode::AOVGameMode()
 
 	FLatentActionInfo LatentInfo;
 	UGameplayStatics::LoadStreamLevel(this, "MainMap", true, false, LatentInfo) ;
-	GoalCount = 0;
-	Battery = 3;
+	GoalCount = 3;
+	Battery = 0;
 
 	MainSound = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Sound/Main.Main'"));
 	AudioComponent = UGameplayStatics::SpawnSound2D(GetWorld(), MainSound);

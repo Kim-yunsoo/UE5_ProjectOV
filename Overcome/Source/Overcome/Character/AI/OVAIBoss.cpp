@@ -211,13 +211,14 @@ float AOVAIBoss::Heal(float Amount)
 bool AOVAIBoss::TakeDamage(FDamageInfo DamageInfo) //영향 받음
 {
 	//UE_LOG(LogTemp, Warning, TEXT("TakeDamage"));
-	DamageComponent->TakeDamage(DamageInfo);
+	bool Attack = DamageComponent->TakeDamage(DamageInfo);
+	UE_LOG(LogTemp, Warning, TEXT("%d"), Attack);
 	// FActorSpawnParameters SpawnParams;
 	// SpawnParams.Owner = this;
 	// AOVDamageWidgetActor* DamageWidget = GetWorld()->SpawnActor<AOVDamageWidgetActor>(AOVDamageWidgetActor::StaticClass() , DamageInfo.Location, GetActorRotation(), SpawnParams );
 	// DamageWidget->SetDamage(DamageInfo.Amount);
 	Stat->SetHp(DamageComponent->Health);
-	return true;
+	return Attack;
 }
 
 bool AOVAIBoss::IsDead()

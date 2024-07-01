@@ -194,16 +194,7 @@ TEXT("/Script/Niagara.NiagaraSystem'/Game/Vefects/Shots_VFX/VFX/MuzzleFlash/Loop
 	//Gun
 	Gun = CreateDefaultSubobject<AOVGun>(TEXT("Gun"));
 	bIsGun = true;
-	//bIsGunRepeat = false;
-	//Item Action
-	// TakeItemActions.Add(
-	// 	FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
-	// TakeItemActions.Add(
-	// 	FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkMp)));
-	// TakeItemActions.Add(
-	// 	FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkAttack)));
-	// TakeItemActions.
-	// 	Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::Damage)));
+
 
 	//Skill
 	TeleportSkillComponent = CreateDefaultSubobject<UOVTeleportSkill>(TEXT("TeleSkillComponent"));
@@ -434,7 +425,7 @@ void AOVCharacterPlayer::StopAiming(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
 {
-	if (!bIsAiming)
+	if (!bIsAiming && bIsActiveShieldSkill)
 	{
 		bPressedJump = true;
 		JumpKeyHoldTime = 0.0f;

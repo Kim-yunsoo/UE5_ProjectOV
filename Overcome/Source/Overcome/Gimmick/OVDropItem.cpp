@@ -21,7 +21,7 @@ AOVDropItem::AOVDropItem()
 	}
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
 	Trigger->SetupAttachment(Mesh);
-	Battery = 3;
+	Battery = 0;
 }
 
 void AOVDropItem::BeginPlay()
@@ -40,7 +40,7 @@ void AOVDropItem::OnTriggerEnter(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	{
 		if (AOVGameMode* GameMode = Cast<AOVGameMode>(GetWorld()->GetAuthGameMode()))
 		{
-			Battery -=1;
+			Battery +=1;
 			GameMode->SetBatteryCount(Battery);
 		}
 	}

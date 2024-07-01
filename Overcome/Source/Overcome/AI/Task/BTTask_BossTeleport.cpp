@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "AI/OVAI.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Character/AI/OVAIBoss.h"
+#include "Components/CapsuleComponent.h"
 #include "Interface/OVEnemyAIInterface.h"
 
 UBTTask_BossTeleport::UBTTask_BossTeleport()
@@ -32,17 +34,18 @@ EBTNodeResult::Type UBTTask_BossTeleport::ExecuteTask(UBehaviorTreeComponent& Ow
 	OnTeleportFinished.BindLambda(
 		[&]()
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("BossTelePortEnd"));
 			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); //마무리 했다
 		}
 	);
 	FVector Location = {0,0,150};
-	//UE_LOG(LogTemp, Warning, TEXT("Location True"));
 	AActor* AttackTarget = Cast<AActor>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(BBKEY_ATTACKTARGET));
 	if (AttackTarget)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Location True"));
 		Location = AttackTarget->GetActorLocation();
+		AOVAIBoss* Boss = Cast<AOVAIBoss>(ControllingPawn);
+		Location.Z += Boss->GetCapsuleComponent()->GetScaledCapsuleHalfHeight()+15;
+
 	}
 	AIPawn->SetAITeleportDelegate(OnTeleportFinished);
 	AIPawn->BossTeleport(Location);
