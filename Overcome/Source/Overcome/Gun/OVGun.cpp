@@ -71,18 +71,15 @@ void AOVGun::PullTrigger()
 
 		// 나이아가라 시스템을 소켓 위치에서 스폰
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), MuzzleEffect, MuzzleLocation, MuzzleRotation);
-		UE_LOG(LogTemp, Warning, TEXT("HAPPY"));
 	}
-	UE_LOG(LogTemp, Warning, TEXT("HAPPY"));
 
 	FHitResult Hit;
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
 
-	if (bSuccess) //이득우 교수님 AI 플레이어
+	if (bSuccess) 
 	{
 		
 		FVector ShotDirection = -Rotation.Vector();
-		//DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
 		AOVCharacterNonPlayer* HitActor = Cast<AOVCharacterNonPlayer>(Hit.GetActor());
 		if (HitActor != nullptr)
 		{

@@ -47,7 +47,6 @@ void UOVItemBase::SetQuantity(const int32 NewQuantity)
 		}
 		else
 		{
-			//UE_LOG(LogTemp,Error,TEXT("ItemBase OwningInventory was null! "));
 		}
 	}
 }

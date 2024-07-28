@@ -94,7 +94,6 @@ float AOVCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 
 void AOVCharacterBase::SetDead()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("DEAD!!!"));
 	SetActorEnableCollision(false);
 	//HpBar->SetHiddenInGame(true);
 	// Destroy(this);
@@ -115,7 +114,6 @@ void AOVCharacterBase::SetupCharacterWidget(UOVUserWidget* InUserWidget)
 
 void AOVCharacterBase::NotifyActionEnd()
 {
-	//attack이 끝나면 이 함수 호출
 }
 
 
