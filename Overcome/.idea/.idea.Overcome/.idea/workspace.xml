@@ -9,13 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b564e6e1-5723-4e5b-95e4-24837e347466" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Overcome/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Potion/BP_OVPickUpBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Potion/BP_OVPickUpBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ItemData/DT_ItemData.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/YSMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/YSMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterPlayer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Object/OVPickup.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Overcome/Character/OVCharacterBase.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,6 +178,7 @@
       <workItem from="1716809747815" duration="22016000" />
       <workItem from="1716887200569" duration="860000" />
       <workItem from="1716888748013" duration="22455000" />
+      <workItem from="1721823702073" duration="1979000" />
     </task>
     <servers />
   </component>
