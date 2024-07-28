@@ -30,7 +30,6 @@ UOVItemBase* UOVItemBase::CreateItemCopy() const  //원본을 복사한다. 그 사본을 �
 	return ItemCopy;
 	
 }
-
 void UOVItemBase::SetQuantity(const int32 NewQuantity)
 {
 	if(NewQuantity!=Quantity)
