@@ -7,29 +7,18 @@
 #include "EnvironmentQuery/EnvQueryTypes.h"
 #include "OVItemData.generated.h"
 
-
-// UENUM()
-// enum class EItemQuality :uint8 //æ∆¿Ã≈€¿Ã æÓ∂≤ ªÛ≈¬¿Œ¡ˆ ø≠∞≈«¸ 
-// {
-// 	Shoddy UMETA(DisplayName = "Shoddy"),
-// 	Common UMETA(DisplayName = "Common"),
-// 	Quality UMETA(DisplayName = "Quality"),
-// 	Masterwork UMETA(DisplayName = "Masterwork"),
-// 	Grandmaster UMETA(DisplayName = "Grandmaster"),
-// };
-
 UENUM()
-enum class EItemType : uint8 //π´±‚ ¡æ∑˘
+enum class EItemType : uint8 //Î¨¥Í∏∞ Ï¢ÖÎ•ò
 {
 	HPPotion UMETA(DisplayName = "HPPotion"),
 	MPPotion UMETA(DisplayName = "MPPotion"),
 	AttackPotion UMETA(DisplayName = "AttackPotion"),
 	Bullet UMETA(DisplayName = "Bullet"),
-	//Bullet UMETA(DisplayName = "Bullet"),
+	Battery UMETA(DisplayName = "Battery")
 };
 
 USTRUCT()
-struct FItemStatistics // æ∆¿Ã≈€ »ø∞˙ 
+struct FItemStatistics // ÏïÑÏù¥ÌÖú Ìö®Í≥º 
 {
 	GENERATED_USTRUCT_BODY()
 	
@@ -52,6 +41,7 @@ struct FItemTextData
 	UPROPERTY(EditAnyWhere)
 	FText UsageText;
 };
+
 USTRUCT()
 struct FItemNumericData
 {
@@ -96,7 +86,4 @@ struct FItemData: public FTableRowBase
 
 	UPROPERTY(EditAnyWhere,Category="Item Data")
 	FItemAssetData AssetData;
-
-
-	
 };

@@ -16,7 +16,7 @@ enum class EInteractableType : uint8
 	Pickup UMETA(DisplayName = "Pickup"),
 	NonPlayerCharacter UMETA(DisplayName = "NonPlayerCharacter"), 
 	Device UMETA(DisplayName = "Device"),
-	Toggle UMETA(DisplayName = "Toggle"), //ÀåÄ¡¸¦ È°¼ºÈ­ÇÏ°Å³ª ´Ù¸¥ ±â´ÉÀ» È°¼ºÈ­
+	Toggle UMETA(DisplayName = "Toggle"), //ï¿½ï¿½Ä¡ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Ï°Å³ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
 	Container UMETA(DisplayName = "Container")
 };
 
@@ -24,16 +24,13 @@ USTRUCT()
 struct FInteractableData
 {
 	GENERATED_BODY()
-	//»óÈ£ÀÛ¿ë °¡´É À¯Çü Á¤º¸ ±¸Á¶Ã¼ »ý¼ºÀÚ
+	//ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	FInteractableData() :
 	InteractableType(EInteractableType::Pickup),
 	Name(FText::GetEmpty()),
 	Action(FText::GetEmpty()),
 	Quantity(0),
-	InteractionDuration(0.0f)
-	{
-		
-	};
+	InteractionDuration(0.0f){};
 
 	
 	UPROPERTY(EditInstanceOnly)
@@ -49,7 +46,7 @@ struct FInteractableData
 	UPROPERTY(EditInstanceOnly)
 	int32 Quantity;
 
-	//door.. ÀÎÅÍ·ºÆ® ½Ã°£ ¼³Á¤ 
+	//door.. ï¿½ï¿½ï¿½Í·ï¿½Æ® ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	UPROPERTY(EditInstanceOnly)
 	float InteractionDuration;
 	

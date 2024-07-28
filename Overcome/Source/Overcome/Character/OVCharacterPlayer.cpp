@@ -11,18 +11,28 @@
 #include "EnhancedInputSubsystems.h"
 #include "Gun/OVGun.h"
 #include "OVCharacterControlData.h"
-#include "Interface/OVInteractionInterface.h"
+#include "Component/OVDamageComponent.h"
+#include "Game/OVGameState.h"
 #include "Net/UnrealNetwork.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "Interface/OVInteractionInterface.h"
 #include "Skill/OVShieldSkill.h"
 #include "Skill/OVTeleportSkill.h"
-#include "Stat/OVCharacterStatComponent.h"
+#include "Component/OVAttackComponent.h"
+#include "Component/OVCharacterStatComponent.h"
+#include "UI/OVBossHpWidget.h"
 #include "UI/OVHUDWidget.h"
 #include "UI/OVStatWidget.h"
 #include "DrawDebugHelpers.h"
+#include "NiagaraFunctionLibrary.h"
 #include "Component/OVInventoryComponent.h"
+#include "Game/OVGameMode.h"
+#include "Item/OVItemBase.h"
 #include "Object/OVPickup.h"
 #include "Player/OVPlayerController.h"
+#include "Skill/OVGunSkill.h"
+#include "UI/OVDeadWidget.h"
 
 DEFINE_LOG_CATEGORY(LogOVCharacter);
 
@@ -31,14 +41,15 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 	//Camera
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 250.0f;
+	CameraBoom->TargetArmLength = 300.0f;
 	CameraBoom->bUsePawnControlRotation = true;
-	CameraBoom->SocketOffset = FVector(0.0, 80.0, 50.0);
-
+	CameraBoom->SocketOffset = FVector(0.0, 60.0, 60.0);
+	CameraBoom->bEnableCameraLag = false;
+	
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
-
+	
 	// Input
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionJumpRef(
 		TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Jump.IA_OV_Jump'"));
@@ -116,6 +127,19 @@ AOVCharacterPlayer::AOVCharacterPlayer()
 		ShieldAction = ShieldActionRef.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UInputAction> HealActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_HealSkill.IA_OV_HealSkill'"));
+	if (nullptr != HealActionRef.Object)
+	{
+		 HealAction = HealActionRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> GunRepeatRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_GunRepeat.IA_OV_GunRepeat'"));
+	if (nullptr != GunRepeatRef.Object)
+	{
+		GunRepeatAction = GunRepeatRef.Object;
+	}
+	
+
 	static ConstructorHelpers::FObjectFinder<UInputAction> InteractionActionRef(
 	TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Interact.IA_OV_Interact'"));
 	if (nullptr != InteractionActionRef.Object)
@@ -128,6 +152,35 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ToggleMenu.IA_
 	if (nullptr != ToggleMenuTabRef.Object)
 	{
 		ToggleMenuTab = ToggleMenuTabRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> ItemUseRef(
+TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ItemUse.IA_OV_ItemUse'"));
+	if (nullptr != ItemUseRef.Object)
+	{
+		ItemUseAction = ItemUseRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> RollActionRef(
+TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Roll.IA_OV_Roll'"));
+	if (nullptr != RollActionRef.Object)
+	{
+		RollAction = RollActionRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> ResumeActionRef(
+TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_Resume.IA_OV_Resume'"));
+	if (nullptr != ResumeActionRef.Object)
+	{
+		ResumeAction = ResumeActionRef.Object;
+	}
+	
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem> MuzzleEffectRef(
+TEXT("/Script/Niagara.NiagaraSystem'/Game/Vefects/Shots_VFX/VFX/MuzzleFlash/Looped/FX_MuzzleFlash_Rifle_Custom.FX_MuzzleFlash_Rifle_Custom'"));
+
+	if (MuzzleEffectRef.Succeeded())
+	{
+		MuzzleEffect = MuzzleEffectRef.Object;
 	}
 	
 	CurrentCharacterControlType = ECharacterControlType::Shoulder;
@@ -142,15 +195,6 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ToggleMenu.IA_
 	Gun = CreateDefaultSubobject<AOVGun>(TEXT("Gun"));
 	bIsGun = true;
 
-	//Item Action
-	TakeItemActions.Add(
-		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkHp)));
-	TakeItemActions.Add(
-		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkMp)));
-	TakeItemActions.Add(
-		FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::DrinkAttack)));
-	TakeItemActions.
-		Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AOVCharacterPlayer::Damage)));
 
 	//Skill
 	TeleportSkillComponent = CreateDefaultSubobject<UOVTeleportSkill>(TEXT("TeleSkillComponent"));
@@ -159,22 +203,40 @@ TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_OV_ToggleMenu.IA_
 	ShieldSkillComponent = CreateDefaultSubobject<UOVShieldSkill>(TEXT("ShieldSkillComponent"));
 	bIsActiveShieldSkill = true;
 
+	GunSkillComponent = CreateDefaultSubobject<UOVGunSkill>(TEXT("GunSkillComponent"));
+	bIsActiveGunSkill = true;
+	
+	bIsAttacking = false;
+	
+	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
+	DamageComponent = CreateDefaultSubobject<UOVDamageComponent>(TEXT("DamageComponent"));
+	AttackComponent = CreateDefaultSubobject<UOVAttackComponent>(TEXT("AttackComponent"));
+
+	Stat->SetMaxHp(100);
+	DamageComponent->SetMaxHealth(100);
+
 	InteractionCheckFrequency = 0.1f;
 	InteractionCheckDistance = 225.0f;
 	BaseEyeHeight = 74.0f;
 	TurningInPlace = ETurningPlaceType::ETIP_NotTurning;
 
 	PlayerInventory = CreateDefaultSubobject<UOVInventoryComponent>(TEXT("PlayerInventory"));
-	PlayerInventory->SetSlotsCapacity(20);
+	PlayerInventory->SetSlotsCapacity(10);
 
+	bIsGun = false;
+	bIsRoll = false;
+	bIsShowInventory = false;
 
+	AngleAxis = 0;
 }
 
 void AOVCharacterPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (HasAuthority())
+	Stat->SetMaxHp(100);
+
+	if(HasAuthority())
 	{
 		Gun = GetWorld()->SpawnActor<AOVGun>(GunClass);
 		Gun->SetOwner(this);
@@ -194,36 +256,30 @@ void AOVCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
-
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Jumping);
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-	EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this,
-	                                   &AOVCharacterPlayer::ChangeCharacterControl);
-	EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this,
-	                                   &AOVCharacterPlayer::ShoulderMove);
-	EnhancedInputComponent->BindAction(ShoulderLookActionX, ETriggerEvent::Triggered, this,
-	                                   &AOVCharacterPlayer::ShoulderLookX);
-	EnhancedInputComponent->BindAction(ShoulderLookActionY, ETriggerEvent::Triggered, this,
-	                                   &AOVCharacterPlayer::ShoulderLookY);
-	EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this,
-	                                   &AOVCharacterPlayer::QuaterMove);
+	EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderMove);
+	EnhancedInputComponent->BindAction(ShoulderLookActionX, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookX);
+	EnhancedInputComponent->BindAction(ShoulderLookActionY, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShoulderLookY);
+	EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::QuaterMove);
 	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Aiming);
 	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopAiming);
-	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Shoot);
+	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AOVCharacterPlayer::Shoot);
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::StopShoot);
 	EnhancedInputComponent->BindAction(WheelAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ChangeWeapon);
-	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this,
-	                                   &AOVCharacterPlayer::TeleportSkill);
+	EnhancedInputComponent->BindAction(TeleportAction, ETriggerEvent::Triggered, this,&AOVCharacterPlayer::TeleportSkill);
 	EnhancedInputComponent->BindAction(ShieldAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ShieldSkill);
+	EnhancedInputComponent->BindAction(HealAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::HealSkill);
 	EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::BeginInteract);
-	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::ToggleMenu);
-	//EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::EndInteract);
-	//EndInteraction 안함
+	EnhancedInputComponent->BindAction(ToggleMenuTab, ETriggerEvent::Completed, this, &AOVCharacterPlayer::ToggleMenu);
+	EnhancedInputComponent->BindAction(GunRepeatAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::GunRepeat);
+	EnhancedInputComponent->BindAction(RollAction, ETriggerEvent::Triggered, this, &AOVCharacterPlayer::Roll);
+	EnhancedInputComponent->BindAction(ResumeAction, ETriggerEvent::Completed, this, &AOVCharacterPlayer::Resume);
 }
 
 void AOVCharacterPlayer::SmoothInterpReturn(float Value)
 {
-	CameraBoom->TargetArmLength = (FMath::Lerp(250, 150, Value));
+	CameraBoom->TargetArmLength = (FMath::Lerp(300, 150, Value));
 }
 
 void AOVCharacterPlayer::SmoothOnFinish()
@@ -302,9 +358,6 @@ void AOVCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 
 	AddMovementInput(ForwardDirection, MovementVector.X);
 	AddMovementInput(RightDirection, MovementVector.Y);
-
-	ClearTurnInPlace(MovementVector.X);
-	ClearTurnInPlace(MovementVector.Y);
 }
 
 
@@ -346,7 +399,7 @@ void AOVCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 {
-	if (bIsGun)
+	if (bIsGun && !bIsRoll && !bIsShowInventory)
 	{
 		if (!bIsAiming)
 		{
@@ -356,10 +409,7 @@ void AOVCharacterPlayer::Aiming(const FInputActionValue& Value)
 			OnAimChanged.Broadcast(bIsAiming);
 			ServerRPCAiming();
 		}
-		// else
-		// {
-		// 	StopAiming(Value);
-		// }
+		
 	}
 }
 
@@ -375,7 +425,7 @@ void AOVCharacterPlayer::StopAiming(const FInputActionValue& Value)
 
 void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
 {
-	if (!bIsAiming)
+	if (!bIsAiming && bIsActiveShieldSkill)
 	{
 		bPressedJump = true;
 		JumpKeyHoldTime = 0.0f;
@@ -385,6 +435,10 @@ void AOVCharacterPlayer::Jumping(const FInputActionValue& Value)
 void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 {
 	int GunSocket = Value.Get<float>();;
+	if(bIsAiming)
+	{
+		return;
+	}
 	if (GunSocket > 0)
 	{
 		bIsGun = true;
@@ -394,6 +448,55 @@ void AOVCharacterPlayer::ChangeWeapon(const FInputActionValue& Value)
 	{
 		bIsGun = false;
 		ServerRPCIsGun(bIsGun);
+	}
+}
+
+void AOVCharacterPlayer::Roll(const FInputActionValue& Value)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Roll"));
+	if(bIsAiming)
+	{
+		return;
+	}
+	if(bIsRoll)
+		return;
+	bIsRoll = true;
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	if (AnimInstance->Montage_Play(RollMontage, 1.0f) > 0.0f)
+	{
+		FOnMontageEnded EndDelegate;
+		EndDelegate.BindLambda([this](UAnimMontage* Montage, bool bInterrupted)
+		{
+			bIsRoll = false;
+		});
+		AnimInstance->Montage_SetEndDelegate(EndDelegate, RollMontage);
+	}
+}
+
+void AOVCharacterPlayer::Resume(const FInputActionValue& Value)
+{
+	HUDWidget->ResumeMenu();
+	GetWorld()->GetFirstPlayerController()->SetPause(true);
+}
+
+void AOVCharacterPlayer::ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse)
+{
+	if(PlayerInventory->FindMatchingItem(ItemToUse))
+	{
+		if(ItemToUse->ItemType == EItemType::HPPotion)
+		{
+			DrinkHp();
+		}
+		else if(ItemToUse->ItemType == EItemType::MPPotion)
+		{
+			DrinkMp();
+		}
+		else if(ItemToUse->ItemType == EItemType::AttackPotion)
+		{
+			DrinkAttack();
+		}
+		const int32 RemovedQuantity = PlayerInventory->RemoveAmountOfItem(ItemToUse,QuantityToUse); //인벤토리에서 숫자 뺴기
 	}
 }
 
@@ -441,13 +544,13 @@ void AOVCharacterPlayer::AimOffset(float DeltaTime)
 
 void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 {
-	UE_LOG(LogTemp, Warning, TEXT("AO_Yaw: %f"), AO_Yaw);
-	if (AO_Yaw > 90.f)
+	if(AO_Yaw > 90.f)
 	{
 		TurningInPlace = ETurningPlaceType::ETIP_Right;
 	}
 	else if (AO_Yaw < -90.f)
 	{
+		
 		TurningInPlace = ETurningPlaceType::ETIP_Left;
 	}
 	if (TurningInPlace != ETurningPlaceType::ETIP_NotTurning)
@@ -463,109 +566,22 @@ void AOVCharacterPlayer::TurnInPlace(float DeltaTime)
 	}
 }
 
-void AOVCharacterPlayer::PlayTurn(class UAnimMontage* MontagetoPlay, float PlayRate, float Duration)
-{
-	if (!bIsTurning)
-	{
-		bIsTurning = true;
-		PlayAnimMontage(MontagetoPlay, PlayRate);
-		// Declare the FTimerHandle within the function
-		FTimerHandle TimerHandle;
 
-		// Set up the timer to call the ResetTurning function after 0.2 seconds
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-		{
-			this->bIsTurning = false;
-		}, Duration, false);
 
-		bIsTurning = false;
-	}
-}
 
-void AOVCharacterPlayer::TurnRight90()
-{
-	PlayTurn(TurnRight_90, 1.5f, 0.5f);
-}
-
-void AOVCharacterPlayer::TurnLeft90()
-{
-	PlayTurn(TurnLeft_90, 1.5f, 0.5f);
-}
-
-void AOVCharacterPlayer::TurnRight180()
-{
-	PlayTurn(TurnRight_180, 1.7f, 0.6f);
-}
-
-void AOVCharacterPlayer::TurnLeft180()
-{
-	PlayTurn(TurnLeft_180, 1.7f, 0.6f);
-}
-
-void AOVCharacterPlayer::ClearTurnInPlace(float Force)
-{
-	if (Force != 0.0f)
-	{
-		ClearMotion();
-	}
-}
-
-void AOVCharacterPlayer::ClearMotion()
-{
-	if (IsPlayingRootMotion())
-	{
-		StopAnimMontage(GetCurrentMontage());
-	}
-}
-
-// void AOVCharacterPlayer::TurnInPlace()
-// {
-// 	
-// 	float VelocityXY = GetCharacterMovement()->Velocity.Size2D();
-// 	if (!(GetCharacterMovement()->IsFalling()) && !(VelocityXY > 0.0f))
-// 	{
-// 		FRotator DeltaRotation = GetActorRotation() - GetBaseAimRotation();
-// 		DeltaRotation.Normalize();
-// 		float DeltaYaw = DeltaRotation.Yaw * -1.0f;
-//         //Todo 외적 사용해서 다시 구현하기 
-// 		if ((DeltaYaw > 45.f) || (DeltaYaw < -45.f))
-// 		{
-// 			// if (DeltaYaw > 135.f)
-// 			// 	TurnRight180();
-// 			// else if (DeltaYaw < -135.f)
-// 			// 	TurnLeft180();
-// 			// else
-// 			if(DeltaYaw > 45.f)
-// 				TurnRight90();
-// 			else if (DeltaYaw < -45.f)
-// 				TurnLeft90();
-// 		}
-// 	}
-// }
 
 void AOVCharacterPlayer::Shoot()
 {
-	if (!bIsShooting)
+	if(!bIsShooting)
 	{
 		bIsShooting = true;
-		if (Gun->GetBulletCount())
-		{
-			Gun->PullTrigger();
-			PlayAnimMontage(Shooting_Gun, 0.5);
-
-			FTimerHandle TimerHandle;
-
-			// Set up the timer to call the ResetTurning function after 0.2 seconds
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-			{
-				bIsShooting = false;
-			}, 0.5, false);
-		}
+		ServerRPCShoot();
 	}
 }
 
 void AOVCharacterPlayer::StopShoot()
 {
+	bIsShooting = false;
 }
 
 void AOVCharacterPlayer::ServerRPCStopAiming_Implementation()
@@ -588,11 +604,63 @@ void AOVCharacterPlayer::ServerRPCIsGun_Implementation(bool IsGun)
 }
 
 
+void AOVCharacterPlayer::ServerRPCShoot_Implementation()
+{
+	if (bIsGun && bIsAiming && bIsShooting)
+	{
+		if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+		{
+			if (AnimInstance->Montage_IsPlaying(Shooting_Gun))
+			{
+				return; // 몽타주가 재생 중일 때 함수를 종료
+			}
+		}
+		bIsAttacking = true;
+		FVector Start;
+		FRotator Rotation;
+		GetController()->GetPlayerViewPoint(Start, Rotation);
+		FVector End = Start + Rotation.Vector() * 2000;
+		FDamageInfo DamageInfo = {Stat->GetCurrentAttack(), E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
+
+		UStaticMeshComponent* WeaponMesh = Gun->Mesh; // Assuming GetMesh() returns the weapon mesh
+		if (WeaponMesh)
+		{
+			FName SocketName = TEXT("Socket"); // Replace with your socket name
+			FVector MuzzleLocation = WeaponMesh->GetSocketLocation(SocketName);
+			FRotator MuzzleRotation = WeaponMesh->GetSocketRotation(SocketName);
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), MuzzleEffect, MuzzleLocation, MuzzleRotation);
+		}
+		AttackComponent->FireBullet(Start, End, DamageInfo);
+		PlayAnimMontage(Shooting_Gun, 2.0);
+		UGameplayStatics::PlayWorldCameraShake(this, GunShake, GetActorLocation(), 0.f, 500.f, 1.f, false);
+		if(bIsActiveGunSkill)
+			bIsShooting = false;
+	}
+}
+
+void AOVCharacterPlayer::SetDead()
+{
+	//Super::SetDead();
+	// GetMesh()->SetSimulatePhysics(true);
+	// GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); //랙돌 만들기
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	if(HUDWidget->DeadWidget)
+	{
+		HUDWidget->UpdateDead();
+	}
+	if(PlayerController) //죽으면 키 입력 없애기
+	{
+		DisableInput(PlayerController);
+	}
+	//UE_LOG(LogTemp,Warning ,TEXT("Character Dead"));
+}
+
 void AOVCharacterPlayer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AOVCharacterPlayer, bIsAiming);
 	DOREPLIFETIME(AOVCharacterPlayer, bIsGun);
+	DOREPLIFETIME(AOVCharacterPlayer, bIsShooting);
 }
 
 
@@ -600,24 +668,35 @@ void AOVCharacterPlayer::TakeItem(UOVItemData* InItemData)
 {
 	if (InItemData)
 	{
-		//		TakeItemActions[(uint8)InItemData->Type].ItemDelegate.ExecuteIfBound(InItemData);
+		//TakeItemActions[(uint8)InItemData->Type].ItemDelegate.ExecuteIfBound(InItemData);
 	}
 }
 
-void AOVCharacterPlayer::DrinkHp(UOVItemData* InItemData)
+void AOVCharacterPlayer::DrinkHp()
 {
+	FVector Location = GetActorLocation();
+	FVector Scale(0.7f, 0.7f, 0.7f);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HealthPotion, Location, FRotator::ZeroRotator, Scale);
 	float HpIncreaseAmount = Stat->GetCurrentHp() + 30;
-	Stat->SetHp(HpIncreaseAmount);
+	DamageComponent->Heal(HpIncreaseAmount);
+	Stat->SetHp(DamageComponent->Health);
 }
 
-void AOVCharacterPlayer::DrinkMp(UOVItemData* InItemData)
+void AOVCharacterPlayer::DrinkMp()
 {
+	FVector Location = GetActorLocation();
+	FVector Scale(0.7f, 0.7f, 0.7f);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ManaPotion, Location, FRotator::ZeroRotator, Scale);
 	float MpIncreaseAmount = Stat->GetCurrentMp() + 20;
 	Stat->SetMp(MpIncreaseAmount);
 }
 
-void AOVCharacterPlayer::DrinkAttack(UOVItemData* InItemData)
+void AOVCharacterPlayer::DrinkAttack()
 {
+	FVector Location = GetActorLocation();
+	Location.Z -= 50;
+	FVector Scale(0.7f, 0.7f, 0.7f);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), AttackPotion, Location, FRotator::ZeroRotator, Scale);
 	float AttackIncreaseAmount = Stat->GetCurrentAttack() + 10;
 	Stat->SetAttack(AttackIncreaseAmount);
 }
@@ -635,7 +714,22 @@ void AOVCharacterPlayer::SetupHUDWidget(UOVHUDWidget* InUserWidget)
 {
 	OnAimChanged.AddUObject(InUserWidget, &UOVHUDWidget::UpdateTarget);
 	UOVStatWidget* StatWidget = InUserWidget->StatWidget;
-	if (StatWidget)
+	UOVBossHpWidget* BossHpWidget = InUserWidget->BossHpWidget;
+	if(BossHpWidget)
+	{
+		InUserWidget->UpdateBossUI(false);
+		if (AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld())))
+		{
+			BossHpWidget->UpdateHpBar(GameState->GetBossHp());
+			GameState->OnBossHpChanged.AddDynamic(BossHpWidget, &UOVBossHpWidget::UpdateHpBar);
+		}
+	}
+	AOVGameMode* GameMode = Cast<AOVGameMode>(GetWorld()->GetAuthGameMode());
+	GameMode->OnBatteryCount.AddUObject(InUserWidget, &UOVHUDWidget::UpdateBatteryCount);
+	TeleportSkillComponent->OnTeleportTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateTeleportTime);
+	ShieldSkillComponent->OnShieldTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateShieldTime);
+	GunSkillComponent->OnGunTime.AddUObject(InUserWidget, &UOVHUDWidget::UpdateGunTime);
+	if(StatWidget)
 	{
 		StatWidget->UpdateStatWidget(Stat->GetCurrentHp(), Stat->GetCurrentMp(), Stat->GetCurrentAttack());
 		Stat->OnStatChanged.AddUObject(StatWidget, &UOVStatWidget::UpdateStatWidget);
@@ -658,23 +752,46 @@ void AOVCharacterPlayer::ShieldSkill(const FInputActionValue& Value)
 	if (bIsActiveShieldSkill && Stat->GetCurrentMp())
 	{
 		bIsActiveShieldSkill = false;
+		DamageComponent->bIsShieldSkill = true;
 		ShieldSkillComponent->SkillAction();
 		float MpIncreaseAmount = Stat->GetCurrentMp() - 30;
 		Stat->SetMp(MpIncreaseAmount);
 	}
 }
 
+void AOVCharacterPlayer::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	DamageComponent->OnDeath.AddUObject(this, &AOVCharacterPlayer::SetDead);
+	DamageComponent->OnBlocked.AddUObject(this, &AOVCharacterPlayer::Blocked);
+	DamageComponent->OnDamageResponse.AddUObject(this, &AOVCharacterPlayer::DamageResponse);
+	AttackComponent->OnAttackEnded.AddUObject(this, &AOVCharacterPlayer::AttackEnded);
+
+}
 
 
 void AOVCharacterPlayer::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	AimOffset(DeltaSeconds);
+	bUseControllerRotationYaw = false;
 
-	// if (GetWorld()->TimeSince(InteractionData.LastInteractionCheckTime) > InteractionCheckFrequency)
-	// {
-	// 	PerformInteractionCheck();
-	// }
+	AimOffset(DeltaSeconds);
+	//UE_LOG(LogTemp, Warning ,TEXT("%d"), bIsRoll);
+	if (!bIsActiveGunSkill)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Shoot"));
+		ServerRPCShoot();
+	}
+	AOVGameState* GameState = Cast<AOVGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	if(GameState->BossDead)
+	{
+		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+		bIsAiming = false;
+		HUDWidget->Ending();
+		FRotator NewRotator = UGameplayStatics::GetPlayerController(this, 0)->GetControlRotation();
+		NewRotator.Yaw += 0.5;
+		UGameplayStatics::GetPlayerController(this, 0)->SetControlRotation(NewRotator);
+	}
 }
 
 void AOVCharacterPlayer::PerformInteractionCheck(AActor* MyActor)
@@ -702,6 +819,7 @@ void AOVCharacterPlayer::FoundInteractable(AActor* NewInteractable)
 
 	HUDWidget->UpdateInteractionWidget(&TargetInteractable->InteractableData);
 	TargetInteractable->BeginFocus();
+	
 }
 
 void AOVCharacterPlayer::NoInteractableFound()
@@ -726,8 +844,6 @@ void AOVCharacterPlayer::NoInteractableFound()
 
 void AOVCharacterPlayer::BeginInteract()
 {
-	//PerformInteractionCheck(); //보고 있다는 것을 확인
-
 	if (InteractionData.CurrentInteractable)
 	{
 		if (IsValid(TargetInteractable.GetObject()))
@@ -769,7 +885,29 @@ void AOVCharacterPlayer::UpdateInteractionWidget() const
 }
 void AOVCharacterPlayer::ToggleMenu()
 {
-	HUDWidget->ToggleMenu();
+	if(!bIsShowInventory) //bIsShowInventory = false
+	{
+		HUDWidget->ToggleMenu();
+		bIsShowInventory = true;
+	}
+	else
+	{
+		HUDWidget->ToggleMenu();
+		bIsShowInventory = false;
+	}
+}
+
+void AOVCharacterPlayer::GunRepeat()
+{
+	//UE_LOG(LogTemp,Warning,TEXT("UpdateGunBar"));
+	if (bIsActiveGunSkill && Stat->GetCurrentMp())
+	{
+		bIsActiveGunSkill = false;
+		GunSkillComponent->SkillAction();
+		float MpIncreaseAmount = Stat->GetCurrentMp() - 30;
+		Stat->SetMp(MpIncreaseAmount);
+	}
+	
 }
 
 void AOVCharacterPlayer::DropItem(UOVItemBase* ItemToDrop, const int32 QuantityToDrop)
@@ -807,3 +945,114 @@ void AOVCharacterPlayer::ServerRPCAiming_Implementation()
 {
 	bIsAiming = true;
 }
+
+
+float AOVCharacterPlayer::GetCurrentHealth()
+{
+	return Stat->GetCurrentHp();
+}
+
+float AOVCharacterPlayer::GetMaxHealth()
+{
+	return Stat->GetMaxHp();
+}
+
+float AOVCharacterPlayer::Heal(float Amount) //스스로 힐하기
+{
+	DamageComponent->Heal(Amount);
+	Stat->SetHp(DamageComponent->Health);
+	return DamageComponent->Health;
+}
+
+bool AOVCharacterPlayer::TakeDamage(FDamageInfo DamageInfo)
+{
+	DamageComponent->TakeDamage(DamageInfo);
+	Stat->SetHp(DamageComponent->Health);
+	return true;
+}
+
+bool AOVCharacterPlayer::IsDead()
+{
+	return DamageComponent->bIsDead;
+}
+
+bool AOVCharacterPlayer::IsAttacking()
+{
+	return bIsAttacking;
+}
+
+void AOVCharacterPlayer::Blocked(bool CanBeParried)
+{
+	//UE_LOG(LogTemp,Warning ,TEXT("Character Blocked"));
+}
+
+void AOVCharacterPlayer::DamageResponse(E_DamageResponses DamageResponses)
+{
+	//UE_LOG(LogTemp,Warning ,TEXT("Character DamageResponse"));
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(StaggerMontage, 1.0f);
+}
+
+void AOVCharacterPlayer::AttackEnded()
+{
+	bIsAttacking = false;
+}
+
+void AOVCharacterPlayer::PlayPickupMontage()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	int32 RandomIndex = FMath::RandRange(0, 1); 
+	UE_LOG(LogTemp, Warning, TEXT("PlayPickupMontage"));
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+	//if(GetMesh()->GetAnimInstance()->Montage_IsPlaying(PickupMontageRH))
+	if (RandomIndex == 0)
+	{
+		AnimInstance->Montage_Play(PickupMontageRH, 1.0f);
+	}
+	else
+	{
+		AnimInstance->Montage_Play(PickupMontageLH, 1.0f);
+	}
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+	{
+		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+			
+	}, 1.5f, false);
+}
+
+void AOVCharacterPlayer::TestAttack() //V키
+{
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectArray;
+	ObjectArray.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+	TArray<AActor*> ActorsToNotTargeting;
+	ActorsToNotTargeting.Add(this);
+	FVector Start = GetActorLocation();
+	FVector End = GetActorForwardVector() * 100 + Start;
+	FHitResult HitResult;
+	bool bResult = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(),Start, End, 20, ObjectArray, false,ActorsToNotTargeting
+	,EDrawDebugTrace::None, HitResult,  true,
+			FLinearColor::Red, FLinearColor::Green, 1.f);
+
+	//테스트 공격 100 
+	FDamageInfo DamageInfo = {50, E_DamageType::Explosion, E_DamageResponses::HitReaction, false, false, false, false };
+	if(bResult)
+	{
+		IOVDamagableInterface* DamagableInterface = Cast<IOVDamagableInterface>(HitResult.GetActor());
+		if(DamagableInterface)
+		{
+			DamagableInterface->TakeDamage(DamageInfo); //반환값 bool
+		}
+	}
+}
+
+void AOVCharacterPlayer::HealSkill(const FInputActionValue& Value)
+{
+	Heal(50);
+	//UE_LOG(LogTemp, Warning, TEXT("HealSkill"));
+}
+
+
+

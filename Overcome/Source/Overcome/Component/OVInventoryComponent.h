@@ -103,7 +103,6 @@ protected:
 	int32 InventorySlotsCapacity;
 	UPROPERTY(VisibleAnywhere, Category= "Inventory")
 	TArray<TObjectPtr<UOVItemBase>> InventoryContents; //인벤토리 
-
 	
 	virtual void BeginPlay() override;
 

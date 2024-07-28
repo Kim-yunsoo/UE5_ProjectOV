@@ -8,8 +8,9 @@
 #include "Components/TimelineComponent.h"
 #include "Interface/OVCharacterHUDInterface.h"
 #include "Interface/OVCharacterItemInterface.h"
-#include "Stat/OVCharacterStatComponent.h"
+#include "Component/OVCharacterStatComponent.h"
 #include "TurningInPlace.h"
+#include "Interface/OVDamagableInterface.h"
 #include "OVCharacterPlayer.generated.h"
 
 /**
@@ -54,7 +55,7 @@ struct FInteractionData
 };
 
 UCLASS()
-class OVERCOME_API AOVCharacterPlayer : public AOVCharacterBase, public IOVCharacterItemInterface, public IOVCharacterHUDInterface
+class OVERCOME_API AOVCharacterPlayer : public AOVCharacterBase, public IOVCharacterItemInterface, public IOVCharacterHUDInterface, public IOVDamagableInterface
 {
 	GENERATED_BODY()
 
@@ -78,7 +79,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Timeline")
 	UCurveFloat* SmoothCurveFloat; // (6)
 
-	
+	void ItemUse(UOVItemBase* ItemToUse, const int32 QuantityToUse);
+
 
 
 	// Character Control Section
@@ -133,6 +135,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> ToggleMenuTab;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> ItemUseAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> RollAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> ResumeAction;
 	
 	void ShoulderMove(const FInputActionValue& Value);
 	void ShoulderLookX(const FInputActionValue& Value);
@@ -145,7 +155,8 @@ protected:
 
 	void Jumping(const FInputActionValue& Value);
 	void ChangeWeapon(const FInputActionValue& Value);
-
+	void Roll(const FInputActionValue& Value);
+	void Resume(const FInputActionValue& Value);
 	//AimOffset
 	void AimOffset(float DeltaTime);
 
@@ -157,6 +168,7 @@ protected:
 public:
 	FORCEINLINE float GetAO_Yaw() const {return AO_Yaw;};
 	FORCEINLINE float GetAO_Pitch() const {return AO_Pitch;};
+	FORCEINLINE bool GetIsGun() const {return bIsGun;};
 
 protected:
 	UPROPERTY(Replicated, BlueprintReadWrite, Category = "Character")
@@ -165,51 +177,13 @@ protected:
 	UPROPERTY(Replicated,EditAnywhere, BlueprintReadWrite, Category = "Character")
 	uint8 bIsGun : 1;
 
+	UPROPERTY(Replicated, BlueprintReadWrite, Category = "Character")
+	uint8 bIsRoll : 1;
 public:
 	const uint8 GetIsAiming() { return bIsAiming; };
 	ECharacterControlType CurrentCharacterControlType;
 
 protected:
-	//Turn In Place Section
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void PlayTurn(class UAnimMontage* MontagetoPlay, float PlayRate, float Duration);
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnRight90();
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnLeft90();
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnRight180();
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void TurnLeft180();
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void ClearTurnInPlace(float Force);
-
-	UFUNCTION(BlueprintCallable, Category = "Turn")
-	void ClearMotion();
-
-	// UFUNCTION(BlueprintCallable, Category = "Turn")
-	// void TurnInPlace();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	uint8 bIsTurning : 1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	TObjectPtr<class UAnimMontage> TurnRight_90;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	TObjectPtr<class UAnimMontage> TurnLeft_90;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	TObjectPtr<class UAnimMontage> TurnRight_180;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn")
-	TObjectPtr<class UAnimMontage> TurnLeft_180;
-
 	ETurningPlaceType TurningInPlace;
 	void TurnInPlace(float DeltaTime);
 	
@@ -223,11 +197,12 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Gun")
 	TSubclassOf<AOVGun> GunClass;
+
 protected:
 	void Shoot();
 	void StopShoot();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gun")
+	UPROPERTY(Replicated,EditAnywhere, BlueprintReadWrite, Category = "Gun")
 	uint8 bIsShooting : 1;
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Gun", Meta = (AllowPrivateAccess = "true"))
@@ -239,6 +214,10 @@ public:
 	UPROPERTY()
 	AOVGun* Gun;
 
+		
+	UPROPERTY()
+	TObjectPtr<UNiagaraSystem> MuzzleEffect;
+	
 	UPROPERTY()
 	TObjectPtr<class UOVHUDWidget> HUDWidget;
 
@@ -252,7 +231,10 @@ public:
 	UFUNCTION(Server, Unreliable)
 	void ServerRPCIsGun(bool IsGun);
 
-	
+	UFUNCTION(Server, Unreliable)
+	void ServerRPCShoot();
+
+	virtual void SetDead() override;
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
@@ -265,14 +247,17 @@ protected:
 	TArray<FTakeItemDelegateWrapper> TakeItemActions;
 	
 	virtual void TakeItem(UOVItemData* InItemData) override;
-	void DrinkHp(class UOVItemData* InItemData);
-	void DrinkMp(class UOVItemData* InItemData);
-	void DrinkAttack(class UOVItemData* InItemData);
+	void DrinkHp();
+	void DrinkMp();
+	void DrinkAttack();
 	void Damage(class UOVItemData* InItemData);
 
 	//UI
 public:
 	FOnAimChangedDelegate OnAimChanged;
+	
+	UPROPERTY()
+	uint8 bIsShowInventory : 1;
 	
 protected:
 	virtual void SetupHUDWidget(UOVHUDWidget* InUserWidget) override;
@@ -280,21 +265,74 @@ protected:
 
 	//Skill
 public:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	uint8 bIsActiveTeleportSkill : 1;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	uint8 bIsActiveShieldSkill : 1;
+
+	UPROPERTY()
+	uint8 bIsActiveGunSkill : 1;
 	
 	UPROPERTY()
 	TObjectPtr<class UOVTeleportSkill> TeleportSkillComponent;
 
 	UPROPERTY()
 	TObjectPtr<class UOVShieldSkill> ShieldSkillComponent;
+
+	UPROPERTY()
+	TObjectPtr<class UOVGunSkill> GunSkillComponent;
 	
 	void TeleportSkill(const FInputActionValue& Value);
 	void ShieldSkill(const FInputActionValue& Value);
 
+	virtual void PostInitializeComponents() override;
+
+	//Damage
+	virtual float GetCurrentHealth() override;
+	virtual float GetMaxHealth() override;
+	virtual float Heal(float Amount) override; 
+	virtual bool TakeDamage(FDamageInfo DamageInfo) override;
+	virtual bool IsDead() override;
+	virtual bool IsAttacking() override;
+
+	UPROPERTY()
+	uint8 bIsAttacking : 1;
+
+	void Blocked(bool CanBeParried);
+	void DamageResponse(E_DamageResponses DamageResponses);
+	void AttackEnded();
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Damage, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UOVDamageComponent> DamageComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UOVAttackComponent> AttackComponent;
+
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> StaggerMontage;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> PickupMontageRH;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage> PickupMontageLH;
+
+	void PlayPickupMontage();
+	
+	
+	//TEST ATTACK
+	UFUNCTION()
+	void TestAttack();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> HealAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> GunRepeatAction;
+	
+	void HealSkill(const FInputActionValue& Value);
 	FORCEINLINE UOVInventoryComponent* GetInventory() const {return PlayerInventory;};
 	FORCEINLINE bool IsInteracting() const {return GetWorldTimerManager().IsTimerActive(TimerHandle_Interaction); };
 
@@ -320,10 +358,34 @@ protected:
 	void Interact();
 
 	void ToggleMenu();
+	void GunRepeat();
 
+	UPROPERTY()
+	uint8 bIsGunRepeat :1;
+
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UAnimMontage>	RollMontage;
+///
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+	TObjectPtr<UNiagaraSystem> ManaPotion;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+	TObjectPtr<UNiagaraSystem> HealthPotion;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+	TObjectPtr<UNiagaraSystem> AttackPotion;
+
+
+
+	//CameraShake
+	UPROPERTY(EditAnywhere, Category = "CameraShake")
+	TSubclassOf<UCameraShakeBase> GunShake;
+	
 public:
 	void NoInteractableFound(); // 상호작용한 액터가 아닌 경우 호출
 	void PerformInteractionCheck(AActor* MyActor); // 매틱마다 호출하며 라인트레이스
 	void DropItem(UOVItemBase* ItemToDrop, const int32 QuantityToDrop);
-	
+
+	float AngleAxis;
 };

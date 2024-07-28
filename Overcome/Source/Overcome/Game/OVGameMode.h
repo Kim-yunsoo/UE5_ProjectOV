@@ -9,6 +9,8 @@
 /**
  * 
  */
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnBatteryCountDelegate, int /*CurrentTime*/);
+
 UCLASS()
 class OVERCOME_API AOVGameMode : public AGameModeBase
 {
@@ -16,5 +18,31 @@ class OVERCOME_API AOVGameMode : public AGameModeBase
 	
 public: 	
 	AOVGameMode();
+	void SetBatteryCount(int NewBattery);
+	
+	FOnBatteryCountDelegate OnBatteryCount;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Battery;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 GoalCount;
+
+	UFUNCTION()
+	void ChangeLevel();
+	
+	UFUNCTION()
+	void UnloadOldLevel();
+	
+	UPROPERTY()
+	float timestamp;
+
+	UPROPERTY()
+	TObjectPtr<USoundWave> MainSound;
+
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> AudioComponent;
+
+	UPROPERTY()
+	TObjectPtr<USoundWave> BossSound;
 };

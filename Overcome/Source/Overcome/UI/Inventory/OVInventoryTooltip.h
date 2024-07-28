@@ -26,12 +26,6 @@ public:
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UTextBlock> ItemType;
 
-	// UPROPERTY(meta=(BindWidget))
-	// TObjectPtr<UTextBlock> DamageValue;
-	//
-	// UPROPERTY(meta=(BindWidget))
-	// TObjectPtr<UTextBlock> ArmorRating;
-
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UTextBlock> UsageText;
 
@@ -40,10 +34,6 @@ public:
 
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UTextBlock> MaxStackSize;
-
-	// UPROPERTY(meta=(BindWidget))
-	// TObjectPtr<UTextBlock> StackSizeValue;
-
 
 protected:
 	virtual void NativeConstruct() override;

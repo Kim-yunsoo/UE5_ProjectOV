@@ -9,6 +9,7 @@
 UOVHpBarWidget::UOVHpBarWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	MaxHp = -1.0f;
+	CurrentHp = MaxHp;
 }
 
 void UOVHpBarWidget::NativeConstruct()
@@ -34,10 +35,10 @@ void UOVHpBarWidget::UpdateHpBar(float NewCurrentHp)
 		HpProgressBar->SetPercent(NewCurrentHp/MaxHp);
 	}
 	CurrentHp = NewCurrentHp;
-	if (HpStat)
-	{
-		HpStat->SetText(FText::FromString(GetHpStatText()));
-	}
+	// if (HpStat)
+	// {
+	// 	HpStat->SetText(FText::FromString(GetHpStatText()));
+	// }
 }
 
 FString UOVHpBarWidget::GetHpStatText()

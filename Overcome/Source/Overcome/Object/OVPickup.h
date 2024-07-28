@@ -20,25 +20,35 @@ class OVERCOME_API AOVPickup : public AActor ,public IOVInteractionInterface
 public:	
 	// Sets default values for this actor's properties
 
-	
 	AOVPickup();
 
 	void InitializePickup(const TSubclassOf<UOVItemBase> BaseClass, const int32 InQuantity);
 	void InitializeDrop(UOVItemBase* ItemDrop, const int32 InQuantity);
-
+	void InitialStart();
 	FORCEINLINE UOVItemBase* GetItemData(){return ItemReference;}
 
 	virtual void BeginFocus() override;
 	virtual void EndFocus() override;
+	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")
+	FName DesiredItemID;
+	UPrimitiveComponent* GetMeshComponent() const { return PickupMesh; }
 
 protected:
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> HPPotionMaterial;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> MPPotionMaterial;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UMaterialInterface> AttackPotionMaterial;
+	
 
 	UPROPERTY(VisibleAnywhere, Category = "Pickup | Components")
 	TObjectPtr<UStaticMeshComponent> PickupMesh;
 	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")
 	TObjectPtr<UDataTable> ItemDataTable;
-	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")
-	FName DesiredItemID;
+
 	UPROPERTY(VisibleAnywhere, Category = "Pickup | Item Reference")
 	TObjectPtr<UOVItemBase> ItemReference;
 	UPROPERTY(EditInstanceOnly, Category = "Pickup | Item Initialization")
@@ -55,7 +65,7 @@ protected:
 	void UpdateInteractableData();
 
 
-	void TakePickup(const AOVCharacterPlayer* Taker);
+	void TakePickup(AOVCharacterPlayer* Taker);
 
 	UFUNCTION()
 	void OnTriggerEnter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -63,7 +73,7 @@ protected:
 	UFUNCTION()
 	void OnTriggerExit(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-#if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
-#endif
+// #if WITH_EDITOR
+// 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+// #endif
 };

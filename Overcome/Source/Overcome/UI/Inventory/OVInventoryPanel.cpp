@@ -24,10 +24,8 @@ void UOVInventoryPanel::NativeOnInitialized()
 			InventoryReference->OnInventoryUpdated.AddUObject(this, &UOVInventoryPanel::RefreshInventory);
 			//인벤토리 컴포넌트 델리게이트와 연결
 			SetInfoText();
-			
 		}
 	}
-	
 }
 void UOVInventoryPanel::SetInfoText() const
 {

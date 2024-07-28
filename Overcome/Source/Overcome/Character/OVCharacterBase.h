@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interface/OVAnimationAttackInterface.h"
 #include "Interface/OVCharateWidgetInterface.h"
 #include "OVCharacterBase.generated.h"
 
@@ -59,4 +60,11 @@ protected:
 	TObjectPtr<class UOVWidgetComponent> HpBar;
 
 	virtual void SetupCharacterWidget(UOVUserWidget* InUserWidget) override;
+
+
+	//Attack Hit Section
+protected:
+	//virtual void AttackHitCheck() override;
+
+	virtual void NotifyActionEnd();
 };

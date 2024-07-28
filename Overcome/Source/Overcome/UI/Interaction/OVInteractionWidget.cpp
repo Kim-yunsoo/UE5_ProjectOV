@@ -31,7 +31,7 @@ void UOVInteractionWidget::UpdateWidget(const FInteractableData* InteractableDat
 
 		if(InteractableData->Quantity < 2)
 		{
-			QuantityText->SetVisibility(ESlateVisibility::Collapsed);
+			QuantityText->SetVisibility(ESlateVisibility::Visible);
 		}
 		else
 		{

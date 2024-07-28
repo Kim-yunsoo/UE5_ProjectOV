@@ -1,6 +1,4 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Gun/OVGun.h"
 #include "Components/StaticMeshComponent.h"
 #include "DrawDebugHelpers.h"
@@ -8,6 +6,8 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Character/OVCharacterBase.h"
 #include "Character/OVCharacterPlayer.h"
+#include "Character/AI/OVCharacterNonPlayer.h"
+#include "WorldPartition/ContentBundle/ContentBundleLog.h"
 
 // Sets default values
 AOVGun::AOVGun()
@@ -16,9 +16,15 @@ AOVGun::AOVGun()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	
 	SetRootComponent(Root);
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));	
 	Mesh->SetupAttachment(Root);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshRef(TEXT("/Script/Engine.StaticMesh'/Game/Asset/Gun/rifle.rifle'"));
+	if (MeshRef.Object)
+	{
+		Mesh->SetStaticMesh(MeshRef.Object);
+	}
 	this->SetReplicates(true);
 	this->SetActorEnableCollision(false);
 	
@@ -29,13 +35,20 @@ TEXT("/Script/Niagara.NiagaraSystem'/Game/Vefects/Blood_VFX/VFX/Performance_Vers
 	{
 		EmitterHit = HitRef.Object;
 	}
+	static ConstructorHelpers::FObjectFinder<UNiagaraSystem> MuzzleEffectRef(
+TEXT("/Script/Niagara.NiagaraSystem'/Game/Vefects/Shots_VFX/VFX/MuzzleFlash/Looped/FX_MuzzleFlash_Rifle_Custom.FX_MuzzleFlash_Rifle_Custom'"));
+
+	if (MuzzleEffectRef.Succeeded())
+	{
+		MuzzleEffect = MuzzleEffectRef.Object;
+	}
 	BulletCount = 20;
 }
 
 void AOVGun::PullTrigger()
 {
 	BulletCount -= 1;
-	UE_LOG(LogTemp, Log, TEXT("You've been shot! %d"), BulletCount);
+	//UE_LOG(LogTemp, Log, TEXT("You've been shot! %d"), BulletCount);
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
 	if(OwnerPawn == nullptr) return;
 	AController* OwnerController = OwnerPawn->GetController();
@@ -49,23 +62,36 @@ void AOVGun::PullTrigger()
 
 	// DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
 	// DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);
+	UStaticMeshComponent* WeaponMesh = Mesh; // 총의 메쉬를 반환하는 함수
+	if (WeaponMesh)
+	{
+		FName SocketName = TEXT("Socket"); // 소켓 이름
+		FVector MuzzleLocation = WeaponMesh->GetSocketLocation(SocketName);
+		FRotator MuzzleRotation = WeaponMesh->GetSocketRotation(SocketName);
+
+		// 나이아가라 시스템을 소켓 위치에서 스폰
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), MuzzleEffect, MuzzleLocation, MuzzleRotation);
+		UE_LOG(LogTemp, Warning, TEXT("HAPPY"));
+	}
+	UE_LOG(LogTemp, Warning, TEXT("HAPPY"));
 
 	FHitResult Hit;
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
 
-	if (bSuccess)
+	if (bSuccess) //이득우 교수님 AI 플레이어
 	{
+		
 		FVector ShotDirection = -Rotation.Vector();
 		//DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
-		AOVCharacterBase* HitActor = Cast<AOVCharacterBase>(Hit.GetActor());
+		AOVCharacterNonPlayer* HitActor = Cast<AOVCharacterNonPlayer>(Hit.GetActor());
 		if (HitActor != nullptr)
 		{
 			AOVCharacterPlayer* CharacterPlayer = Cast<AOVCharacterPlayer>(GetOwner());
 			Damage = CharacterPlayer->GetAttack();
-			UE_LOG(LogTemp, Warning, TEXT("Damage %f"), Damage);
+			//UE_LOG(LogTemp, Warning, TEXT("Damage %f"), Damage);
 			FPointDamageEvent DamageEvent{ Damage, Hit, ShotDirection, nullptr };
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, Hit.Location, FRotator::ZeroRotator);
-			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+			//HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+			MulticastEffect(Hit.Location);
 		}
 	}
 }
@@ -82,5 +108,10 @@ void AOVGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AOVGun::MulticastEffect_Implementation(FVector Location)
+{
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), EmitterHit, Location, FRotator::ZeroRotator);
 }
 

@@ -29,6 +29,9 @@ void AOVPlayerController::BeginPlay()
 			OVHUDWidget->SetVisibility(ESlateVisibility::Visible);
 		}
 	}
+	const FInputModeGameOnly InputMode;
+	SetInputMode(InputMode);
+	SetShowMouseCursor(false);
 }
 
 UOVHUDWidget* AOVPlayerController::GetOVHUDWidget() const

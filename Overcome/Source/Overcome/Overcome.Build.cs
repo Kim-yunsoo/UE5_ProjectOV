@@ -10,7 +10,7 @@ public class Overcome : ModuleRules
 
         PublicIncludePaths.AddRange(new string[] { "Overcome" });
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG" ,"Niagara","SlateCore","Slate"});
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG" ,"Niagara", "NavigationSystem", "AIModule", "GameplayTasks", "Slate", "SlateCore" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

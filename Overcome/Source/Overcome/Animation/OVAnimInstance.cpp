@@ -2,6 +2,8 @@
 
 
 #include "Animation/OVAnimInstance.h"
+
+#include "KismetAnimationLibrary.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Character/OVCharacterPlayer.h"
@@ -39,7 +41,7 @@ void UOVAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bIsJumping = bIsFalling & (Velocity.Z > JumpingThreshould);
 		bIsAiming = Owner->GetIsAiming();
 		TurningInPlace = Owner->GetTurningInPlace();
-		
+		Direction = UKismetAnimationLibrary::CalculateDirection(Velocity, Owner->GetActorRotation());
 		AO_Yaw = Owner->GetAO_Yaw();
 		AO_Pitch =  Owner->GetAO_Pitch();
 	}
@@ -48,7 +50,7 @@ void UOVAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 void UOVAnimInstance::AnimNotify_PlayMontageNotify()
 {
-	UE_LOG(LogTemp, Log, TEXT("GrenadeCheck"))
+	//UE_LOG(LogTemp, Log, TEXT("GrenadeCheck"))
 }
 
 AOVCharacterPlayer* UOVAnimInstance::GetOwner()

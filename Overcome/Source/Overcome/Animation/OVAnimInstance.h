@@ -18,16 +18,16 @@ public:
 	UOVAnimInstance();
 
 protected:
-	virtual void NativeInitializeAnimation() override; //¾Ö´Ô±×·¡ÇÁ ½ÃÀÛ½Ã ÀÛµ¿
+	virtual void NativeInitializeAnimation() override; //ï¿½Ö´Ô±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û½ï¿½ ï¿½Ûµï¿½
 
-	virtual void NativeUpdateAnimation(float DeltaSeconds) override; //ÇÁ·¹ÀÓ¸¶´Ù °è¼Ó ¾÷µ¥ÀÌÆ® 
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override; //ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® 
 
 	void AnimNotify_PlayMontageNotify();
 
 	FORCEINLINE class AOVCharacterPlayer* GetOwner();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character)
-	TObjectPtr<class AOVCharacterPlayer> Owner; //¾Ö´Ô ÀÎ½ºÅÏ½º¸¦ ¼ÒÀ¯ÇÏ°í ÀÖ´Â Á¤º¸¸¦ ´ã´Â º¯¼ö 
+	TObjectPtr<class AOVCharacterPlayer> Owner; //ï¿½Ö´ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character)
 	TObjectPtr<class UCharacterMovementComponent> Movement;
@@ -39,22 +39,22 @@ protected:
 	float GroundSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
-	uint8 bIsIdle : 1; // »çÀÌÁî°¡ ¸íÈ®ÇÑ bool Å¸ÀÔ
+	uint8 bIsIdle : 1; // ï¿½ï¿½ï¿½ï¿½ï¿½î°¡ ï¿½ï¿½È®ï¿½ï¿½ bool Å¸ï¿½ï¿½
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
-	float MovingThreshould; //¿òÁ÷ÀÌ´ÂÁö 
+	float MovingThreshould; //ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
-	uint8 bIsFalling : 1; //¶³¾îÁö°íÀÖ´ÂÁö
+	uint8 bIsFalling : 1; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
-	uint8 bIsJumping : 1; //Á¡ÇÁÇÏ°íÀÖ´ÂÁö
+	uint8 bIsJumping : 1; //ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ö´ï¿½ï¿½ï¿½
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
-	float JumpingThreshould; //Á¡ÇÁÁßÀÎÁö 
+	float JumpingThreshould; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
-	uint8 bIsAiming : 1; //¿¡ÀÓ¸ðµå
+	uint8 bIsAiming : 1; //ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	float AO_Yaw;
@@ -64,4 +64,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	ETurningPlaceType TurningInPlace;
+
+	/////////////////////////////////////////////////////////////////
+	///
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
+	float Direction;
 };

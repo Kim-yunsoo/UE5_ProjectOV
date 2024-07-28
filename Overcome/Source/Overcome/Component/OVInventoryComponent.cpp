@@ -2,8 +2,6 @@
 
 
 #include "Component/OVInventoryComponent.h"
-
-#include "IDetailTreeNode.h"
 #include "Item/OVItemBase.h"
 
 // Sets default values for this component's properties
@@ -55,7 +53,7 @@ UOVItemBase* UOVInventoryComponent::FindNextPartialStack(UOVItemBase* ItemIn) co
 		}
 		))
 	{
-		return *Result;			//ItemIn->ID와 일치하고, 완전히 채워지지 않은 아이템 스택을 배열에서 찾아서 반환한다.
+		return *Result;	//ItemIn->ID와 일치하고, 완전히 채워지지 않은 아이템 스택을 배열에서 찾아서 반환한다.
 	}
 
 	return nullptr; // 찾지못하면 nullptr 반환. 
@@ -157,8 +155,6 @@ int32 UOVInventoryComponent::HandleStackableItems(UOVItemBase* ItemIn, int32 Req
 
 	while (ExistingItem) //부분적으로 넣을 스택이 있다면?
 	{
-		//const int32 AmountToMakeFullStack = CalculateNumberForFullStack(ExistingItem, AmountToDistribute);
-		//int32 RemainAmount = ExistingItem->ItemNumericData.MaxStackSize
 		int32 CalCulateNumber = ExistingItem->ItemNumericData.MaxStackSize - ExistingItem->Quantity; // 수용될 수 있는 양
 		if(CalCulateNumber >= RequestedAddAmount) //수용될 수 있는 양이 요청 값보단 많다면? 
 		{
@@ -173,7 +169,6 @@ int32 UOVInventoryComponent::HandleStackableItems(UOVItemBase* ItemIn, int32 Req
 			int32 RemainItemAmount = RequestedAddAmount - CalCulateNumber; //바닥에 남을 값
 			ExistingItem->SetQuantity(ExistingItem->Quantity + CalCulateNumber); //요청한거 그대로 올려두기
 			ItemIn->SetQuantity(RemainItemAmount);
-
 			OnInventoryUpdated.Broadcast();
 			return CalCulateNumber; // 전부 추가하도록 요청 금액 리턴 
 			

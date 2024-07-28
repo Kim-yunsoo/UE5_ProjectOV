@@ -12,7 +12,7 @@
 				"Engine",
 				"AnimGraphRuntime",
 				"UMG",
-				"CoreUObject"
+				"AIModule"
 			]
 		}
 	],
@@ -23,6 +23,10 @@
 			"TargetAllowList": [
 				"Editor"
 			]
+		},
+		{
+			"Name": "Text3D",
+			"Enabled": true
 		}
 	]
 }

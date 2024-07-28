@@ -5,10 +5,9 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "OVCharacterControlData.h"
-#include "Components/WidgetComponent.h"
-#include "Stat/OVCharacterStatComponent.h"
-#include "UI/OVWidgetComponent.h"
+#include "Component/OVCharacterStatComponent.h"
 #include "UI/OVHpBarWidget.h"
+#include "Physics/OVCollision.h"
 
 // Sets default values
 AOVCharacterBase::AOVCharacterBase()
@@ -20,7 +19,7 @@ AOVCharacterBase::AOVCharacterBase()
 
 	//Capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Pawn"));
+	GetCapsuleComponent()->SetCollisionProfileName(CPROFILE_OVCAPSULE);
 
 	//Movement
 	GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -36,7 +35,7 @@ AOVCharacterBase::AOVCharacterBase()
 	//Mesh
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -100.f), FRotator(0.0f, -90.0f, 0.0f));
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	GetMesh()->SetCollisionProfileName(TEXT("CharacterMesh"));
+	GetMesh()->SetCollisionProfileName(TEXT("NoCollision"));
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharaterMeshRef(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonLtBelica/Characters/Heroes/Belica/Skins/PolarStrike/Meshes/Belica_PolarStrike.Belica_PolarStrike'"));
 	if (CharaterMeshRef.Object)
@@ -44,19 +43,19 @@ AOVCharacterBase::AOVCharacterBase()
 		GetMesh()->SetSkeletalMesh(CharaterMeshRef.Object); //분수대 만들었을 때처럼 오브젝트 지정
 	}
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstanceRef(TEXT("/Game/Blueprint/ABP_OV_Character.ABP_OV_Character_C"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstanceRef(TEXT("/Game/Blueprint/Animation/ABP_OV_Character.ABP_OV_Character_C"));
 	if (AnimInstanceRef.Class)
 	{
 		GetMesh()->SetAnimInstanceClass(AnimInstanceRef.Class); //클래스 정보 가지고 와서 지정
 	}
 
-	static ConstructorHelpers::FObjectFinder<UOVCharacterControlData> ShoulderDataRef(TEXT("/Script/Overcome.OVCharacterControlData'/Game/CharacterControl/ABC_Shouler.ABC_Shouler'"));
+	static ConstructorHelpers::FObjectFinder<UOVCharacterControlData> ShoulderDataRef(TEXT("/Script/Overcome.OVCharacterControlData'/Game/Input/CharacterControl/ABC_Shouler.ABC_Shouler'"));
 	if (ShoulderDataRef.Object)
 	{
 		CharacterControlManager.Add(ECharacterControlType::Shoulder, ShoulderDataRef.Object);
 	}
 
-	static ConstructorHelpers::FObjectFinder<UOVCharacterControlData> QuaterDataRef(TEXT("/Script/Overcome.OVCharacterControlData'/Game/CharacterControl/ABC_Quater.ABC_Quater'"));
+	static ConstructorHelpers::FObjectFinder<UOVCharacterControlData> QuaterDataRef(TEXT("/Script/Overcome.OVCharacterControlData'/Game/Input/CharacterControl/ABC_Quater.ABC_Quater'"));
 	if (QuaterDataRef.Object)
 	{
 		CharacterControlManager.Add(ECharacterControlType::Quater, QuaterDataRef.Object);
@@ -66,18 +65,7 @@ AOVCharacterBase::AOVCharacterBase()
 	//Stat Component
 	Stat = CreateDefaultSubobject<UOVCharacterStatComponent>(TEXT("Stat"));
 
-	//Widget Component
-	HpBar = CreateDefaultSubobject<UOVWidgetComponent>(TEXT("Widget"));
-	HpBar->SetupAttachment(GetMesh());
-	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
-	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UMG/WBP_HpBar.WBP_HpBar_C"));
-	if (HpBarWidgetRef.Class)
-	{
-		HpBar->SetWidgetClass(HpBarWidgetRef.Class);
-		HpBar->SetWidgetSpace(EWidgetSpace::Screen);
-		HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
-		HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	}
+
 }
 
 void AOVCharacterBase::PostInitializeComponents()
@@ -106,9 +94,9 @@ float AOVCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 
 void AOVCharacterBase::SetDead()
 {
-	UE_LOG(LogTemp, Warning, TEXT("DEAD!!!"));
+	//UE_LOG(LogTemp, Warning, TEXT("DEAD!!!"));
 	SetActorEnableCollision(false);
-	HpBar->SetHiddenInGame(true);
+	//HpBar->SetHiddenInGame(true);
 	// Destroy(this);
 	//SetActorHiddenInGame(true);
 }
@@ -122,6 +110,12 @@ void AOVCharacterBase::SetupCharacterWidget(UOVUserWidget* InUserWidget)
 		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp());
 		Stat->OnHpchanged.AddUObject(HpBarWidget, &UOVHpBarWidget::UpdateHpBar);
 	}
+}
+
+
+void AOVCharacterBase::NotifyActionEnd()
+{
+	//attack이 끝나면 이 함수 호출
 }
 
 

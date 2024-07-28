@@ -2,12 +2,13 @@
 
 
 #include "UI/Inventory/OVInventoryItemSlot.h"
-
 #include "OVItemDragDropOperation.h"
+#include "Character/OVCharacterPlayer.h"
 #include "Components/Border.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Item/OVItemBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "UI/Inventory/OVInventoryTooltip.h"
 #include "UI/Inventory/OVDragItemVisual.h"
 
@@ -58,13 +59,25 @@ void UOVInventoryItemSlot::NativeConstruct()
 
 FReply UOVInventoryItemSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	//return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	FReply Reply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 	if(InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
 	{
 		return Reply.Handled().DetectDrag(TakeWidget(),EKeys::LeftMouseButton);
 	}
-	return Reply.Unhandled();  // 다른 것을 누를 시 아무동작이 일어나지 않도록 반환한다. 
+	else if(InMouseEvent.GetEffectingButton() == EKeys::RightMouseButton)
+	{
+		if(ItemReference->ItemType == EItemType::Battery)
+			return Reply.Unhandled();
+		AOVCharacterPlayer* PlayerCharacter = Cast<AOVCharacterPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		if (PlayerCharacter)
+		{
+			UOVItemBase* ItemToUse = ItemReference;
+			int32 QuantityToUse = 1;
+			PlayerCharacter->ItemUse(ItemToUse, QuantityToUse);
+		}
+		return Reply.Handled();
+	}
+	return Reply.Unhandled();
 }
 
 void UOVInventoryItemSlot::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
@@ -102,3 +115,4 @@ bool UOVInventoryItemSlot::NativeOnDrop(const FGeometry& InGeometry, const FDrag
 {
 	return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 }
+
